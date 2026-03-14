@@ -22,10 +22,10 @@ class _PhotosViewState extends State<PhotosView> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Upload en cours...')),
+        const SnackBar(content: Text('Uploading...')),
       );
 
-      // Utiliser un ID temporaire pour les photos hors dépenses
+      // Use a temporary ID for non-expense photos
       final String tempId = DateTime.now().millisecondsSinceEpoch.toString();
       final String? photoUrl = await PhotoService.uploadExpenseImage(
         widget.tricountId,
@@ -36,17 +36,17 @@ class _PhotosViewState extends State<PhotosView> {
       if (photoUrl != null) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Photo ajoutée avec succès')),
+          const SnackBar(content: Text('Photo added successfully')),
         );
-        setState(() {}); // Rafraîchir la liste
+        setState(() {}); // Refresh the list
       } else {
-        throw Exception('Erreur lors de l\'upload');
+        throw Exception('Error uploading photo');
       }
     } catch (e) {
-      print('Erreur lors de l\'upload: $e');
+      debugPrint('Error uploading photo: $e');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Erreur lors de l\'upload')),
+        const SnackBar(content: Text('Error uploading photo')),
       );
     }
   }
@@ -61,7 +61,7 @@ class _PhotosViewState extends State<PhotosView> {
             child: ElevatedButton.icon(
               onPressed: _pickAndUploadImage,
               icon: const Icon(Icons.add_a_photo),
-              label: const Text('Ajouter une preuve d\'achat'),
+              label: const Text('Add proof of purchase'),
             ),
           ),
           Expanded(
@@ -69,8 +69,8 @@ class _PhotosViewState extends State<PhotosView> {
               future: PhotoService.getPhotos(widget.tricountId),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  print('Erreur FutureBuilder: ${snapshot.error}');
-                  return const Center(child: Text('Une erreur est survenue'));
+                  debugPrint('FutureBuilder Error: ${snapshot.error}');
+                  return const Center(child: Text('An error occurred'));
                 }
 
                 if (!snapshot.hasData) {
@@ -81,7 +81,7 @@ class _PhotosViewState extends State<PhotosView> {
 
                 if (photos.isEmpty) {
                   return const Center(
-                    child: Text('Aucune photo'),
+                    child: Text('No photos'),
                   );
                 }
 

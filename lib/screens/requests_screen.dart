@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../services/data_provider.dart';
 
 class RequestsScreen extends StatefulWidget {
   const RequestsScreen({super.key});
@@ -9,32 +9,43 @@ class RequestsScreen extends StatefulWidget {
   State<RequestsScreen> createState() => _RequestsScreenState();
 }
 
-class _RequestsScreenState extends State<RequestsScreen> with SingleTickerProviderStateMixin {
+class _RequestsScreenState extends State<RequestsScreen>
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    WidgetsBinding.instance.addObserver(this);
+    // Refresh requests every time screen is created
+    DataProvider().refreshRequests();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _tabController.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
-    final currentUser = FirebaseAuth.instance.currentUser;
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      DataProvider().refreshRequests();
+    }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Demandes'),
+        title: const Text('Requests'),
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
-            Tab(text: 'Amis'),
+            Tab(text: 'Friends'),
             Tab(text: 'Tricounts'),
           ],
         ),
@@ -53,74 +64,98 @@ class _RequestsScreenState extends State<RequestsScreen> with SingleTickerProvid
 class _FriendRequestsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final currentUser = FirebaseAuth.instance.currentUser;
+    // Note: Friend requests logic needs to be implemented in Supabase.
+    // For now, we'll assume a 'friend_requests' table or similar logic.
+    // Based on the SQL setup, we don't have a friend_requests table yet.
+    // We should probably add one or use a status in the friends table.
+    // Assuming we will add a friend_requests table.
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser?.uid)
-          .collection('friendRequests')
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Center(child: Text('Une erreur est survenue'));
-        }
+    // Since the SQL didn't explicitly create a friend_requests table,
+    // I will assume for now we might need to create it or it was missed.
+    // However, looking at the previous code, it was using a subcollection.
+    // Let's assume we need to create a 'friend_requests' table.
+    // For this refactor, I will implement the UI to fetch from 'friend_requests'
+    // and we will need to ensure the table exists.
 
-        if (!snapshot.hasData) {
+    return ListenableBuilder(
+      listenable: DataProvider(),
+      builder: (context, _) {
+        final requests = DataProvider().myFriendRequests;
+
+        if (DataProvider().isLoading && requests.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        final requests = snapshot.data!.docs;
-
         if (requests.isEmpty) {
-          return const Center(
-            child: Text('Aucune demande d\'ami en attente'),
-          );
+          return const Center(child: Text('No pending friend requests'));
         }
 
-        return ListView.builder(
-          itemCount: requests.length,
-          itemBuilder: (context, index) {
-            final request = requests[index].data() as Map<String, dynamic>;
-
-            return Card(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
-              ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    request['senderPhotoUrl'] ?? 'https://via.placeholder.com/150',
-                  ),
-                ),
-                title: Text(request['senderName'] ?? 'Utilisateur inconnu'),
-                subtitle: const Text('Souhaite vous ajouter comme ami'),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.check, color: Colors.green),
-                      onPressed: () => _acceptFriendRequest(
-                        context,
-                        requests[index].id,
-                        request['senderId'],
-                        request['senderName'],
-                        request['senderPhotoUrl'],
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Colors.red),
-                      onPressed: () => _rejectFriendRequest(
-                        context,
-                        requests[index].id,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
+        return RefreshIndicator(
+          onRefresh: () async {
+            await DataProvider().refreshRequests();
           },
+          child: ListView.builder(
+            itemCount: requests.length,
+            itemBuilder: (context, index) {
+              final request = requests[index];
+              final senderId = request['sender_id'];
+
+              return FutureBuilder<Map<String, dynamic>>(
+                future: Supabase.instance.client
+                    .from('users')
+                    .select()
+                    .eq('id', senderId)
+                    .single(),
+                builder: (context, userSnapshot) {
+                  if (!userSnapshot.hasData) return const SizedBox.shrink();
+                  final sender = userSnapshot.data!;
+
+                  return Card(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.grey[800],
+                        backgroundImage: sender['photo_url'] != null
+                            ? NetworkImage(sender['photo_url'])
+                            : null,
+                        child: sender['photo_url'] == null
+                            ? const Icon(Icons.person, color: Colors.white)
+                            : null,
+                      ),
+                      title: Text(
+                        sender['name'] ?? 'Unknown User',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      subtitle: const Text('Wants to add you as a friend',
+                          overflow: TextOverflow.ellipsis, maxLines: 1),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.check, color: Colors.green),
+                            onPressed: () => _acceptFriendRequest(
+                              context,
+                              request['id'],
+                              senderId,
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.close, color: Colors.red),
+                            onPressed: () => _rejectFriendRequest(
+                              context,
+                              request['id'],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         );
       },
     );
@@ -130,92 +165,57 @@ class _FriendRequestsTab extends StatelessWidget {
     BuildContext context,
     String requestId,
     String senderId,
-    String senderName,
-    String? senderPhotoUrl,
   ) async {
-    final currentUser = FirebaseAuth.instance.currentUser;
+    final currentUser = Supabase.instance.client.auth.currentUser;
     if (currentUser == null) return;
 
     try {
-      final batch = FirebaseFirestore.instance.batch();
+      // Add friend relationship (bidirectional)
+      await Supabase.instance.client.from('friends').insert([
+        {'user_id': currentUser.id, 'friend_id': senderId},
+        {'user_id': senderId, 'friend_id': currentUser.id},
+      ]);
 
-      // Ajouter l'ami à la liste d'amis de l'utilisateur courant
-      final currentUserFriendRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .collection('friends')
-          .doc(senderId);
-
-      batch.set(currentUserFriendRef, {
-        'userId': senderId,
-        'name': senderName,
-        'photoUrl': senderPhotoUrl,
-      });
-
-      // Ajouter l'utilisateur courant à la liste d'amis de l'expéditeur
-      final senderFriendRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc(senderId)
-          .collection('friends')
-          .doc(currentUser.uid);
-
-      final currentUserData = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .get();
-
-      batch.set(senderFriendRef, {
-        'userId': currentUser.uid,
-        'name': currentUserData.data()?['name'] ?? 'Utilisateur',
-        'photoUrl': currentUserData.data()?['photoUrl'],
-      });
-
-      // Supprimer la demande d'ami
-      final requestRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .collection('friendRequests')
-          .doc(requestId);
-
-      batch.delete(requestRef);
-
-      await batch.commit();
+      // Delete request
+      await Supabase.instance.client
+          .from('friend_requests')
+          .delete()
+          .eq('id', requestId);
 
       if (context.mounted) {
+        DataProvider().refreshAll();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Demande d\'ami acceptée')),
+          const SnackBar(content: Text('Friend request accepted')),
         );
       }
     } catch (e) {
+      debugPrint('Error accepting friend request: $e');
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erreur lors de l\'acceptation')),
+          SnackBar(content: Text('Error accepting request: $e')),
         );
       }
     }
   }
 
-  Future<void> _rejectFriendRequest(BuildContext context, String requestId) async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser == null) return;
-
+  Future<void> _rejectFriendRequest(
+      BuildContext context, String requestId) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .collection('friendRequests')
-          .doc(requestId)
-          .delete();
+      await Supabase.instance.client
+          .from('friend_requests')
+          .delete()
+          .eq('id', requestId);
 
       if (context.mounted) {
+        DataProvider().refreshRequests();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Demande d\'ami rejetée')),
+          const SnackBar(content: Text('Friend request rejected')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erreur lors du rejet')),
+          const SnackBar(content: Text('Error rejecting request')),
         );
       }
     }
@@ -225,64 +225,73 @@ class _FriendRequestsTab extends StatelessWidget {
 class _TricountInvitesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final currentUser = FirebaseAuth.instance.currentUser;
+    final currentUser = Supabase.instance.client.auth.currentUser;
     if (currentUser == null) return const SizedBox.shrink();
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .collection('tricountInvites')
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+    return ListenableBuilder(
+      listenable: DataProvider(),
+      builder: (context, _) {
+        final invites = DataProvider().myTricountInvites;
+
+        if (DataProvider().isLoading && invites.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        final invites = snapshot.data!.docs;
-
         if (invites.isEmpty) {
           return const Center(
-            child: Text('Aucune invitation en attente'),
+            child: Text('No pending invitations'),
           );
         }
 
-        return ListView.builder(
-          itemCount: invites.length,
-          itemBuilder: (context, index) {
-            final invite = invites[index].data() as Map<String, dynamic>;
-
-            return Card(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
-              ),
-              child: ListTile(
-                title: Text(invite['tricountName'] ?? 'Sans nom'),
-                subtitle: Text('Invité par ${invite['invitedBy']}'),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.check, color: Colors.green),
-                      onPressed: () => _acceptTricountInvite(
-                        context,
-                        invites[index].id,
-                        invite['tricountId'],
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Colors.red),
-                      onPressed: () => _rejectTricountInvite(
-                        context,
-                        invites[index].id,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
+        return RefreshIndicator(
+          onRefresh: () async {
+            await DataProvider().refreshRequests();
           },
+          child: ListView.builder(
+            itemCount: invites.length,
+            itemBuilder: (context, index) {
+              final invite = invites[index];
+
+              return Card(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: ListTile(
+                  title: Text(
+                    invite['tricount_name'] ?? 'Unnamed',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                  subtitle: Text(
+                    'Invited by ${invite['invited_by']}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.check, color: Colors.green),
+                        onPressed: () => _acceptTricountInvite(
+                          context,
+                          invite['id'],
+                          invite['tricount_id'],
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close, color: Colors.red),
+                        onPressed: () => _rejectTricountInvite(
+                          context,
+                          invite['id'],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         );
       },
     );
@@ -293,86 +302,269 @@ class _TricountInvitesTab extends StatelessWidget {
     String inviteId,
     String tricountId,
   ) async {
-    final currentUser = FirebaseAuth.instance.currentUser;
+    final currentUser = Supabase.instance.client.auth.currentUser;
     if (currentUser == null) return;
 
     try {
-      final batch = FirebaseFirestore.instance.batch();
+      // Get current tricount data
+      final tricountRes = await Supabase.instance.client
+          .from('tricounts')
+          .select()
+          .eq('id', tricountId)
+          .single();
 
-      // Ajouter l'utilisateur au tricount
-      final tricountRef = FirebaseFirestore.instance
-          .collection('tricounts')
-          .doc(tricountId);
+      final participantIds =
+          List<dynamic>.from(tricountRes['participant_ids'] ?? []);
+      final participants = List<Map<String, dynamic>>.from(
+          (tricountRes['participants'] as List? ?? [])
+              .map((p) => Map<String, dynamic>.from(p)));
 
-      final userData = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .get();
+      // Check if already joined
+      if (participantIds.contains(currentUser.id)) {
+        // Just delete the invite and return
+        await Supabase.instance.client
+            .from('tricount_invites')
+            .delete()
+            .eq('id', inviteId);
+        if (context.mounted) {
+          DataProvider().refreshAll();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('You are already in this Tricount')),
+          );
+        }
+        return;
+      }
 
-      final tricountDoc = await tricountRef.get();
-      final data = tricountDoc.data();
+      // Find ghost participants
+      final ghosts = participants.where((p) => p['is_ghost'] == true).toList();
 
-      final List<String> participantIds = List<String>.from(data?['participantIds'] ?? []);
-      final List<Map<String, dynamic>> participants = List<Map<String, dynamic>>.from(data?['participants'] ?? []);
-
-      participantIds.add(currentUser.uid);
-      participants.add({
-        'userId': currentUser.uid,
-        'name': userData.data()?['name'] ?? 'Unknown',
-        'photoUrl': userData.data()?['photoUrl'],
-      });
-
-      batch.update(tricountRef, {
-        'participantIds': participantIds,
-        'participants': participants,
-      });
-
-      // Supprimer l'invitation
-      batch.delete(
-        FirebaseFirestore.instance
-            .collection('users')
-            .doc(currentUser.uid)
-            .collection('tricountInvites')
-            .doc(inviteId),
-      );
-
-      await batch.commit();
-
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invitation acceptée')),
+      if (ghosts.isNotEmpty && context.mounted) {
+        // Show ghost claim dialog
+        await _showGhostClaimDialog(
+          context,
+          tricountId,
+          inviteId,
+          ghosts,
+          currentUser,
+          participants,
+          participantIds,
         );
+      } else {
+        // No ghosts — join as new participant
+        await _joinAsNew(tricountId, currentUser, participants, participantIds);
+        // Delete invitation
+        await Supabase.instance.client
+            .from('tricount_invites')
+            .delete()
+            .eq('id', inviteId);
+        if (context.mounted) {
+          DataProvider().refreshAll();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invitation accepted')),
+          );
+        }
       }
     } catch (e) {
+      debugPrint('Error accepting tricount invite: $e');
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erreur lors de l\'acceptation')),
+          SnackBar(content: Text('Error accepting invitation: $e')),
         );
       }
     }
   }
 
-  Future<void> _rejectTricountInvite(BuildContext context, String inviteId) async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser == null) return;
+  Future<void> _showGhostClaimDialog(
+    BuildContext context,
+    String tricountId,
+    String inviteId,
+    List<Map<String, dynamic>> ghosts,
+    User currentUser,
+    List<Map<String, dynamic>> allParticipants,
+    List<dynamic> allParticipantIds,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Are you one of these people?'),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              ...ghosts.map((g) => ListTile(
+                    title: Text(g['name'] ?? 'Unknown'),
+                    subtitle: const Text('Tap to claim this profile'),
+                    leading: const Icon(Icons.person_outline),
+                    onTap: () async {
+                      Navigator.pop(dialogContext);
+                      try {
+                        await _claimGhostProfile(tricountId, g, currentUser,
+                            allParticipants, allParticipantIds);
+                        // Delete invitation
+                        await Supabase.instance.client
+                            .from('tricount_invites')
+                            .delete()
+                            .eq('id', inviteId);
+                        if (context.mounted) {
+                          DataProvider().refreshAll();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Profile claimed successfully!')),
+                          );
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text('Error claiming profile: $e')),
+                          );
+                        }
+                      }
+                    },
+                  )),
+              const Divider(),
+              ListTile(
+                title: const Text('None of these'),
+                subtitle: const Text('Join as a new participant'),
+                leading: const Icon(Icons.person_add),
+                onTap: () async {
+                  Navigator.pop(dialogContext);
+                  try {
+                    await _joinAsNew(tricountId, currentUser, allParticipants,
+                        allParticipantIds);
+                    // Delete invitation
+                    await Supabase.instance.client
+                        .from('tricount_invites')
+                        .delete()
+                        .eq('id', inviteId);
+                    if (context.mounted) {
+                      DataProvider().refreshAll();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Joined successfully!')),
+                      );
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error joining: $e')),
+                      );
+                    }
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
+  Future<void> _claimGhostProfile(
+    String tricountId,
+    Map<String, dynamic> ghost,
+    User currentUser,
+    List<Map<String, dynamic>> allParticipants,
+    List<dynamic> allParticipantIds,
+  ) async {
+    final ghostId = ghost['id'];
+    final realId = currentUser.id;
+    final realName = currentUser.userMetadata?['name'] ?? ghost['name'];
+
+    // 1. Update participants list — replace ghost with real user
+    final updatedParticipants = allParticipants.map((p) {
+      if (p['id'] == ghostId) {
+        return {
+          'id': realId,
+          'name': realName,
+          'photo_url': currentUser.userMetadata?['photo_url'],
+          'is_ghost': false,
+        };
+      }
+      return p;
+    }).toList();
+
+    final updatedIds = [...allParticipantIds, realId];
+
+    await Supabase.instance.client.from('tricounts').update({
+      'participants': updatedParticipants,
+      'participant_ids': updatedIds,
+    }).eq('id', tricountId);
+
+    // 2. Update expenses — paid by ghost → paid by real user
+    await Supabase.instance.client
+        .from('expenses')
+        .update({'user_id': realId})
+        .eq('tricount_id', tricountId)
+        .eq('user_id', ghostId);
+
+    // 3. Update involved_participants in all expenses
+    final expensesRes = await Supabase.instance.client
+        .from('expenses')
+        .select()
+        .eq('tricount_id', tricountId);
+
+    final expenses = List<Map<String, dynamic>>.from(expensesRes);
+    for (var expense in expenses) {
+      final involved =
+          List<dynamic>.from(expense['involved_participants'] ?? []);
+      bool changed = false;
+      final newInvolved = involved.map((item) {
+        if (item is Map) {
+          if (item['user_id'] == ghostId || item['id'] == ghostId) {
+            changed = true;
+            return {...item, 'user_id': realId, 'id': realId};
+          }
+        }
+        return item;
+      }).toList();
+
+      if (changed) {
+        await Supabase.instance.client.from('expenses').update(
+            {'involved_participants': newInvolved}).eq('id', expense['id']);
+      }
+    }
+  }
+
+  Future<void> _joinAsNew(
+    String tricountId,
+    User currentUser,
+    List<Map<String, dynamic>> participants,
+    List<dynamic> participantIds,
+  ) async {
+    if (!participantIds.contains(currentUser.id)) {
+      participantIds.add(currentUser.id);
+      participants.add({
+        'id': currentUser.id,
+        'name': currentUser.userMetadata?['name'] ?? 'Unknown',
+        'photo_url': currentUser.userMetadata?['photo_url'],
+      });
+
+      await Supabase.instance.client.from('tricounts').update({
+        'participant_ids': participantIds,
+        'participants': participants,
+      }).eq('id', tricountId);
+    }
+  }
+
+  Future<void> _rejectTricountInvite(
+      BuildContext context, String inviteId) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .collection('tricountInvites')
-          .doc(inviteId)
-          .delete();
+      await Supabase.instance.client
+          .from('tricount_invites')
+          .delete()
+          .eq('id', inviteId);
 
       if (context.mounted) {
+        DataProvider().refreshRequests();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invitation rejetée')),
+          const SnackBar(content: Text('Invitation rejected')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erreur lors du rejet')),
+          const SnackBar(content: Text('Error rejecting invitation')),
         );
       }
     }

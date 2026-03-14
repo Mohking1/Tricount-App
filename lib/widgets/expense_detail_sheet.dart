@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseDetailSheet extends StatelessWidget {
@@ -14,14 +13,14 @@ class ExpenseDetailSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateTime = (expense['createdAt'] as Timestamp).toDate();
+    final dateTime = DateTime.parse(expense['created_at']);
     final formattedDate = DateFormat('dd/MM/yyyy').format(dateTime);
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -30,11 +29,15 @@ class ExpenseDetailSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                expense['name'] ?? 'Sans nom',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Text(
+                  expense['name'] ?? 'Unnamed',
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
               ),
               IconButton(
@@ -44,13 +47,16 @@ class ExpenseDetailSheet extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          _buildInfoRow('Montant', '${expense['value']} €'),
-          _buildInfoRow('Payé par', expense['paidBy'] ?? 'Non spécifié'),
+          _buildInfoRow('Amount', '${expense['value']} ₹'),
+          _buildInfoRow('Paid by', expense['paid_by'] ?? 'Unspecified'),
+          _buildInfoRow('Category', expense['category'] ?? 'Other'),
+          if (expense['payment_method'] != null)
+            _buildInfoRow('Payment Method', expense['payment_method']),
           _buildInfoRow('Date', formattedDate),
           const SizedBox(height: 16),
-          if (expense['photoUrl'] != null) ...[
+          if (expense['photo_url'] != null) ...[
             const Text(
-              'Justificatif',
+              'Proof',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -58,13 +64,13 @@ class ExpenseDetailSheet extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             GestureDetector(
-              onTap: () => _showFullScreenImage(context, expense['photoUrl']),
+              onTap: () => _showFullScreenImage(context, expense['photo_url']),
               child: Hero(
-                tag: expense['photoUrl'],
+                tag: expense['photo_url'],
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
-                    expense['photoUrl'],
+                    expense['photo_url'],
                     fit: BoxFit.cover,
                     height: 200,
                   ),
@@ -91,11 +97,17 @@ class ExpenseDetailSheet extends StatelessWidget {
               color: Colors.grey,
             ),
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+          const SizedBox(width: 16),
+          Flexible(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              textAlign: TextAlign.end,
             ),
           ),
         ],

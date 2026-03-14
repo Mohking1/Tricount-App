@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../services/data_provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = Supabase.instance.client.auth.currentUser;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Mon Profil'),
+        title: const Text('My Profile'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
-              await FirebaseAuth.instance.signOut();
+              await DataProvider().clear();
+              await Supabase.instance.client.auth.signOut();
               if (context.mounted) {
                 Navigator.of(context).pushReplacementNamed('/login');
               }
@@ -24,147 +26,222 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('users')
-            .doc(user?.uid)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(child: Text('Une erreur est survenue'));
-          }
+      body: ListenableBuilder(
+        listenable: DataProvider(),
+        builder: (context, _) {
+          final userData = DataProvider().myProfile;
 
-          if (!snapshot.hasData) {
+          if (DataProvider().isLoading && userData == null) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final userData = snapshot.data?.data() as Map<String, dynamic>?;
-
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              // Photo de profil
-              Center(
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(
-                    userData?['photoUrl'] ?? 'https://via.placeholder.com/150',
+          return RefreshIndicator(
+            onRefresh: () async {
+              await DataProvider().refreshProfile();
+            },
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                // Profile Photo
+                Center(
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.grey[800],
+                    backgroundImage: userData?['photo_url'] != null
+                        ? NetworkImage(userData!['photo_url'])
+                        : null,
+                    child: userData?['photo_url'] == null
+                        ? const Icon(Icons.person,
+                            size: 50, color: Colors.white)
+                        : null,
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              // Informations personnelles
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Informations personnelles',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                // Personal Information
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Personal Information',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      ListTile(
-                        leading: const Icon(Icons.person),
-                        title: Text(userData?['name'] ?? 'Non renseigné'),
-                        trailing: const Icon(Icons.edit),
-                        onTap: () => _showEditNameDialog(context, userData?['name']),
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.email),
-                        title: Text(user?.email ?? 'Non renseigné'),
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        ListTile(
+                          leading: const Icon(Icons.person),
+                          title: Text(userData?['name'] ?? 'Not specified'),
+                          trailing: const Icon(Icons.edit),
+                          onTap: () =>
+                              _showEditNameDialog(context, userData?['name']),
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.email),
+                          title: Text(user?.email ?? 'Not specified'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              // Liste d'amis
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Mes amis',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                // Friends List
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'My Friends',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.person_add),
-                            onPressed: () => _showAddFriendDialog(context),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(user?.uid)
-                            .collection('friends')
-                            .snapshots(),
-                        builder: (context, friendsSnapshot) {
-                          if (!friendsSnapshot.hasData) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
+                            IconButton(
+                              icon: const Icon(Icons.person_add),
+                              onPressed: () => _showAddFriendDialog(context),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Builder(
+                          builder: (context) {
+                            final friends = DataProvider().myFriends;
 
-                          final friends = friendsSnapshot.data!.docs;
-
-                          if (friends.isEmpty) {
-                            return const Center(
-                              child: Text('Aucun ami pour le moment'),
-                            );
-                          }
-
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: friends.length,
-                            itemBuilder: (context, index) {
-                              final friend = friends[index].data()
-                                  as Map<String, dynamic>;
-                              return ListTile(
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    friend['photoUrl'] ??
-                                        'https://via.placeholder.com/150',
-                                  ),
-                                ),
-                                title: Text(friend['name'] ?? ''),
-                                trailing: IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () {
-                                    // TODO: Implémenter la suppression d'ami
-                                  },
-                                ),
+                            if (friends.isEmpty) {
+                              return const Center(
+                                child: Text('No friends yet'),
                               );
-                            },
-                          );
-                        },
-                      ),
-                    ],
+                            }
+
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: friends.length,
+                              itemBuilder: (context, index) {
+                                final friendId = friends[index]['friend_id'];
+                                return FutureBuilder<Map<String, dynamic>>(
+                                  future: Supabase.instance.client
+                                      .from('users')
+                                      .select()
+                                      .eq('id', friendId)
+                                      .single(),
+                                  builder: (context, friendUserSnapshot) {
+                                    if (!friendUserSnapshot.hasData) {
+                                      return const SizedBox.shrink();
+                                    }
+                                    final friend = friendUserSnapshot.data!;
+                                    return ListTile(
+                                      leading: CircleAvatar(
+                                        backgroundColor: Colors.grey[800],
+                                        backgroundImage: friend['photo_url'] !=
+                                                null
+                                            ? NetworkImage(friend['photo_url'])
+                                            : null,
+                                        child: friend['photo_url'] == null
+                                            ? const Icon(Icons.person,
+                                                color: Colors.white)
+                                            : null,
+                                      ),
+                                      title: Text(
+                                        friend['name'] ?? '',
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                      trailing: IconButton(
+                                        icon: const Icon(Icons.delete),
+                                        onPressed: () => _deleteFriend(
+                                          context,
+                                          friends[index]['id'],
+                                          friends[index]['friend_id'],
+                                          friend['name'] ?? 'this friend',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),
     );
+  }
+
+  Future<void> _deleteFriend(
+    BuildContext context,
+    dynamic friendshipId,
+    String friendId,
+    String friendName,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Remove Friend'),
+        content: Text('Remove $friendName from your friends?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Remove', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    try {
+      final currentUser = Supabase.instance.client.auth.currentUser;
+      if (currentUser == null) return;
+
+      // Delete both directions of the friendship
+      await Supabase.instance.client
+          .from('friends')
+          .delete()
+          .eq('user_id', currentUser.id)
+          .eq('friend_id', friendId);
+
+      await Supabase.instance.client
+          .from('friends')
+          .delete()
+          .eq('user_id', friendId)
+          .eq('friend_id', currentUser.id);
+
+      if (context.mounted) {
+        DataProvider().refreshProfile();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('$friendName removed from friends')),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error removing friend: $e')),
+        );
+      }
+    }
   }
 
   Future<void> _showAddFriendDialog(BuildContext context) async {
@@ -173,120 +250,179 @@ class ProfileScreen extends StatelessWidget {
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Ajouter un ami'),
+        title: const Text('Add Friend'),
         content: TextField(
           controller: emailController,
           decoration: const InputDecoration(
-            hintText: 'Email de votre ami',
+            hintText: 'Friend\'s Email',
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Annuler'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () async {
               await _sendFriendRequest(context, emailController.text.trim());
               if (context.mounted) Navigator.pop(context);
             },
-            child: const Text('Envoyer'),
+            child: const Text('Send'),
           ),
         ],
       ),
     );
   }
 
-  Future<void> _sendFriendRequest(BuildContext context, String friendEmail) async {
-    try {
-      // Chercher l'utilisateur par email
-      final QuerySnapshot userQuery = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: friendEmail)
-          .limit(1)
-          .get();
-
-      if (userQuery.docs.isEmpty) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Utilisateur non trouvé')),
-          );
-        }
-        return;
+  Future<void> _sendFriendRequest(
+      BuildContext context, String friendEmail) async {
+    if (friendEmail.isEmpty) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please enter an email')),
+        );
       }
+      return;
+    }
 
-      final friendDoc = userQuery.docs.first;
-      final currentUser = FirebaseAuth.instance.currentUser;
+    try {
+      final currentUser = Supabase.instance.client.auth.currentUser;
       if (currentUser == null) return;
 
-      // Vérifier si la demande existe déjà
-      final existingRequest = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(friendDoc.id)
-          .collection('friendRequests')
-          .doc(currentUser.uid)
-          .get();
-
-      if (existingRequest.exists) {
+      // Don't allow adding yourself
+      if (friendEmail.toLowerCase() == currentUser.email?.toLowerCase()) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Demande déjà envoyée')),
+            const SnackBar(content: Text('You cannot add yourself')),
           );
         }
         return;
       }
 
-      // Récupérer les données de l'utilisateur courant
-      final currentUserDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .get();
+      // Search user by email in public.users table
+      final userQuery = await Supabase.instance.client
+          .from('users')
+          .select()
+          .ilike('email', friendEmail.trim())
+          .limit(1);
 
-      // Envoyer la demande d'ami
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(friendDoc.id)
-          .collection('friendRequests')
-          .doc(currentUser.uid)
-          .set({
-        'senderId': currentUser.uid,
-        'senderName': currentUserDoc.data()?['name'] ?? 'Utilisateur',
-        'senderPhotoUrl': currentUserDoc.data()?['photoUrl'],
-        'timestamp': FieldValue.serverTimestamp(),
+      if (userQuery.isEmpty) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('No user found with that email')),
+          );
+        }
+        return;
+      }
+
+      final friendDoc = userQuery.first;
+
+      // Check if already friends
+      final existingFriend = await Supabase.instance.client
+          .from('friends')
+          .select()
+          .eq('user_id', currentUser.id)
+          .eq('friend_id', friendDoc['id'])
+          .maybeSingle();
+
+      if (existingFriend != null) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Already friends with this user')),
+          );
+        }
+        return;
+      }
+
+      // Check if request already exists
+      final existingRequest = await Supabase.instance.client
+          .from('friend_requests')
+          .select()
+          .eq('sender_id', currentUser.id)
+          .eq('receiver_id', friendDoc['id'])
+          .maybeSingle();
+
+      if (existingRequest != null) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Friend request already sent')),
+          );
+        }
+        return;
+      }
+
+      // Check if they already sent us a request (auto-accept)
+      final reverseRequest = await Supabase.instance.client
+          .from('friend_requests')
+          .select()
+          .eq('sender_id', friendDoc['id'])
+          .eq('receiver_id', currentUser.id)
+          .maybeSingle();
+
+      if (reverseRequest != null) {
+        // They already sent us a request — auto-accept
+        await Supabase.instance.client.from('friends').insert([
+          {'user_id': currentUser.id, 'friend_id': friendDoc['id']},
+          {'user_id': friendDoc['id'], 'friend_id': currentUser.id},
+        ]);
+        await Supabase.instance.client
+            .from('friend_requests')
+            .delete()
+            .eq('id', reverseRequest['id']);
+
+        if (context.mounted) {
+          DataProvider().refreshProfile();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content:
+                    Text('They already sent you a request — now friends!')),
+          );
+        }
+        return;
+      }
+
+      // Send friend request
+      await Supabase.instance.client.from('friend_requests').insert({
+        'sender_id': currentUser.id,
+        'receiver_id': friendDoc['id'],
+        'status': 'pending',
       });
 
       if (context.mounted) {
+        DataProvider().refreshProfile();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Demande d\'ami envoyée')),
+          const SnackBar(content: Text('Friend request sent!')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erreur lors de l\'envoi de la demande')),
+          SnackBar(content: Text('Error: $e')),
         );
       }
     }
   }
 
-  Future<void> _showEditNameDialog(BuildContext context, String? currentName) async {
-    final TextEditingController nameController = TextEditingController(text: currentName);
+  Future<void> _showEditNameDialog(
+      BuildContext context, String? currentName) async {
+    final TextEditingController nameController =
+        TextEditingController(text: currentName);
 
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Modifier le nom'),
+        title: const Text('Edit Name'),
         content: TextField(
           controller: nameController,
           decoration: const InputDecoration(
-            hintText: 'Votre nom',
+            hintText: 'Your Name',
           ),
           autofocus: true,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Annuler'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () async {
@@ -296,7 +432,7 @@ class ProfileScreen extends StatelessWidget {
               }
               if (context.mounted) Navigator.pop(context);
             },
-            child: const Text('Enregistrer'),
+            child: const Text('Save'),
           ),
         ],
       ),
@@ -305,23 +441,27 @@ class ProfileScreen extends StatelessWidget {
 
   Future<void> _updateUserName(BuildContext context, String newName) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = Supabase.instance.client.auth.currentUser;
       if (user == null) return;
 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .update({'name': newName});
+      await Supabase.instance.client
+          .from('users')
+          .update({'name': newName}).eq('id', user.id);
+
+      // Also update auth metadata if possible, or just rely on public table
+      await Supabase.instance.client.auth.updateUser(
+        UserAttributes(data: {'name': newName}),
+      );
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Nom mis à jour')),
+          const SnackBar(content: Text('Name updated')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erreur lors de la mise à jour')),
+          const SnackBar(content: Text('Error updating name')),
         );
       }
     }

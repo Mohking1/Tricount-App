@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -23,43 +22,32 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() => _isLoading = true);
 
     try {
+      final supabase = Supabase.instance.client;
       if (_isLogin) {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+        await supabase.auth.signInWithPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text,
         );
       } else {
-        final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        await supabase.auth.signUp(
           email: _emailController.text.trim(),
           password: _passwordController.text,
+          data: {'name': _nameController.text.trim()},
         );
-
-        await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
-          'email': _emailController.text.trim(),
-          'name': _nameController.text.trim(),
-        });
+        // User creation is handled by Supabase trigger
       }
-    } on FirebaseAuthException catch (e) {
-      String message;
-      switch (e.code) {
-        case 'email-already-in-use':
-          message = 'Cet email est déjà utilisé';
-          break;
-        case 'invalid-email':
-          message = 'Email invalide';
-          break;
-        case 'user-not-found':
-          message = 'Aucun utilisateur trouvé avec cet email';
-          break;
-        case 'wrong-password':
-          message = 'Mot de passe incorrect';
-          break;
-        default:
-          message = 'Une erreur est survenue (${e.code})';
+    } on AuthException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.message)),
+        );
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occurred: $e')),
+        );
+      }
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -68,6 +56,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -76,22 +65,25 @@ class _AuthScreenState extends State<AuthScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (!_isLogin) TextFormField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Nom',
-                    border: OutlineInputBorder(),
+                if (!_isLogin)
+                  TextFormField(
+                    controller: _nameController,
+                    style: const TextStyle(fontFamily: 'Roboto'),
+                    decoration: const InputDecoration(
+                      labelText: 'Name',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a name';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Veuillez entrer un nom';
-                    }
-                    return null;
-                  },
-                ),
                 if (!_isLogin) const SizedBox(height: 16),
                 TextFormField(
                   controller: _emailController,
+                  style: const TextStyle(fontFamily: 'Roboto'),
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(),
@@ -99,10 +91,10 @@ class _AuthScreenState extends State<AuthScreen> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez entrer un email';
+                      return 'Please enter an email';
                     }
                     if (!value.contains('@')) {
-                      return 'Veuillez entrer un email valide';
+                      return 'Please enter a valid email';
                     }
                     return null;
                   },
@@ -110,17 +102,18 @@ class _AuthScreenState extends State<AuthScreen> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _passwordController,
+                  style: const TextStyle(fontFamily: 'Roboto'),
                   decoration: const InputDecoration(
-                    labelText: 'Mot de passe',
+                    labelText: 'Password',
                     border: OutlineInputBorder(),
                   ),
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez entrer un mot de passe';
+                      return 'Please enter a password';
                     }
                     if (value.length < 6) {
-                      return 'Le mot de passe doit contenir au moins 6 caractères';
+                      return 'Password must be at least 6 characters';
                     }
                     return null;
                   },
@@ -134,14 +127,15 @@ class _AuthScreenState extends State<AuthScreen> {
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size.fromHeight(50),
                     ),
-                    child: Text(_isLogin ? 'Se connecter' : 'Créer un compte'),
+                    child: Text(_isLogin ? 'Login' : 'Create Account'),
                   ),
                 const SizedBox(height: 16),
                 TextButton(
                   onPressed: () => setState(() => _isLogin = !_isLogin),
-                  child: Text(_isLogin
-                    ? 'Créer un nouveau compte'
-                    : 'J\'ai déjà un compte'
+                  child: Text(
+                    _isLogin
+                        ? 'Create a new account'
+                        : 'I already have an account',
                   ),
                 ),
               ],
