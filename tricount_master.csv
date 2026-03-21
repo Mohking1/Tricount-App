@@ -1,0 +1,961 @@
+group_name,expense_title,type,category,total_amount,currency,date,paid_by,owes_who,owes_amount
+Roomie,Fuel,NORMAL,TRANSPORT,500.0,INR,2026-03-17,Mohammed,Garv,150.0
+Roomie,Fuel,NORMAL,TRANSPORT,500.0,INR,2026-03-17,Mohammed,Mohammed,175.0
+Roomie,Fuel,NORMAL,TRANSPORT,500.0,INR,2026-03-17,Mohammed,Pratham,175.0
+Roomie,"Sev, Paneer, Bread",NORMAL,GROCERIES,240.0,INR,2026-03-15,Pratham,Garv,80.0
+Roomie,"Sev, Paneer, Bread",NORMAL,GROCERIES,240.0,INR,2026-03-15,Pratham,Mohammed,80.0
+Roomie,"Sev, Paneer, Bread",NORMAL,GROCERIES,240.0,INR,2026-03-15,Pratham,Pratham,80.0
+Roomie,Groceries,NORMAL,GROCERIES,110.0,INR,2026-03-14,Mohammed,Garv,36.6666666666667
+Roomie,Groceries,NORMAL,GROCERIES,110.0,INR,2026-03-14,Mohammed,Mohammed,36.6666666666667
+Roomie,Groceries,NORMAL,GROCERIES,110.0,INR,2026-03-14,Mohammed,Pratham,36.6666666666667
+Roomie,Electricity,NORMAL,ACCOMODATION,2160.13,INR,2026-03-14,Pratham,Garv,720.043333333333
+Roomie,Electricity,NORMAL,ACCOMODATION,2160.13,INR,2026-03-14,Pratham,Mohammed,720.043333333333
+Roomie,Electricity,NORMAL,ACCOMODATION,2160.13,INR,2026-03-14,Pratham,Pratham,720.043333333333
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-03-13,Pratham,Garv,12.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-03-13,Pratham,Mohammed,12.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-03-13,Pratham,Pratham,12.0
+Roomie,Petrol,NORMAL,TRANSPORT,500.0,INR,2026-03-12,Pratham,Garv,150.0
+Roomie,Petrol,NORMAL,TRANSPORT,500.0,INR,2026-03-12,Pratham,Mohammed,175.0
+Roomie,Petrol,NORMAL,TRANSPORT,500.0,INR,2026-03-12,Pratham,Pratham,175.0
+Roomie,Butter,NORMAL,GROCERIES,58.0,INR,2026-03-07,Pratham,Garv,19.3333333333333
+Roomie,Butter,NORMAL,GROCERIES,58.0,INR,2026-03-07,Pratham,Mohammed,19.3333333333333
+Roomie,Butter,NORMAL,GROCERIES,58.0,INR,2026-03-07,Pratham,Pratham,19.3333333333333
+Roomie,"Garbage Bag",NORMAL,GROCERIES,40.0,INR,2026-03-07,Mohammed,Garv,13.3333333333333
+Roomie,"Garbage Bag",NORMAL,GROCERIES,40.0,INR,2026-03-07,Mohammed,Mohammed,13.3333333333333
+Roomie,"Garbage Bag",NORMAL,GROCERIES,40.0,INR,2026-03-07,Mohammed,Pratham,13.3333333333333
+Roomie,Petrol,NORMAL,TRANSPORT,300.0,INR,2026-02-25,Pratham,Garv,90.0
+Roomie,Petrol,NORMAL,TRANSPORT,300.0,INR,2026-02-25,Pratham,Mohammed,105.0
+Roomie,Petrol,NORMAL,TRANSPORT,300.0,INR,2026-02-25,Pratham,Pratham,105.0
+Roomie,Rent,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-02-25,Garv,Mohammed,2100.0
+Roomie,Rent,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-02-25,Garv,Garv,0.0
+Roomie,Rent,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-02-25,Garv,Pratham,0.0
+Roomie,Rent,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-02-25,Pratham,Mohammed,2100.0
+Roomie,Rent,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-02-25,Pratham,Pratham,0.0
+Roomie,Rent,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-02-25,Pratham,Garv,0.0
+Roomie,"25th Jan to 25th Feb Rent",NORMAL,RENT,6300.0,INR,2026-02-25,Mohammed,Garv,2100.0
+Roomie,"25th Jan to 25th Feb Rent",NORMAL,RENT,6300.0,INR,2026-02-25,Mohammed,Mohammed,2100.0
+Roomie,"25th Jan to 25th Feb Rent",NORMAL,RENT,6300.0,INR,2026-02-25,Mohammed,Pratham,2100.0
+Roomie,"Bake N Basil 25th",NORMAL,RESTAURANTS,550.0,INR,2026-02-25,Pratham,Garv,275.0
+Roomie,"Bake N Basil 25th",NORMAL,RESTAURANTS,550.0,INR,2026-02-25,Pratham,Pratham,275.0
+Roomie,"Bake N Basil 25th",NORMAL,RESTAURANTS,550.0,INR,2026-02-25,Pratham,Mohammed,0.0
+Roomie,Milk,NORMAL,GROCERIES,82.0,INR,2026-02-24,Pratham,Garv,27.3333333333333
+Roomie,Milk,NORMAL,GROCERIES,82.0,INR,2026-02-24,Pratham,Mohammed,27.3333333333333
+Roomie,Milk,NORMAL,GROCERIES,82.0,INR,2026-02-24,Pratham,Pratham,27.3333333333333
+Roomie,Groceries,NORMAL,GROCERIES,850.0,INR,2026-02-24,Mohammed,Garv,283.333333333333
+Roomie,Groceries,NORMAL,GROCERIES,850.0,INR,2026-02-24,Mohammed,Mohammed,283.333333333333
+Roomie,Groceries,NORMAL,GROCERIES,850.0,INR,2026-02-24,Mohammed,Pratham,283.333333333333
+Roomie,Ticket,NORMAL,TRANSPORT,100.0,INR,2026-02-24,Pratham,Mohammed,50.0
+Roomie,Ticket,NORMAL,TRANSPORT,100.0,INR,2026-02-24,Pratham,Pratham,50.0
+Roomie,Ticket,NORMAL,TRANSPORT,100.0,INR,2026-02-24,Pratham,Garv,0.0
+Roomie,"Dinner Jay Ambe 21st",NORMAL,RESTAURANTS,582.0,INR,2026-02-21,Pratham,Mohammed,291.0
+Roomie,"Dinner Jay Ambe 21st",NORMAL,RESTAURANTS,582.0,INR,2026-02-21,Pratham,Pratham,291.0
+Roomie,"Dinner Jay Ambe 21st",NORMAL,RESTAURANTS,582.0,INR,2026-02-21,Pratham,Garv,0.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,60.0,INR,2026-02-20,Mohammed,Garv,30.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,60.0,INR,2026-02-20,Mohammed,Mohammed,30.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,60.0,INR,2026-02-20,Mohammed,Pratham,0.0
+Roomie,Petrol,NORMAL,TRANSPORT,200.0,INR,2026-02-17,Pratham,Garv,60.0
+Roomie,Petrol,NORMAL,TRANSPORT,200.0,INR,2026-02-17,Pratham,Mohammed,70.0
+Roomie,Petrol,NORMAL,TRANSPORT,200.0,INR,2026-02-17,Pratham,Pratham,70.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,120.0,INR,2026-02-12,Pratham,Garv,40.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,120.0,INR,2026-02-12,Pratham,Mohammed,30.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,120.0,INR,2026-02-12,Pratham,Pratham,50.0
+Roomie,Soap,NORMAL,SHOPPING,20.0,INR,2026-02-11,Pratham,Mohammed,20.0
+Roomie,Soap,NORMAL,SHOPPING,20.0,INR,2026-02-11,Pratham,Pratham,0.0
+Roomie,Soap,NORMAL,SHOPPING,20.0,INR,2026-02-11,Pratham,Garv,0.0
+Roomie,Groceries,NORMAL,GROCERIES,762.0,INR,2026-02-11,Pratham,Garv,254.0
+Roomie,Groceries,NORMAL,GROCERIES,762.0,INR,2026-02-11,Pratham,Mohammed,254.0
+Roomie,Groceries,NORMAL,GROCERIES,762.0,INR,2026-02-11,Pratham,Pratham,254.0
+Roomie,Iron,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",500.0,INR,2026-02-10,Garv,Garv,166.666666666667
+Roomie,Iron,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",500.0,INR,2026-02-10,Garv,Mohammed,166.666666666667
+Roomie,Iron,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",500.0,INR,2026-02-10,Garv,Pratham,166.666666666667
+Roomie,Mirror,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",230.0,INR,2026-02-10,Mohammed,Garv,76.6666666666667
+Roomie,Mirror,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",230.0,INR,2026-02-10,Mohammed,Mohammed,76.6666666666667
+Roomie,Mirror,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",230.0,INR,2026-02-10,Mohammed,Pratham,76.6666666666667
+Roomie,Lunch,NORMAL,RESTAURANTS,420.0,INR,2026-02-10,Mohammed,Garv,145.0
+Roomie,Lunch,NORMAL,RESTAURANTS,420.0,INR,2026-02-10,Mohammed,Mohammed,130.0
+Roomie,Lunch,NORMAL,RESTAURANTS,420.0,INR,2026-02-10,Mohammed,Pratham,145.0
+Roomie,"Rent agreement",NORMAL,RENT,1500.0,INR,2026-02-10,Mohammed,Garv,500.0
+Roomie,"Rent agreement",NORMAL,RENT,1500.0,INR,2026-02-10,Mohammed,Mohammed,500.0
+Roomie,"Rent agreement",NORMAL,RENT,1500.0,INR,2026-02-10,Mohammed,Pratham,500.0
+Roomie,Dosa,NORMAL,RESTAURANTS,360.0,INR,2026-02-10,Mohammed,Garv,110.0
+Roomie,Dosa,NORMAL,RESTAURANTS,360.0,INR,2026-02-10,Mohammed,Pratham,100.0
+Roomie,Dosa,NORMAL,RESTAURANTS,360.0,INR,2026-02-10,Mohammed,Mohammed,150.0
+Roomie,GAS,NORMAL,GROCERIES,300.0,INR,2026-02-09,Garv,Garv,100.0
+Roomie,GAS,NORMAL,GROCERIES,300.0,INR,2026-02-09,Garv,Mohammed,100.0
+Roomie,GAS,NORMAL,GROCERIES,300.0,INR,2026-02-09,Garv,Pratham,100.0
+Roomie,Vegetables,NORMAL,GROCERIES,310.0,INR,2026-02-09,Garv,Garv,103.333333333333
+Roomie,Vegetables,NORMAL,GROCERIES,310.0,INR,2026-02-09,Garv,Mohammed,103.333333333333
+Roomie,Vegetables,NORMAL,GROCERIES,310.0,INR,2026-02-09,Garv,Pratham,103.333333333333
+Roomie,"Gas + Vegetables 9th Feb",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",203.33,INR,2026-02-09,Pratham,Garv,203.33
+Roomie,"Gas + Vegetables 9th Feb",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",203.33,INR,2026-02-09,Pratham,Pratham,0.0
+Roomie,"Gas + Vegetables 9th Feb",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",203.33,INR,2026-02-09,Pratham,Mohammed,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,150.0,INR,2026-02-04,Mohammed,Garv,75.0
+Roomie,Dinner,NORMAL,RESTAURANTS,150.0,INR,2026-02-04,Mohammed,Mohammed,75.0
+Roomie,Dinner,NORMAL,RESTAURANTS,150.0,INR,2026-02-04,Mohammed,Pratham,0.0
+Roomie,Wafers,NORMAL,GROCERIES,30.0,INR,2026-02-04,Mohammed,Mohammed,15.0
+Roomie,Wafers,NORMAL,GROCERIES,30.0,INR,2026-02-04,Mohammed,Pratham,15.0
+Roomie,Wafers,NORMAL,GROCERIES,30.0,INR,2026-02-04,Mohammed,Garv,0.0
+Roomie,Sauce,NORMAL,GROCERIES,110.0,INR,2026-02-04,Mohammed,Garv,36.6666666666667
+Roomie,Sauce,NORMAL,GROCERIES,110.0,INR,2026-02-04,Mohammed,Mohammed,36.6666666666667
+Roomie,Sauce,NORMAL,GROCERIES,110.0,INR,2026-02-04,Mohammed,Pratham,36.6666666666667
+Roomie,"Wafers + Sauce 4th Feb",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",51.67,INR,2026-02-04,Pratham,Mohammed,51.67
+Roomie,"Wafers + Sauce 4th Feb",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",51.67,INR,2026-02-04,Pratham,Pratham,0.0
+Roomie,"Wafers + Sauce 4th Feb",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",51.67,INR,2026-02-04,Pratham,Garv,0.0
+Roomie,"Dinner + Sauce",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",111.67,INR,2026-02-03,Garv,Mohammed,111.67
+Roomie,"Dinner + Sauce",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",111.67,INR,2026-02-03,Garv,Garv,0.0
+Roomie,"Dinner + Sauce",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",111.67,INR,2026-02-03,Garv,Pratham,0.0
+Roomie,Icecream,NORMAL,RESTAURANTS,45.0,INR,2026-02-03,Mohammed,Mohammed,25.0
+Roomie,Icecream,NORMAL,RESTAURANTS,45.0,INR,2026-02-03,Mohammed,Pratham,20.0
+Roomie,Vegetables,NORMAL,GROCERIES,60.0,INR,2026-02-03,Pratham,Garv,20.0
+Roomie,Vegetables,NORMAL,GROCERIES,60.0,INR,2026-02-03,Pratham,Mohammed,20.0
+Roomie,Vegetables,NORMAL,GROCERIES,60.0,INR,2026-02-03,Pratham,Pratham,20.0
+Roomie,Masala,NORMAL,GROCERIES,95.0,INR,2026-02-03,Mohammed,Garv,31.6666666666667
+Roomie,Masala,NORMAL,GROCERIES,95.0,INR,2026-02-03,Mohammed,Mohammed,31.6666666666667
+Roomie,Masala,NORMAL,GROCERIES,95.0,INR,2026-02-03,Mohammed,Pratham,31.6666666666667
+Roomie,Lumch,NORMAL,RESTAURANTS,260.0,INR,2026-02-03,Mohammed,Mohammed,130.0
+Roomie,Lumch,NORMAL,RESTAURANTS,260.0,INR,2026-02-03,Mohammed,Pratham,130.0
+Roomie,Lumch,NORMAL,RESTAURANTS,260.0,INR,2026-02-03,Mohammed,Garv,0.0
+Roomie,"Lunch + Masala + Icecream 3rd Feb",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",181.67,INR,2026-02-03,Pratham,Mohammed,181.67
+Roomie,"Lunch + Masala + Icecream 3rd Feb",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",181.67,INR,2026-02-03,Pratham,Pratham,0.0
+Roomie,"Lunch + Masala + Icecream 3rd Feb",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",181.67,INR,2026-02-03,Pratham,Garv,0.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-02-03,Pratham,Mohammed,18.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-02-03,Pratham,Pratham,18.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-02-03,Pratham,Garv,0.0
+Roomie,Butter,NORMAL,GROCERIES,58.0,INR,2026-02-03,Pratham,Garv,19.3333333333333
+Roomie,Butter,NORMAL,GROCERIES,58.0,INR,2026-02-03,Pratham,Mohammed,19.3333333333333
+Roomie,Butter,NORMAL,GROCERIES,58.0,INR,2026-02-03,Pratham,Pratham,19.3333333333333
+Roomie,Masala,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",31.67,INR,2026-02-02,Garv,Mohammed,31.67
+Roomie,Masala,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",31.67,INR,2026-02-02,Garv,Garv,0.0
+Roomie,Masala,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",31.67,INR,2026-02-02,Garv,Pratham,0.0
+Roomie,"Butter And Vegetables",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",39.33,INR,2026-02-02,Garv,Pratham,39.33
+Roomie,"Butter And Vegetables",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",39.33,INR,2026-02-02,Garv,Garv,0.0
+Roomie,"Butter And Vegetables",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",39.33,INR,2026-02-02,Garv,Mohammed,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,90.0,INR,2026-02-01,Mohammed,Mohammed,50.0
+Roomie,Dinner,NORMAL,RESTAURANTS,90.0,INR,2026-02-01,Mohammed,Pratham,40.0
+Roomie,Bread,NORMAL,GROCERIES,60.0,INR,2026-01-31,Pratham,Mohammed,30.0
+Roomie,Bread,NORMAL,GROCERIES,60.0,INR,2026-01-31,Pratham,Pratham,30.0
+Roomie,Bread,NORMAL,GROCERIES,60.0,INR,2026-01-31,Pratham,Garv,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,100.0,INR,2026-01-31,Pratham,Mohammed,50.0
+Roomie,Dinner,NORMAL,RESTAURANTS,100.0,INR,2026-01-31,Pratham,Pratham,50.0
+Roomie,Dinner,NORMAL,RESTAURANTS,100.0,INR,2026-01-31,Pratham,Garv,0.0
+Roomie,Fuel,NORMAL,TRANSPORT,1205.93,INR,2026-01-31,Mohammed,Garv,361.77
+Roomie,Fuel,NORMAL,TRANSPORT,1205.93,INR,2026-01-31,Mohammed,Mohammed,422.08
+Roomie,Fuel,NORMAL,TRANSPORT,1205.93,INR,2026-01-31,Mohammed,Pratham,422.08
+Roomie,"Moong Daal",NORMAL,GROCERIES,30.0,INR,2026-01-31,Mohammed,Mohammed,15.0
+Roomie,"Moong Daal",NORMAL,GROCERIES,30.0,INR,2026-01-31,Mohammed,Pratham,15.0
+Roomie,"Moong Daal",NORMAL,GROCERIES,30.0,INR,2026-01-31,Mohammed,Garv,0.0
+Roomie,"Fuel + Moong Dal + Milk",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",449.0,INR,2026-01-31,Pratham,Mohammed,449.0
+Roomie,"Fuel + Moong Dal + Milk",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",449.0,INR,2026-01-31,Pratham,Pratham,0.0
+Roomie,"Fuel + Moong Dal + Milk",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",449.0,INR,2026-01-31,Pratham,Garv,0.0
+Roomie,Petrol,NORMAL,TRANSPORT,400.0,INR,2026-01-31,Pratham,Garv,120.33
+Roomie,Petrol,NORMAL,TRANSPORT,400.0,INR,2026-01-31,Pratham,Mohammed,139.835
+Roomie,Petrol,NORMAL,TRANSPORT,400.0,INR,2026-01-31,Pratham,Pratham,139.835
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-01-31,Mohammed,Garv,12.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-01-31,Mohammed,Mohammed,12.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-01-31,Mohammed,Pratham,12.0
+Roomie,"Fuel + Milk",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",373.77,INR,2026-01-30,Garv,Mohammed,373.77
+Roomie,"Fuel + Milk",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",373.77,INR,2026-01-30,Garv,Garv,0.0
+Roomie,"Fuel + Milk",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",373.77,INR,2026-01-30,Garv,Pratham,0.0
+Roomie,Fuel,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",120.0,INR,2026-01-30,Garv,Pratham,120.0
+Roomie,Fuel,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",120.0,INR,2026-01-30,Garv,Garv,0.0
+Roomie,Fuel,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",120.0,INR,2026-01-30,Garv,Mohammed,0.0
+Roomie,"Hakka Masala",NORMAL,GROCERIES,20.0,INR,2026-01-30,Mohammed,Garv,6.66666666666667
+Roomie,"Hakka Masala",NORMAL,GROCERIES,20.0,INR,2026-01-30,Mohammed,Mohammed,6.66666666666667
+Roomie,"Hakka Masala",NORMAL,GROCERIES,20.0,INR,2026-01-30,Mohammed,Pratham,6.66666666666667
+Roomie,"Hakka Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2026-01-30,Pratham,Mohammed,6.67
+Roomie,"Hakka Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2026-01-30,Pratham,Pratham,0.0
+Roomie,"Hakka Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2026-01-30,Pratham,Garv,0.0
+Roomie,"Thumbs Up",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",16.67,INR,2026-01-30,Pratham,Garv,16.67
+Roomie,"Thumbs Up",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",16.67,INR,2026-01-30,Pratham,Pratham,0.0
+Roomie,"Thumbs Up",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",16.67,INR,2026-01-30,Pratham,Mohammed,0.0
+Roomie,"Thumbs Up",NORMAL,RESTAURANTS,50.0,INR,2026-01-29,Garv,Garv,16.6666666666667
+Roomie,"Thumbs Up",NORMAL,RESTAURANTS,50.0,INR,2026-01-29,Garv,Mohammed,16.6666666666667
+Roomie,"Thumbs Up",NORMAL,RESTAURANTS,50.0,INR,2026-01-29,Garv,Pratham,16.6666666666667
+Roomie,"Hakka Msala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2026-01-29,Garv,Mohammed,6.67
+Roomie,"Hakka Msala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2026-01-29,Garv,Garv,0.0
+Roomie,"Hakka Msala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2026-01-29,Garv,Pratham,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",55.0,INR,2026-01-29,Mohammed,Garv,55.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",55.0,INR,2026-01-29,Mohammed,Mohammed,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",55.0,INR,2026-01-29,Mohammed,Pratham,0.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2026-01-29,Mohammed,Pratham,50.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2026-01-29,Mohammed,Mohammed,0.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2026-01-29,Mohammed,Garv,0.0
+Roomie,"Rent from 25th December to 25th January",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-01-29,Garv,Mohammed,2100.0
+Roomie,"Rent from 25th December to 25th January",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-01-29,Garv,Garv,0.0
+Roomie,"Rent from 25th December to 25th January",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-01-29,Garv,Pratham,0.0
+Roomie,"Rent from 25th December to 25th January",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-01-29,Pratham,Mohammed,2100.0
+Roomie,"Rent from 25th December to 25th January",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-01-29,Pratham,Pratham,0.0
+Roomie,"Rent from 25th December to 25th January",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2026-01-29,Pratham,Garv,0.0
+Roomie,"Rent from 25th December to 25th January",NORMAL,ACCOMODATION,6300.0,INR,2026-01-29,Mohammed,Garv,2100.0
+Roomie,"Rent from 25th December to 25th January",NORMAL,ACCOMODATION,6300.0,INR,2026-01-29,Mohammed,Mohammed,2100.0
+Roomie,"Rent from 25th December to 25th January",NORMAL,ACCOMODATION,6300.0,INR,2026-01-29,Mohammed,Pratham,2100.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,115.0,INR,2026-01-29,Garv,Mohammed,55.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,115.0,INR,2026-01-29,Garv,Garv,30.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,115.0,INR,2026-01-29,Garv,Pratham,30.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",170.0,INR,2026-01-29,Garv,Pratham,170.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",170.0,INR,2026-01-29,Garv,Garv,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",170.0,INR,2026-01-29,Garv,Mohammed,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,210.0,INR,2026-01-29,Pratham,Garv,170.0
+Roomie,Dinner,NORMAL,RESTAURANTS,210.0,INR,2026-01-29,Pratham,Pratham,40.0
+Roomie,Dinner,NORMAL,RESTAURANTS,210.0,INR,2026-01-29,Pratham,Mohammed,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-29,Pratham,Garv,30.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-29,Pratham,Pratham,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-29,Pratham,Mohammed,0.0
+Roomie,Pasta,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",29.67,INR,2026-01-28,Mohammed,Garv,29.67
+Roomie,Pasta,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",29.67,INR,2026-01-28,Mohammed,Mohammed,0.0
+Roomie,Pasta,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",29.67,INR,2026-01-28,Mohammed,Pratham,0.0
+Roomie,"Cream Bun",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",18.0,INR,2026-01-28,Mohammed,Garv,18.0
+Roomie,"Cream Bun",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",18.0,INR,2026-01-28,Mohammed,Mohammed,0.0
+Roomie,"Cream Bun",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",18.0,INR,2026-01-28,Mohammed,Pratham,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",10.0,INR,2026-01-28,Mohammed,Pratham,10.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",10.0,INR,2026-01-28,Mohammed,Mohammed,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",10.0,INR,2026-01-28,Mohammed,Garv,0.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",33.33,INR,2026-01-28,Mohammed,Pratham,33.33
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",33.33,INR,2026-01-28,Mohammed,Mohammed,0.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",33.33,INR,2026-01-28,Mohammed,Garv,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-28,Garv,Pratham,30.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-28,Garv,Garv,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-28,Garv,Mohammed,0.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,70.0,INR,2026-01-28,Pratham,Garv,30.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,70.0,INR,2026-01-28,Pratham,Mohammed,10.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,70.0,INR,2026-01-28,Pratham,Pratham,30.0
+Roomie,Pasta,NORMAL,GROCERIES,89.0,INR,2026-01-28,Garv,Garv,29.6666666666667
+Roomie,Pasta,NORMAL,GROCERIES,89.0,INR,2026-01-28,Garv,Mohammed,29.6666666666667
+Roomie,Pasta,NORMAL,GROCERIES,89.0,INR,2026-01-28,Garv,Pratham,29.6666666666667
+Roomie,"Cream Bun",NORMAL,RESTAURANTS,54.0,INR,2026-01-28,Garv,Mohammed,18.0
+Roomie,"Cream Bun",NORMAL,RESTAURANTS,54.0,INR,2026-01-28,Garv,Garv,36.0
+Roomie,Groceries,NORMAL,GROCERIES,100.0,INR,2026-01-28,Pratham,Garv,33.3333333333333
+Roomie,Groceries,NORMAL,GROCERIES,100.0,INR,2026-01-28,Pratham,Mohammed,33.3333333333333
+Roomie,Groceries,NORMAL,GROCERIES,100.0,INR,2026-01-28,Pratham,Pratham,33.3333333333333
+Roomie,Pasta,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",28.67,INR,2026-01-28,Pratham,Garv,28.67
+Roomie,Pasta,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",28.67,INR,2026-01-28,Pratham,Pratham,0.0
+Roomie,Pasta,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",28.67,INR,2026-01-28,Pratham,Mohammed,0.0
+Roomie,"Thumbs UP",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",16.67,INR,2026-01-26,Mohammed,Garv,16.67
+Roomie,"Thumbs UP",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",16.67,INR,2026-01-26,Mohammed,Mohammed,0.0
+Roomie,"Thumbs UP",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",16.67,INR,2026-01-26,Mohammed,Pratham,0.0
+Roomie,"Thumbs Up",NORMAL,RESTAURANTS,50.0,INR,2026-01-26,Garv,Garv,16.6666666666667
+Roomie,"Thumbs Up",NORMAL,RESTAURANTS,50.0,INR,2026-01-26,Garv,Mohammed,16.6666666666667
+Roomie,"Thumbs Up",NORMAL,RESTAURANTS,50.0,INR,2026-01-26,Garv,Pratham,16.6666666666667
+Roomie,Panipuri,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2026-01-26,Garv,Mohammed,20.0
+Roomie,Panipuri,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2026-01-26,Garv,Garv,0.0
+Roomie,Panipuri,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2026-01-26,Garv,Pratham,0.0
+Roomie,Snacks,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",55.0,INR,2026-01-26,Garv,Pratham,55.0
+Roomie,Snacks,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",55.0,INR,2026-01-26,Garv,Garv,0.0
+Roomie,Snacks,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",55.0,INR,2026-01-26,Garv,Mohammed,0.0
+Roomie,Sauces,NORMAL,GROCERIES,185.0,INR,2026-01-26,Mohammed,Garv,61.6666666666667
+Roomie,Sauces,NORMAL,GROCERIES,185.0,INR,2026-01-26,Mohammed,Mohammed,61.6666666666667
+Roomie,Sauces,NORMAL,GROCERIES,185.0,INR,2026-01-26,Mohammed,Pratham,61.6666666666667
+Roomie,Snacks,NORMAL,RESTAURANTS,101.0,INR,2026-01-26,Pratham,Garv,55.0
+Roomie,Snacks,NORMAL,RESTAURANTS,101.0,INR,2026-01-26,Pratham,Pratham,46.0
+Roomie,"Rice + Masala",NORMAL,GROCERIES,210.0,INR,2026-01-26,Mohammed,Garv,70.0
+Roomie,"Rice + Masala",NORMAL,GROCERIES,210.0,INR,2026-01-26,Mohammed,Mohammed,70.0
+Roomie,"Rice + Masala",NORMAL,GROCERIES,210.0,INR,2026-01-26,Mohammed,Pratham,70.0
+Roomie,Panipuri,NORMAL,RESTAURANTS,60.0,INR,2026-01-26,Mohammed,Garv,20.0
+Roomie,Panipuri,NORMAL,RESTAURANTS,60.0,INR,2026-01-26,Mohammed,Mohammed,20.0
+Roomie,Panipuri,NORMAL,RESTAURANTS,60.0,INR,2026-01-26,Mohammed,Pratham,20.0
+Roomie,"Rice + Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",70.0,INR,2026-01-25,Garv,Mohammed,70.0
+Roomie,"Rice + Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",70.0,INR,2026-01-25,Garv,Garv,0.0
+Roomie,"Rice + Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",70.0,INR,2026-01-25,Garv,Pratham,0.0
+Roomie,Sauces,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",61.67,INR,2026-01-25,Garv,Mohammed,61.67
+Roomie,Sauces,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",61.67,INR,2026-01-25,Garv,Garv,0.0
+Roomie,Sauces,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",61.67,INR,2026-01-25,Garv,Pratham,0.0
+Roomie,"Lunch Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",150.0,INR,2026-01-25,Pratham,Mohammed,150.0
+Roomie,"Lunch Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",150.0,INR,2026-01-25,Pratham,Pratham,0.0
+Roomie,"Lunch Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",150.0,INR,2026-01-25,Pratham,Garv,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2026-01-25,Garv,Mohammed,50.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2026-01-25,Garv,Garv,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2026-01-25,Garv,Pratham,0.0
+Roomie,Icecream,NORMAL,RESTAURANTS,120.0,INR,2026-01-25,Mohammed,Garv,50.0
+Roomie,Icecream,NORMAL,RESTAURANTS,120.0,INR,2026-01-25,Mohammed,Mohammed,50.0
+Roomie,Icecream,NORMAL,RESTAURANTS,120.0,INR,2026-01-25,Mohammed,Pratham,20.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-25,Garv,Mohammed,130.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-25,Garv,Garv,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-25,Garv,Pratham,0.0
+Roomie,Lunch,NORMAL,RESTAURANTS,390.0,INR,2026-01-25,Mohammed,Garv,130.0
+Roomie,Lunch,NORMAL,RESTAURANTS,390.0,INR,2026-01-25,Mohammed,Mohammed,130.0
+Roomie,Lunch,NORMAL,RESTAURANTS,390.0,INR,2026-01-25,Mohammed,Pratham,130.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",180.0,INR,2026-01-24,Pratham,Mohammed,180.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",180.0,INR,2026-01-24,Pratham,Pratham,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",180.0,INR,2026-01-24,Pratham,Garv,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,360.0,INR,2026-01-24,Mohammed,Mohammed,180.0
+Roomie,Dinner,NORMAL,RESTAURANTS,360.0,INR,2026-01-24,Mohammed,Pratham,180.0
+Roomie,Dinner,NORMAL,RESTAURANTS,360.0,INR,2026-01-24,Mohammed,Garv,0.0
+Roomie,"Plumber Oil Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",91.67,INR,2026-01-23,Pratham,Mohammed,91.67
+Roomie,"Plumber Oil Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",91.67,INR,2026-01-23,Pratham,Pratham,0.0
+Roomie,"Plumber Oil Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",91.67,INR,2026-01-23,Pratham,Garv,0.0
+Roomie,Plunger,NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",50.0,INR,2026-01-23,Mohammed,Garv,16.6666666666667
+Roomie,Plunger,NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",50.0,INR,2026-01-23,Mohammed,Mohammed,16.6666666666667
+Roomie,Plunger,NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",50.0,INR,2026-01-23,Mohammed,Pratham,16.6666666666667
+Roomie,"Plunger + Oil",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",70.0,INR,2026-01-23,Garv,Mohammed,70.0
+Roomie,"Plunger + Oil",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",70.0,INR,2026-01-23,Garv,Garv,0.0
+Roomie,"Plunger + Oil",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",70.0,INR,2026-01-23,Garv,Pratham,0.0
+Roomie,Oil,NORMAL,GROCERIES,160.0,INR,2026-01-23,Mohammed,Garv,53.3333333333333
+Roomie,Oil,NORMAL,GROCERIES,160.0,INR,2026-01-23,Mohammed,Mohammed,53.3333333333333
+Roomie,Oil,NORMAL,GROCERIES,160.0,INR,2026-01-23,Mohammed,Pratham,53.3333333333333
+Roomie,Masala,NORMAL,GROCERIES,65.0,INR,2026-01-23,Mohammed,Garv,21.6666666666667
+Roomie,Masala,NORMAL,GROCERIES,65.0,INR,2026-01-23,Mohammed,Mohammed,21.6666666666667
+Roomie,Masala,NORMAL,GROCERIES,65.0,INR,2026-01-23,Mohammed,Pratham,21.6666666666667
+Roomie,"Lunch Biryani",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-21,Mohammed,Pratham,100.0
+Roomie,"Lunch Biryani",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-21,Mohammed,Mohammed,0.0
+Roomie,"Lunch Biryani",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-21,Mohammed,Garv,0.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-21,Pratham,Mohammed,12.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-21,Pratham,Pratham,0.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-21,Pratham,Garv,0.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-21,Garv,Mohammed,12.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-21,Garv,Garv,0.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-21,Garv,Pratham,0.0
+Roomie,"Lunch Biryani",NORMAL,RESTAURANTS,200.0,INR,2026-01-21,Pratham,Mohammed,100.0
+Roomie,"Lunch Biryani",NORMAL,RESTAURANTS,200.0,INR,2026-01-21,Pratham,Pratham,100.0
+Roomie,"Lunch Biryani",NORMAL,RESTAURANTS,200.0,INR,2026-01-21,Pratham,Garv,0.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-01-21,Mohammed,Garv,12.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-01-21,Mohammed,Mohammed,12.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-01-21,Mohammed,Pratham,12.0
+Roomie,Fuel,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",225.0,INR,2026-01-20,Mohammed,Garv,225.0
+Roomie,Fuel,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",225.0,INR,2026-01-20,Mohammed,Mohammed,0.0
+Roomie,Fuel,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",225.0,INR,2026-01-20,Mohammed,Pratham,0.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-20,Mohammed,Garv,30.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-20,Mohammed,Mohammed,0.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-20,Mohammed,Pratham,0.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",315.33,INR,2026-01-20,Mohammed,Pratham,315.33
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",315.33,INR,2026-01-20,Mohammed,Mohammed,0.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",315.33,INR,2026-01-20,Mohammed,Garv,0.0
+Roomie,"Fuel Vada Pav",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",255.0,INR,2026-01-20,Pratham,Garv,255.0
+Roomie,"Fuel Vada Pav",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",255.0,INR,2026-01-20,Pratham,Pratham,0.0
+Roomie,"Fuel Vada Pav",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",255.0,INR,2026-01-20,Pratham,Mohammed,0.0
+Roomie,Groceries,NORMAL,GROCERIES,856.0,INR,2026-01-20,Pratham,Mohammed,315.33
+Roomie,Groceries,NORMAL,GROCERIES,856.0,INR,2026-01-20,Pratham,Garv,270.335
+Roomie,Groceries,NORMAL,GROCERIES,856.0,INR,2026-01-20,Pratham,Pratham,270.335
+Roomie,Fuel,NORMAL,TRANSPORT,600.0,INR,2026-01-20,Garv,Garv,150.0
+Roomie,Fuel,NORMAL,TRANSPORT,600.0,INR,2026-01-20,Garv,Mohammed,225.0
+Roomie,Fuel,NORMAL,TRANSPORT,600.0,INR,2026-01-20,Garv,Pratham,225.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,90.0,INR,2026-01-20,Garv,Garv,30.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,90.0,INR,2026-01-20,Garv,Mohammed,30.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,90.0,INR,2026-01-20,Garv,Pratham,30.0
+Roomie,"Groceries + Breakfast",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",320.0,INR,2026-01-20,Garv,Pratham,320.0
+Roomie,"Groceries + Breakfast",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",320.0,INR,2026-01-20,Garv,Garv,0.0
+Roomie,"Groceries + Breakfast",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",320.0,INR,2026-01-20,Garv,Mohammed,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-19,Mohammed,Pratham,30.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-19,Mohammed,Mohammed,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2026-01-19,Mohammed,Garv,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-19,Mohammed,Pratham,130.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-19,Mohammed,Mohammed,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-19,Mohammed,Garv,0.0
+Roomie,"Dinner And Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",160.0,INR,2026-01-19,Garv,Pratham,160.0
+Roomie,"Dinner And Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",160.0,INR,2026-01-19,Garv,Garv,0.0
+Roomie,"Dinner And Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",160.0,INR,2026-01-19,Garv,Mohammed,0.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,80.0,INR,2026-01-19,Pratham,Garv,30.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,80.0,INR,2026-01-19,Pratham,Mohammed,30.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,80.0,INR,2026-01-19,Pratham,Pratham,20.0
+Roomie,"Dinner (BK)",NORMAL,RESTAURANTS,400.0,INR,2026-01-19,Pratham,Garv,130.0
+Roomie,"Dinner (BK)",NORMAL,RESTAURANTS,400.0,INR,2026-01-19,Pratham,Mohammed,130.0
+Roomie,"Dinner (BK)",NORMAL,RESTAURANTS,400.0,INR,2026-01-19,Pratham,Pratham,140.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-13,Mohammed,Pratham,25.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-13,Mohammed,Mohammed,0.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-13,Mohammed,Garv,0.0
+Roomie,"Breakfast Vadapav",NORMAL,RESTAURANTS,50.0,INR,2026-01-13,Pratham,Mohammed,25.0
+Roomie,"Breakfast Vadapav",NORMAL,RESTAURANTS,50.0,INR,2026-01-13,Pratham,Pratham,25.0
+Roomie,"Breakfast Vadapav",NORMAL,RESTAURANTS,50.0,INR,2026-01-13,Pratham,Garv,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",160.0,INR,2026-01-12,Mohammed,Pratham,160.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",160.0,INR,2026-01-12,Mohammed,Mohammed,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",160.0,INR,2026-01-12,Mohammed,Garv,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,320.0,INR,2026-01-12,Pratham,Mohammed,160.0
+Roomie,Dinner,NORMAL,RESTAURANTS,320.0,INR,2026-01-12,Pratham,Pratham,160.0
+Roomie,Dinner,NORMAL,RESTAURANTS,320.0,INR,2026-01-12,Pratham,Garv,0.0
+Roomie,Rag,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",100.0,INR,2026-01-11,Mohammed,Garv,33.3333333333333
+Roomie,Rag,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",100.0,INR,2026-01-11,Mohammed,Mohammed,33.3333333333333
+Roomie,Rag,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",100.0,INR,2026-01-11,Mohammed,Pratham,33.3333333333333
+Roomie,"Lunch Dinner Rag",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",270.0,INR,2026-01-11,Pratham,Mohammed,270.0
+Roomie,"Lunch Dinner Rag",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",270.0,INR,2026-01-11,Pratham,Pratham,0.0
+Roomie,"Lunch Dinner Rag",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",270.0,INR,2026-01-11,Pratham,Garv,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,333.34,INR,2026-01-11,Mohammed,Mohammed,166.67
+Roomie,Dinner,NORMAL,RESTAURANTS,333.34,INR,2026-01-11,Mohammed,Pratham,166.67
+Roomie,Dinner,NORMAL,RESTAURANTS,333.34,INR,2026-01-11,Mohammed,Garv,0.0
+Roomie,Rag,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",33.33,INR,2026-01-11,Garv,Mohammed,33.33
+Roomie,Rag,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",33.33,INR,2026-01-11,Garv,Garv,0.0
+Roomie,Rag,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",33.33,INR,2026-01-11,Garv,Pratham,0.0
+Roomie,Lunch,NORMAL,RESTAURANTS,140.0,INR,2026-01-11,Mohammed,Mohammed,70.0
+Roomie,Lunch,NORMAL,RESTAURANTS,140.0,INR,2026-01-11,Mohammed,Pratham,70.0
+Roomie,Lunch,NORMAL,RESTAURANTS,140.0,INR,2026-01-11,Mohammed,Garv,0.0
+Roomie,"Panner and Bread",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",86.0,INR,2026-01-10,Mohammed,Pratham,86.0
+Roomie,"Panner and Bread",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",86.0,INR,2026-01-10,Mohammed,Mohammed,0.0
+Roomie,"Panner and Bread",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",86.0,INR,2026-01-10,Mohammed,Garv,0.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-10,Mohammed,Pratham,25.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-10,Mohammed,Mohammed,0.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-10,Mohammed,Garv,0.0
+Roomie,Gas,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-10,Pratham,Mohammed,100.0
+Roomie,Gas,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-10,Pratham,Pratham,0.0
+Roomie,Gas,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-10,Pratham,Garv,0.0
+Roomie,"Groceries Soap And Other Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",46.67,INR,2026-01-10,Pratham,Mohammed,46.67
+Roomie,"Groceries Soap And Other Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",46.67,INR,2026-01-10,Pratham,Pratham,0.0
+Roomie,"Groceries Soap And Other Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",46.67,INR,2026-01-10,Pratham,Garv,0.0
+Roomie,"Pav bhaji masala",NORMAL,GROCERIES,20.0,INR,2026-01-10,Mohammed,Garv,6.66666666666667
+Roomie,"Pav bhaji masala",NORMAL,GROCERIES,20.0,INR,2026-01-10,Mohammed,Mohammed,6.66666666666667
+Roomie,"Pav bhaji masala",NORMAL,GROCERIES,20.0,INR,2026-01-10,Mohammed,Pratham,6.66666666666667
+Roomie,GAS,NORMAL,GROCERIES,300.0,INR,2026-01-10,Mohammed,Garv,100.0
+Roomie,GAS,NORMAL,GROCERIES,300.0,INR,2026-01-10,Mohammed,Mohammed,100.0
+Roomie,GAS,NORMAL,GROCERIES,300.0,INR,2026-01-10,Mohammed,Pratham,100.0
+Roomie,"Groceries, Soap And Other Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",47.67,INR,2026-01-10,Garv,Mohammed,47.67
+Roomie,"Groceries, Soap And Other Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",47.67,INR,2026-01-10,Garv,Garv,0.0
+Roomie,"Groceries, Soap And Other Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",47.67,INR,2026-01-10,Garv,Pratham,0.0
+Roomie,Butter,NORMAL,GROCERIES,58.0,INR,2026-01-10,Mohammed,Garv,19.3333333333333
+Roomie,Butter,NORMAL,GROCERIES,58.0,INR,2026-01-10,Mohammed,Mohammed,19.3333333333333
+Roomie,Butter,NORMAL,GROCERIES,58.0,INR,2026-01-10,Mohammed,Pratham,19.3333333333333
+Roomie,Soap,NORMAL,GROCERIES,65.0,INR,2026-01-10,Mohammed,Garv,21.6666666666667
+Roomie,Soap,NORMAL,GROCERIES,65.0,INR,2026-01-10,Mohammed,Mohammed,21.6666666666667
+Roomie,Soap,NORMAL,GROCERIES,65.0,INR,2026-01-10,Mohammed,Pratham,21.6666666666667
+Roomie,"Paneer And Bread",NORMAL,GROCERIES,152.0,INR,2026-01-10,Pratham,Mohammed,86.0
+Roomie,"Paneer And Bread",NORMAL,GROCERIES,152.0,INR,2026-01-10,Pratham,Pratham,66.0
+Roomie,"Paneer And Bread",NORMAL,GROCERIES,152.0,INR,2026-01-10,Pratham,Garv,0.0
+Roomie,"Breakfast (Khaman)",NORMAL,RESTAURANTS,50.0,INR,2026-01-10,Garv,Garv,25.0
+Roomie,"Breakfast (Khaman)",NORMAL,RESTAURANTS,50.0,INR,2026-01-10,Garv,Pratham,25.0
+Roomie,"Breakfast (Khaman)",NORMAL,RESTAURANTS,50.0,INR,2026-01-10,Garv,Mohammed,0.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,50.0,INR,2026-01-10,Pratham,Mohammed,25.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,50.0,INR,2026-01-10,Pratham,Pratham,25.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,50.0,INR,2026-01-10,Pratham,Garv,0.0
+Roomie,"Breakfast Khaman",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-10,Pratham,Garv,25.0
+Roomie,"Breakfast Khaman",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-10,Pratham,Pratham,0.0
+Roomie,"Breakfast Khaman",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-10,Pratham,Mohammed,0.0
+Roomie,Gas,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-09,Garv,Mohammed,100.0
+Roomie,Gas,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-09,Garv,Garv,0.0
+Roomie,Gas,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-09,Garv,Pratham,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-09,Mohammed,Pratham,100.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-09,Mohammed,Mohammed,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-09,Mohammed,Garv,0.0
+Roomie,Drink,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",15.0,INR,2026-01-09,Pratham,Mohammed,15.0
+Roomie,Drink,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",15.0,INR,2026-01-09,Pratham,Pratham,0.0
+Roomie,Drink,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",15.0,INR,2026-01-09,Pratham,Garv,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,245.0,INR,2026-01-09,Mohammed,Garv,115.0
+Roomie,Dinner,NORMAL,RESTAURANTS,245.0,INR,2026-01-09,Mohammed,Pratham,15.0
+Roomie,Dinner,NORMAL,RESTAURANTS,245.0,INR,2026-01-09,Mohammed,Mohammed,115.0
+Roomie,"Pav Bhaji Dinner",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",115.0,INR,2026-01-09,Garv,Mohammed,115.0
+Roomie,"Pav Bhaji Dinner",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",115.0,INR,2026-01-09,Garv,Garv,0.0
+Roomie,"Pav Bhaji Dinner",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",115.0,INR,2026-01-09,Garv,Pratham,0.0
+Roomie,Reimbursement,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",4.14,INR,2026-01-09,Garv,Mohammed,4.14
+Roomie,Reimbursement,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",4.14,INR,2026-01-09,Garv,Garv,0.0
+Roomie,Reimbursement,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",4.14,INR,2026-01-09,Garv,Pratham,0.0
+Roomie,Lunch,NORMAL,RESTAURANTS,200.0,INR,2026-01-09,Pratham,Mohammed,100.0
+Roomie,Lunch,NORMAL,RESTAURANTS,200.0,INR,2026-01-09,Pratham,Pratham,100.0
+Roomie,Lunch,NORMAL,RESTAURANTS,200.0,INR,2026-01-09,Pratham,Garv,0.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,40.0,INR,2026-01-09,Garv,Garv,20.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,40.0,INR,2026-01-09,Garv,Pratham,20.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,40.0,INR,2026-01-09,Garv,Mohammed,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",188.67,INR,2026-01-08,Mohammed,Pratham,188.67
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",188.67,INR,2026-01-08,Mohammed,Mohammed,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",188.67,INR,2026-01-08,Mohammed,Garv,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2026-01-08,Pratham,Mohammed,140.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2026-01-08,Pratham,Pratham,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2026-01-08,Pratham,Garv,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,300.0,INR,2026-01-08,Mohammed,Garv,100.0
+Roomie,Dinner,NORMAL,RESTAURANTS,300.0,INR,2026-01-08,Mohammed,Mohammed,100.0
+Roomie,Dinner,NORMAL,RESTAURANTS,300.0,INR,2026-01-08,Mohammed,Pratham,100.0
+Roomie,"Dinner(Byting Korner)",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-08,Garv,Mohammed,100.0
+Roomie,"Dinner(Byting Korner)",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-08,Garv,Garv,0.0
+Roomie,"Dinner(Byting Korner)",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-08,Garv,Pratham,0.0
+Roomie,"Lunch (Jay Ambe)",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",188.67,INR,2026-01-08,Garv,Pratham,188.67
+Roomie,"Lunch (Jay Ambe)",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",188.67,INR,2026-01-08,Garv,Garv,0.0
+Roomie,"Lunch (Jay Ambe)",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",188.67,INR,2026-01-08,Garv,Mohammed,0.0
+Roomie,Lunch,NORMAL,RESTAURANTS,566.0,INR,2026-01-08,Pratham,Garv,188.666666666667
+Roomie,Lunch,NORMAL,RESTAURANTS,566.0,INR,2026-01-08,Pratham,Mohammed,188.666666666667
+Roomie,Lunch,NORMAL,RESTAURANTS,566.0,INR,2026-01-08,Pratham,Pratham,188.666666666667
+Roomie,Dinner,NORMAL,RESTAURANTS,390.0,INR,2026-01-07,Pratham,Garv,130.0
+Roomie,Dinner,NORMAL,RESTAURANTS,390.0,INR,2026-01-07,Pratham,Mohammed,130.0
+Roomie,Dinner,NORMAL,RESTAURANTS,390.0,INR,2026-01-07,Pratham,Pratham,130.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-07,Mohammed,Pratham,130.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-07,Mohammed,Mohammed,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-07,Mohammed,Garv,0.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-07,Mohammed,Pratham,12.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-07,Mohammed,Mohammed,0.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-07,Mohammed,Garv,0.0
+Roomie,"Dinner(Best Chinese)+ Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-07,Garv,Pratham,130.0
+Roomie,"Dinner(Best Chinese)+ Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-07,Garv,Garv,0.0
+Roomie,"Dinner(Best Chinese)+ Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",130.0,INR,2026-01-07,Garv,Mohammed,0.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-07,Garv,Pratham,12.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-07,Garv,Garv,0.0
+Roomie,Milk,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",12.0,INR,2026-01-07,Garv,Mohammed,0.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-01-07,Pratham,Garv,12.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-01-07,Pratham,Mohammed,12.0
+Roomie,Milk,NORMAL,GROCERIES,36.0,INR,2026-01-07,Pratham,Pratham,12.0
+Roomie,Bread,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2026-01-06,Mohammed,Pratham,20.0
+Roomie,Bread,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2026-01-06,Mohammed,Mohammed,0.0
+Roomie,Bread,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2026-01-06,Mohammed,Garv,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2026-01-06,Pratham,Garv,140.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2026-01-06,Pratham,Pratham,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2026-01-06,Pratham,Mohammed,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",340.0,INR,2026-01-06,Garv,Mohammed,340.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",340.0,INR,2026-01-06,Garv,Garv,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",340.0,INR,2026-01-06,Garv,Pratham,0.0
+Roomie,Lunch,NORMAL,RESTAURANTS,648.3,INR,2026-01-06,Mohammed,Garv,340.0
+Roomie,Lunch,NORMAL,RESTAURANTS,648.3,INR,2026-01-06,Mohammed,Mohammed,168.3
+Roomie,Lunch,NORMAL,RESTAURANTS,648.3,INR,2026-01-06,Mohammed,Pratham,140.0
+Roomie,Bread,NORMAL,GROCERIES,60.0,INR,2026-01-06,Pratham,Garv,20.0
+Roomie,Bread,NORMAL,GROCERIES,60.0,INR,2026-01-06,Pratham,Mohammed,20.0
+Roomie,Bread,NORMAL,GROCERIES,60.0,INR,2026-01-06,Pratham,Pratham,20.0
+Roomie,Bread,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2026-01-06,Garv,Pratham,20.0
+Roomie,Bread,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2026-01-06,Garv,Garv,0.0
+Roomie,Bread,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2026-01-06,Garv,Mohammed,0.0
+Roomie,"Milk And Coke",NORMAL,RESTAURANTS,78.0,INR,2026-01-05,Pratham,Garv,39.0
+Roomie,"Milk And Coke",NORMAL,RESTAURANTS,78.0,INR,2026-01-05,Pratham,Pratham,39.0
+Roomie,"Milk And Coke",NORMAL,RESTAURANTS,78.0,INR,2026-01-05,Pratham,Mohammed,0.0
+Roomie,"Milk And Coke",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",39.0,INR,2026-01-05,Garv,Pratham,39.0
+Roomie,"Milk And Coke",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",39.0,INR,2026-01-05,Garv,Garv,0.0
+Roomie,"Milk And Coke",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",39.0,INR,2026-01-05,Garv,Mohammed,0.0
+Roomie,Capcicum,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2026-01-04,Mohammed,Garv,6.67
+Roomie,Capcicum,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2026-01-04,Mohammed,Mohammed,0.0
+Roomie,Capcicum,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2026-01-04,Mohammed,Pratham,0.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,70.0,INR,2026-01-04,Garv,Garv,30.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,70.0,INR,2026-01-04,Garv,Pratham,40.0
+Roomie,Capsicum,NORMAL,GROCERIES,20.0,INR,2026-01-04,Garv,Garv,6.66666666666667
+Roomie,Capsicum,NORMAL,GROCERIES,20.0,INR,2026-01-04,Garv,Mohammed,6.66666666666667
+Roomie,Capsicum,NORMAL,GROCERIES,20.0,INR,2026-01-04,Garv,Pratham,6.66666666666667
+Roomie,"Ice Cream Caps",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",46.0,INR,2026-01-04,Pratham,Garv,46.0
+Roomie,"Ice Cream Caps",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",46.0,INR,2026-01-04,Pratham,Pratham,0.0
+Roomie,"Ice Cream Caps",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",46.0,INR,2026-01-04,Pratham,Mohammed,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-02,Pratham,Mohammed,100.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-02,Pratham,Pratham,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",100.0,INR,2026-01-02,Pratham,Garv,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,200.0,INR,2026-01-02,Mohammed,Mohammed,100.0
+Roomie,Dinner,NORMAL,RESTAURANTS,200.0,INR,2026-01-02,Mohammed,Pratham,100.0
+Roomie,Dinner,NORMAL,RESTAURANTS,200.0,INR,2026-01-02,Mohammed,Garv,0.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-01,Mohammed,Pratham,25.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-01,Mohammed,Mohammed,0.0
+Roomie,Vadapav,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",25.0,INR,2026-01-01,Mohammed,Garv,0.0
+Roomie,"Milk Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",37.0,INR,2026-01-01,Pratham,Mohammed,37.0
+Roomie,"Milk Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",37.0,INR,2026-01-01,Pratham,Pratham,0.0
+Roomie,"Milk Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",37.0,INR,2026-01-01,Pratham,Garv,0.0
+Roomie,"Milk + masala",NORMAL,GROCERIES,111.0,INR,2026-01-01,Mohammed,Garv,37.0
+Roomie,"Milk + masala",NORMAL,GROCERIES,111.0,INR,2026-01-01,Mohammed,Mohammed,37.0
+Roomie,"Milk + masala",NORMAL,GROCERIES,111.0,INR,2026-01-01,Mohammed,Pratham,37.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,50.0,INR,2026-01-01,Pratham,Mohammed,25.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,50.0,INR,2026-01-01,Pratham,Pratham,25.0
+Roomie,Vadapav,NORMAL,RESTAURANTS,50.0,INR,2026-01-01,Pratham,Garv,0.0
+Roomie,"Milk And Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",37.0,INR,2026-01-01,Garv,Mohammed,37.0
+Roomie,"Milk And Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",37.0,INR,2026-01-01,Garv,Garv,0.0
+Roomie,"Milk And Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",37.0,INR,2026-01-01,Garv,Pratham,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",85.0,INR,2025-12-31,Mohammed,Pratham,85.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",85.0,INR,2025-12-31,Mohammed,Mohammed,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",85.0,INR,2025-12-31,Mohammed,Garv,0.0
+Roomie,"Groceries ( Onion Potato Tomato )",NORMAL,GROCERIES,150.0,INR,2025-12-31,Pratham,Garv,50.0
+Roomie,"Groceries ( Onion Potato Tomato )",NORMAL,GROCERIES,150.0,INR,2025-12-31,Pratham,Mohammed,50.0
+Roomie,"Groceries ( Onion Potato Tomato )",NORMAL,GROCERIES,150.0,INR,2025-12-31,Pratham,Pratham,50.0
+Roomie,Lunch,NORMAL,RESTAURANTS,170.0,INR,2025-12-31,Pratham,Mohammed,85.0
+Roomie,Lunch,NORMAL,RESTAURANTS,170.0,INR,2025-12-31,Pratham,Pratham,85.0
+Roomie,Lunch,NORMAL,RESTAURANTS,170.0,INR,2025-12-31,Pratham,Garv,0.0
+Roomie,"Groceries And Vegetables",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-31,Garv,Pratham,50.0
+Roomie,"Groceries And Vegetables",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-31,Garv,Garv,0.0
+Roomie,"Groceries And Vegetables",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-31,Garv,Mohammed,0.0
+Roomie,"Lunch Bharuch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",275.0,INR,2025-12-31,Pratham,Mohammed,275.0
+Roomie,"Lunch Bharuch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",275.0,INR,2025-12-31,Pratham,Pratham,0.0
+Roomie,"Lunch Bharuch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",275.0,INR,2025-12-31,Pratham,Garv,0.0
+Roomie,Surf...,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",56.67,INR,2025-12-30,Mohammed,Pratham,56.67
+Roomie,Surf...,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",56.67,INR,2025-12-30,Mohammed,Mohammed,0.0
+Roomie,Surf...,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",56.67,INR,2025-12-30,Mohammed,Garv,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",13.33,INR,2025-12-30,Mohammed,Pratham,13.33
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",13.33,INR,2025-12-30,Mohammed,Mohammed,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",13.33,INR,2025-12-30,Mohammed,Garv,0.0
+Roomie,"Detergent And Other Stuffs",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",56.67,INR,2025-12-30,Garv,Pratham,56.67
+Roomie,"Detergent And Other Stuffs",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",56.67,INR,2025-12-30,Garv,Garv,0.0
+Roomie,"Detergent And Other Stuffs",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",56.67,INR,2025-12-30,Garv,Mohammed,0.0
+Roomie,"Surf, Dishwash, Locha, Tel, Etc",NORMAL,GROCERIES,170.0,INR,2025-12-30,Pratham,Garv,56.6666666666667
+Roomie,"Surf, Dishwash, Locha, Tel, Etc",NORMAL,GROCERIES,170.0,INR,2025-12-30,Pratham,Mohammed,56.6666666666667
+Roomie,"Surf, Dishwash, Locha, Tel, Etc",NORMAL,GROCERIES,170.0,INR,2025-12-30,Pratham,Pratham,56.6666666666667
+Roomie,"Lunch Chole",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",70.0,INR,2025-12-30,Pratham,Mohammed,70.0
+Roomie,"Lunch Chole",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",70.0,INR,2025-12-30,Pratham,Pratham,0.0
+Roomie,"Lunch Chole",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",70.0,INR,2025-12-30,Pratham,Garv,0.0
+Roomie,Lunch,NORMAL,RESTAURANTS,160.0,INR,2025-12-30,Mohammed,Mohammed,90.0
+Roomie,Lunch,NORMAL,RESTAURANTS,160.0,INR,2025-12-30,Mohammed,Pratham,70.0
+Roomie,Breakfast,NORMAL,RESTAURANTS,40.0,INR,2025-12-30,Pratham,Garv,13.3333333333333
+Roomie,Breakfast,NORMAL,RESTAURANTS,40.0,INR,2025-12-30,Pratham,Mohammed,13.3333333333333
+Roomie,Breakfast,NORMAL,RESTAURANTS,40.0,INR,2025-12-30,Pratham,Pratham,13.3333333333333
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",13.33,INR,2025-12-29,Garv,Pratham,13.33
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",13.33,INR,2025-12-29,Garv,Garv,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",13.33,INR,2025-12-29,Garv,Mohammed,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-29,Mohammed,Garv,50.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-29,Mohammed,Mohammed,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-29,Mohammed,Pratham,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-29,Pratham,Garv,50.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-29,Pratham,Pratham,0.0
+Roomie,"Ice Cream",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-29,Pratham,Mohammed,0.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,150.0,INR,2025-12-29,Garv,Garv,50.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,150.0,INR,2025-12-29,Garv,Mohammed,50.0
+Roomie,"Ice Cream",NORMAL,RESTAURANTS,150.0,INR,2025-12-29,Garv,Pratham,50.0
+Roomie,"Teflon Tape And WM Tap",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",26.0,INR,2025-12-26,Pratham,Mohammed,26.0
+Roomie,"Teflon Tape And WM Tap",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",26.0,INR,2025-12-26,Pratham,Pratham,0.0
+Roomie,"Teflon Tape And WM Tap",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",26.0,INR,2025-12-26,Pratham,Garv,0.0
+Roomie,Wardrobe,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",836.0,INR,2025-12-26,Pratham,Mohammed,836.0
+Roomie,Wardrobe,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",836.0,INR,2025-12-26,Pratham,Pratham,0.0
+Roomie,Wardrobe,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",836.0,INR,2025-12-26,Pratham,Garv,0.0
+Roomie,"Teflon Tape",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",20.0,INR,2025-12-26,Mohammed,Garv,6.66666666666667
+Roomie,"Teflon Tape",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",20.0,INR,2025-12-26,Mohammed,Mohammed,6.66666666666667
+Roomie,"Teflon Tape",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",20.0,INR,2025-12-26,Mohammed,Pratham,6.66666666666667
+Roomie,"Teflon Tape And WM Tap",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",26.0,INR,2025-12-26,Garv,Mohammed,26.0
+Roomie,"Teflon Tape And WM Tap",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",26.0,INR,2025-12-26,Garv,Garv,0.0
+Roomie,"Teflon Tape And WM Tap",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",26.0,INR,2025-12-26,Garv,Pratham,0.0
+Roomie,Wardrobe,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",836.0,INR,2025-12-26,Garv,Mohammed,836.0
+Roomie,Wardrobe,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",836.0,INR,2025-12-26,Garv,Garv,0.0
+Roomie,Wardrobe,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",836.0,INR,2025-12-26,Garv,Pratham,0.0
+Roomie,"Washing machine Tap",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",60.0,INR,2025-12-26,Mohammed,Garv,20.0
+Roomie,"Washing machine Tap",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",60.0,INR,2025-12-26,Mohammed,Mohammed,20.0
+Roomie,"Washing machine Tap",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",60.0,INR,2025-12-26,Mohammed,Pratham,20.0
+Roomie,Wardrobe,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",2508.0,INR,2025-12-26,Mohammed,Garv,836.0
+Roomie,Wardrobe,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",2508.0,INR,2025-12-26,Mohammed,Mohammed,836.0
+Roomie,Wardrobe,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",2508.0,INR,2025-12-26,Mohammed,Pratham,836.0
+Roomie,"Groceries, Capsicum & Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",253.67,INR,2025-12-25,Garv,Mohammed,253.67
+Roomie,"Groceries, Capsicum & Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",253.67,INR,2025-12-25,Garv,Garv,0.0
+Roomie,"Groceries, Capsicum & Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",253.67,INR,2025-12-25,Garv,Pratham,0.0
+Roomie,Electricity,NORMAL,ACCOMODATION,177.86,INR,2025-12-25,Mohammed,Garv,59.2866666666667
+Roomie,Electricity,NORMAL,ACCOMODATION,177.86,INR,2025-12-25,Mohammed,Mohammed,59.2866666666667
+Roomie,Electricity,NORMAL,ACCOMODATION,177.86,INR,2025-12-25,Mohammed,Pratham,59.2866666666667
+Roomie,"Masala And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",113.33,INR,2025-12-25,Pratham,Mohammed,113.33
+Roomie,"Masala And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",113.33,INR,2025-12-25,Pratham,Pratham,0.0
+Roomie,"Masala And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",113.33,INR,2025-12-25,Pratham,Garv,0.0
+Roomie,Capsicum,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",23.33,INR,2025-12-25,Pratham,Mohammed,23.33
+Roomie,Capsicum,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",23.33,INR,2025-12-25,Pratham,Pratham,0.0
+Roomie,Capsicum,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",23.33,INR,2025-12-25,Pratham,Garv,0.0
+Roomie,Electricity,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",59.29,INR,2025-12-25,Pratham,Mohammed,59.29
+Roomie,Electricity,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",59.29,INR,2025-12-25,Pratham,Pratham,0.0
+Roomie,Electricity,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",59.29,INR,2025-12-25,Pratham,Garv,0.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",116.67,INR,2025-12-25,Pratham,Mohammed,116.67
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",116.67,INR,2025-12-25,Pratham,Pratham,0.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",116.67,INR,2025-12-25,Pratham,Garv,0.0
+Roomie,Electricity,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",59.0,INR,2025-12-25,Garv,Mohammed,59.0
+Roomie,Electricity,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",59.0,INR,2025-12-25,Garv,Garv,0.0
+Roomie,Electricity,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",59.0,INR,2025-12-25,Garv,Pratham,0.0
+Roomie,Grocceries,NORMAL,GROCERIES,350.0,INR,2025-12-25,Mohammed,Garv,116.666666666667
+Roomie,Grocceries,NORMAL,GROCERIES,350.0,INR,2025-12-25,Mohammed,Mohammed,116.666666666667
+Roomie,Grocceries,NORMAL,GROCERIES,350.0,INR,2025-12-25,Mohammed,Pratham,116.666666666667
+Roomie,Capsicum,NORMAL,GROCERIES,70.0,INR,2025-12-25,Mohammed,Garv,23.3333333333333
+Roomie,Capsicum,NORMAL,GROCERIES,70.0,INR,2025-12-25,Mohammed,Mohammed,23.3333333333333
+Roomie,Capsicum,NORMAL,GROCERIES,70.0,INR,2025-12-25,Mohammed,Pratham,23.3333333333333
+Roomie,"Masala and stuff",NORMAL,GROCERIES,340.0,INR,2025-12-25,Mohammed,Garv,113.333333333333
+Roomie,"Masala and stuff",NORMAL,GROCERIES,340.0,INR,2025-12-25,Mohammed,Mohammed,113.333333333333
+Roomie,"Masala and stuff",NORMAL,GROCERIES,340.0,INR,2025-12-25,Mohammed,Pratham,113.333333333333
+Roomie,Sev,NORMAL,GROCERIES,70.0,INR,2025-12-23,Mohammed,Garv,23.3333333333333
+Roomie,Sev,NORMAL,GROCERIES,70.0,INR,2025-12-23,Mohammed,Mohammed,23.3333333333333
+Roomie,Sev,NORMAL,GROCERIES,70.0,INR,2025-12-23,Mohammed,Pratham,23.3333333333333
+Roomie,"Plumbing stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",60.0,INR,2025-12-23,Mohammed,Garv,20.0
+Roomie,"Plumbing stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",60.0,INR,2025-12-23,Mohammed,Mohammed,20.0
+Roomie,"Plumbing stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",60.0,INR,2025-12-23,Mohammed,Pratham,20.0
+Roomie,Table,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",1800.0,INR,2025-12-23,Pratham,Garv,600.0
+Roomie,Table,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",1800.0,INR,2025-12-23,Pratham,Mohammed,600.0
+Roomie,Table,NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",1800.0,INR,2025-12-23,Pratham,Pratham,600.0
+Roomie,"Lunch Bharuch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",275.0,INR,2025-12-23,Garv,Mohammed,275.0
+Roomie,"Lunch Bharuch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",275.0,INR,2025-12-23,Garv,Garv,0.0
+Roomie,"Lunch Bharuch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",275.0,INR,2025-12-23,Garv,Pratham,0.0
+Roomie,Masala+Ketchup,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Mohammed,Pratham,20.0
+Roomie,Masala+Ketchup,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Mohammed,Mohammed,0.0
+Roomie,Masala+Ketchup,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Mohammed,Garv,0.0
+Roomie,"Lunch Bharuch",NORMAL,RESTAURANTS,825.0,INR,2025-12-23,Mohammed,Garv,275.0
+Roomie,"Lunch Bharuch",NORMAL,RESTAURANTS,825.0,INR,2025-12-23,Mohammed,Mohammed,275.0
+Roomie,"Lunch Bharuch",NORMAL,RESTAURANTS,825.0,INR,2025-12-23,Mohammed,Pratham,275.0
+Roomie,Table,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",600.0,INR,2025-12-23,Mohammed,Pratham,600.0
+Roomie,Table,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",600.0,INR,2025-12-23,Mohammed,Mohammed,0.0
+Roomie,Table,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",600.0,INR,2025-12-23,Mohammed,Garv,0.0
+Roomie,"Plumbing Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Pratham,Mohammed,20.0
+Roomie,"Plumbing Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Pratham,Pratham,0.0
+Roomie,"Plumbing Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Pratham,Garv,0.0
+Roomie,Sev,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",23.33,INR,2025-12-23,Pratham,Mohammed,23.33
+Roomie,Sev,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",23.33,INR,2025-12-23,Pratham,Pratham,0.0
+Roomie,Sev,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",23.33,INR,2025-12-23,Pratham,Garv,0.0
+Roomie,"Ketchup And Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Garv,Pratham,20.0
+Roomie,"Ketchup And Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Garv,Garv,0.0
+Roomie,"Ketchup And Masala",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Garv,Mohammed,0.0
+Roomie,"Plumbing stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Garv,Mohammed,20.0
+Roomie,"Plumbing stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Garv,Garv,0.0
+Roomie,"Plumbing stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-23,Garv,Pratham,0.0
+Roomie,Sev,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",23.0,INR,2025-12-23,Garv,Mohammed,23.0
+Roomie,Sev,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",23.0,INR,2025-12-23,Garv,Garv,0.0
+Roomie,Sev,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",23.0,INR,2025-12-23,Garv,Pratham,0.0
+Roomie,"Ketchup And Masala",NORMAL,GROCERIES,60.0,INR,2025-12-23,Pratham,Garv,20.0
+Roomie,"Ketchup And Masala",NORMAL,GROCERIES,60.0,INR,2025-12-23,Pratham,Mohammed,20.0
+Roomie,"Ketchup And Masala",NORMAL,GROCERIES,60.0,INR,2025-12-23,Pratham,Pratham,20.0
+Roomie,Table,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",600.0,INR,2025-12-22,Garv,Pratham,600.0
+Roomie,Table,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",600.0,INR,2025-12-22,Garv,Garv,0.0
+Roomie,Table,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",600.0,INR,2025-12-22,Garv,Mohammed,0.0
+Roomie,"Fridge And Other Transportation",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",500.0,INR,2025-12-22,Garv,Mohammed,500.0
+Roomie,"Fridge And Other Transportation",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",500.0,INR,2025-12-22,Garv,Garv,0.0
+Roomie,"Fridge And Other Transportation",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",500.0,INR,2025-12-22,Garv,Pratham,0.0
+Roomie,"Basket + Water",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",101.67,INR,2025-12-22,Garv,Pratham,101.67
+Roomie,"Basket + Water",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",101.67,INR,2025-12-22,Garv,Garv,0.0
+Roomie,"Basket + Water",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",101.67,INR,2025-12-22,Garv,Mohammed,0.0
+Roomie,"Basket + Water",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",101.67,INR,2025-12-22,Mohammed,Pratham,101.67
+Roomie,"Basket + Water",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",101.67,INR,2025-12-22,Mohammed,Mohammed,0.0
+Roomie,"Basket + Water",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",101.67,INR,2025-12-22,Mohammed,Garv,0.0
+Roomie,Water,NORMAL,"CUSTOM({""t"":""Water"", ""i"":""💦""})",5.0,INR,2025-12-22,Pratham,Garv,1.66666666666667
+Roomie,Water,NORMAL,"CUSTOM({""t"":""Water"", ""i"":""💦""})",5.0,INR,2025-12-22,Pratham,Mohammed,1.66666666666667
+Roomie,Water,NORMAL,"CUSTOM({""t"":""Water"", ""i"":""💦""})",5.0,INR,2025-12-22,Pratham,Pratham,1.66666666666667
+Roomie,"Basket times 2",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",300.0,INR,2025-12-22,Pratham,Garv,100.0
+Roomie,"Basket times 2",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",300.0,INR,2025-12-22,Pratham,Mohammed,100.0
+Roomie,"Basket times 2",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",300.0,INR,2025-12-22,Pratham,Pratham,100.0
+Roomie,"Washing machine inlet",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",10.0,INR,2025-12-22,Mohammed,Garv,3.33333333333333
+Roomie,"Washing machine inlet",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",10.0,INR,2025-12-22,Mohammed,Mohammed,3.33333333333333
+Roomie,"Washing machine inlet",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",10.0,INR,2025-12-22,Mohammed,Pratham,3.33333333333333
+Roomie,Travel+Donut,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",166.66,INR,2025-12-22,Mohammed,Garv,166.66
+Roomie,Travel+Donut,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",166.66,INR,2025-12-22,Mohammed,Mohammed,0.0
+Roomie,Travel+Donut,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",166.66,INR,2025-12-22,Mohammed,Pratham,0.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",328.34,INR,2025-12-22,Mohammed,Garv,328.34
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",328.34,INR,2025-12-22,Mohammed,Mohammed,0.0
+Roomie,Groceries,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",328.34,INR,2025-12-22,Mohammed,Pratham,0.0
+Roomie,"Fridge and stuff transportation",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",1500.0,INR,2025-12-22,Mohammed,Garv,500.0
+Roomie,"Fridge and stuff transportation",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",1500.0,INR,2025-12-22,Mohammed,Mohammed,500.0
+Roomie,"Fridge and stuff transportation",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",1500.0,INR,2025-12-22,Mohammed,Pratham,500.0
+Roomie,"Groceries Dec 22",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",153.67,INR,2025-12-22,Pratham,Garv,153.67
+Roomie,"Groceries Dec 22",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",153.67,INR,2025-12-22,Pratham,Pratham,0.0
+Roomie,"Groceries Dec 22",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",153.67,INR,2025-12-22,Pratham,Mohammed,0.0
+Roomie,"Bathroom Filter",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",13.33,INR,2025-12-22,Pratham,Garv,13.33
+Roomie,"Bathroom Filter",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",13.33,INR,2025-12-22,Pratham,Pratham,0.0
+Roomie,"Bathroom Filter",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",13.33,INR,2025-12-22,Pratham,Mohammed,0.0
+Roomie,"Room Fragnance",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",54.67,INR,2025-12-22,Pratham,Garv,54.67
+Roomie,"Room Fragnance",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",54.67,INR,2025-12-22,Pratham,Pratham,0.0
+Roomie,"Room Fragnance",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",54.67,INR,2025-12-22,Pratham,Mohammed,0.0
+Roomie,"Bread + Bath Filter",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",33.33,INR,2025-12-22,Pratham,Garv,33.33
+Roomie,"Bread + Bath Filter",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",33.33,INR,2025-12-22,Pratham,Pratham,0.0
+Roomie,"Bread + Bath Filter",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",33.33,INR,2025-12-22,Pratham,Mohammed,0.0
+Roomie,"Vegetables Dec 22",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",86.67,INR,2025-12-22,Pratham,Garv,86.67
+Roomie,"Vegetables Dec 22",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",86.67,INR,2025-12-22,Pratham,Pratham,0.0
+Roomie,"Vegetables Dec 22",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",86.67,INR,2025-12-22,Pratham,Mohammed,0.0
+Roomie,"Transport + Inlet",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",503.3,INR,2025-12-22,Pratham,Mohammed,503.3
+Roomie,"Transport + Inlet",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",503.3,INR,2025-12-22,Pratham,Pratham,0.0
+Roomie,"Transport + Inlet",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",503.3,INR,2025-12-22,Pratham,Garv,0.0
+Roomie,"Bathroom Filter",NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",40.0,INR,2025-12-22,Garv,Garv,13.3333333333333
+Roomie,"Bathroom Filter",NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",40.0,INR,2025-12-22,Garv,Mohammed,13.3333333333333
+Roomie,"Bathroom Filter",NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",40.0,INR,2025-12-22,Garv,Pratham,13.3333333333333
+Roomie,Bread,NORMAL,GROCERIES,60.0,INR,2025-12-22,Garv,Garv,20.0
+Roomie,Bread,NORMAL,GROCERIES,60.0,INR,2025-12-22,Garv,Mohammed,20.0
+Roomie,Bread,NORMAL,GROCERIES,60.0,INR,2025-12-22,Garv,Pratham,20.0
+Roomie,Vegetables,NORMAL,GROCERIES,260.0,INR,2025-12-22,Garv,Garv,86.6666666666667
+Roomie,Vegetables,NORMAL,GROCERIES,260.0,INR,2025-12-22,Garv,Mohammed,86.6666666666667
+Roomie,Vegetables,NORMAL,GROCERIES,260.0,INR,2025-12-22,Garv,Pratham,86.6666666666667
+Roomie,Groceries,NORMAL,GROCERIES,461.0,INR,2025-12-22,Garv,Garv,153.666666666667
+Roomie,Groceries,NORMAL,GROCERIES,461.0,INR,2025-12-22,Garv,Mohammed,153.666666666667
+Roomie,Groceries,NORMAL,GROCERIES,461.0,INR,2025-12-22,Garv,Pratham,153.666666666667
+Roomie,"Room Fragrances",NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",164.0,INR,2025-12-22,Garv,Garv,54.6666666666667
+Roomie,"Room Fragrances",NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",164.0,INR,2025-12-22,Garv,Mohammed,54.6666666666667
+Roomie,"Room Fragrances",NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",164.0,INR,2025-12-22,Garv,Pratham,54.6666666666667
+Roomie,"Rent from 25th nov to 25 dec",NORMAL,RENT,6300.0,INR,2025-12-21,Mohammed,Garv,2100.0
+Roomie,"Rent from 25th nov to 25 dec",NORMAL,RENT,6300.0,INR,2025-12-21,Mohammed,Mohammed,2100.0
+Roomie,"Rent from 25th nov to 25 dec",NORMAL,RENT,6300.0,INR,2025-12-21,Mohammed,Pratham,2100.0
+Roomie,"Maid Cleaning",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",183.0,INR,2025-12-21,Garv,Mohammed,183.0
+Roomie,"Maid Cleaning",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",183.0,INR,2025-12-21,Garv,Garv,0.0
+Roomie,"Maid Cleaning",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",183.0,INR,2025-12-21,Garv,Pratham,0.0
+Roomie,"First Broom And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",350.0,INR,2025-12-21,Garv,Mohammed,350.0
+Roomie,"First Broom And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",350.0,INR,2025-12-21,Garv,Garv,0.0
+Roomie,"First Broom And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",350.0,INR,2025-12-21,Garv,Pratham,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-20,Garv,Mohammed,30.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-20,Garv,Garv,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-20,Garv,Pratham,0.0
+Roomie,"Night Tea",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",35.0,INR,2025-12-20,Mohammed,Pratham,35.0
+Roomie,"Night Tea",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",35.0,INR,2025-12-20,Mohammed,Mohammed,0.0
+Roomie,"Night Tea",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",35.0,INR,2025-12-20,Mohammed,Garv,0.0
+Roomie,"Night Tea",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-19,Garv,Pratham,50.0
+Roomie,"Night Tea",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-19,Garv,Garv,0.0
+Roomie,"Night Tea",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-19,Garv,Mohammed,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-19,Pratham,Mohammed,30.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-19,Pratham,Pratham,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-19,Pratham,Garv,0.0
+Roomie,Breakfast,NORMAL,RESTAURANTS,90.0,INR,2025-12-19,Mohammed,Garv,30.0
+Roomie,Breakfast,NORMAL,RESTAURANTS,90.0,INR,2025-12-19,Mohammed,Mohammed,30.0
+Roomie,Breakfast,NORMAL,RESTAURANTS,90.0,INR,2025-12-19,Mohammed,Pratham,30.0
+Roomie,"Night Tea",NORMAL,RESTAURANTS,110.0,INR,2025-12-18,Pratham,Garv,50.0
+Roomie,"Night Tea",NORMAL,RESTAURANTS,110.0,INR,2025-12-18,Pratham,Mohammed,35.0
+Roomie,"Night Tea",NORMAL,RESTAURANTS,110.0,INR,2025-12-18,Pratham,Pratham,25.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",93.0,INR,2025-12-18,Garv,Mohammed,93.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",93.0,INR,2025-12-18,Garv,Garv,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",93.0,INR,2025-12-18,Garv,Pratham,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,280.0,INR,2025-12-18,Mohammed,Garv,93.3333333333333
+Roomie,Dinner,NORMAL,RESTAURANTS,280.0,INR,2025-12-18,Mohammed,Mohammed,93.3333333333333
+Roomie,Dinner,NORMAL,RESTAURANTS,280.0,INR,2025-12-18,Mohammed,Pratham,93.3333333333333
+Roomie,"College To Room Travel",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",26.67,INR,2025-12-18,Garv,Mohammed,26.67
+Roomie,"College To Room Travel",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",26.67,INR,2025-12-18,Garv,Garv,0.0
+Roomie,"College To Room Travel",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",26.67,INR,2025-12-18,Garv,Pratham,0.0
+Roomie,"College to room",NORMAL,TRANSPORT,80.0,INR,2025-12-18,Mohammed,Garv,26.6666666666667
+Roomie,"College to room",NORMAL,TRANSPORT,80.0,INR,2025-12-18,Mohammed,Mohammed,26.6666666666667
+Roomie,"College to room",NORMAL,TRANSPORT,80.0,INR,2025-12-18,Mohammed,Pratham,26.6666666666667
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-18,Garv,Mohammed,20.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-18,Garv,Garv,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-18,Garv,Pratham,0.0
+Roomie,"Room To College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",40.0,INR,2025-12-18,Garv,Mohammed,40.0
+Roomie,"Room To College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",40.0,INR,2025-12-18,Garv,Garv,0.0
+Roomie,"Room To College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",40.0,INR,2025-12-18,Garv,Pratham,0.0
+Roomie,"College Lunch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",90.0,INR,2025-12-18,Garv,Mohammed,90.0
+Roomie,"College Lunch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",90.0,INR,2025-12-18,Garv,Garv,0.0
+Roomie,"College Lunch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",90.0,INR,2025-12-18,Garv,Pratham,0.0
+Roomie,"Round Trip College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.0,INR,2025-12-18,Pratham,Mohammed,66.0
+Roomie,"Round Trip College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.0,INR,2025-12-18,Pratham,Pratham,0.0
+Roomie,"Round Trip College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.0,INR,2025-12-18,Pratham,Garv,0.0
+Roomie,"College Lunch",NORMAL,RESTAURANTS,270.0,INR,2025-12-18,Mohammed,Garv,90.0
+Roomie,"College Lunch",NORMAL,RESTAURANTS,270.0,INR,2025-12-18,Mohammed,Mohammed,90.0
+Roomie,"College Lunch",NORMAL,RESTAURANTS,270.0,INR,2025-12-18,Mohammed,Pratham,90.0
+Roomie,"Lunch And Dinner",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",183.0,INR,2025-12-18,Pratham,Mohammed,183.0
+Roomie,"Lunch And Dinner",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",183.0,INR,2025-12-18,Pratham,Pratham,0.0
+Roomie,"Lunch And Dinner",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",183.0,INR,2025-12-18,Pratham,Garv,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-18,Pratham,Mohammed,20.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-18,Pratham,Pratham,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-18,Pratham,Garv,0.0
+Roomie,"Room to College",NORMAL,TRANSPORT,120.0,INR,2025-12-18,Mohammed,Garv,40.0
+Roomie,"Room to College",NORMAL,TRANSPORT,120.0,INR,2025-12-18,Mohammed,Mohammed,40.0
+Roomie,"Room to College",NORMAL,TRANSPORT,120.0,INR,2025-12-18,Mohammed,Pratham,40.0
+Roomie,Breakfast,NORMAL,RESTAURANTS,60.0,INR,2025-12-18,Mohammed,Garv,20.0
+Roomie,Breakfast,NORMAL,RESTAURANTS,60.0,INR,2025-12-18,Mohammed,Mohammed,20.0
+Roomie,Breakfast,NORMAL,RESTAURANTS,60.0,INR,2025-12-18,Mohammed,Pratham,20.0
+Roomie,"Scrub And Cleaning Stuffs",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",10.0,INR,2025-12-18,Garv,Mohammed,10.0
+Roomie,"Scrub And Cleaning Stuffs",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",10.0,INR,2025-12-18,Garv,Garv,0.0
+Roomie,"Scrub And Cleaning Stuffs",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",10.0,INR,2025-12-18,Garv,Pratham,0.0
+Roomie,"College Lunch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",90.0,INR,2025-12-17,Garv,Pratham,90.0
+Roomie,"College Lunch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",90.0,INR,2025-12-17,Garv,Garv,0.0
+Roomie,"College Lunch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",90.0,INR,2025-12-17,Garv,Mohammed,0.0
+Roomie,"Shawarma Dinner",NORMAL,RESTAURANTS,100.0,INR,2025-12-17,Mohammed,Mohammed,50.0
+Roomie,"Shawarma Dinner",NORMAL,RESTAURANTS,100.0,INR,2025-12-17,Mohammed,Pratham,50.0
+Roomie,"Shawarma Dinner",NORMAL,RESTAURANTS,100.0,INR,2025-12-17,Mohammed,Garv,0.0
+Roomie,Donuts,NORMAL,RESTAURANTS,150.0,INR,2025-12-17,Garv,Garv,50.0
+Roomie,Donuts,NORMAL,RESTAURANTS,150.0,INR,2025-12-17,Garv,Mohammed,50.0
+Roomie,Donuts,NORMAL,RESTAURANTS,150.0,INR,2025-12-17,Garv,Pratham,50.0
+Roomie,"Scrubs for cleaning",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",30.0,INR,2025-12-17,Mohammed,Garv,10.0
+Roomie,"Scrubs for cleaning",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",30.0,INR,2025-12-17,Mohammed,Mohammed,10.0
+Roomie,"Scrubs for cleaning",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",30.0,INR,2025-12-17,Mohammed,Pratham,10.0
+Roomie,"Maid 1 time cleaning",NORMAL,ACCOMODATION,550.0,INR,2025-12-17,Mohammed,Garv,183.333333333333
+Roomie,"Maid 1 time cleaning",NORMAL,ACCOMODATION,550.0,INR,2025-12-17,Mohammed,Mohammed,183.333333333333
+Roomie,"Maid 1 time cleaning",NORMAL,ACCOMODATION,550.0,INR,2025-12-17,Mohammed,Pratham,183.333333333333
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-17,Garv,Mohammed,20.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-17,Garv,Garv,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-17,Garv,Pratham,0.0
+Roomie,"College to Room",NORMAL,TRANSPORT,100.0,INR,2025-12-17,Garv,Garv,33.3333333333333
+Roomie,"College to Room",NORMAL,TRANSPORT,100.0,INR,2025-12-17,Garv,Mohammed,33.3333333333333
+Roomie,"College to Room",NORMAL,TRANSPORT,100.0,INR,2025-12-17,Garv,Pratham,33.3333333333333
+Roomie,Donut,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-17,Pratham,Garv,50.0
+Roomie,Donut,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-17,Pratham,Pratham,0.0
+Roomie,Donut,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-17,Pratham,Mohammed,0.0
+Roomie,"Swarma Dinner",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-17,Pratham,Mohammed,50.0
+Roomie,"Swarma Dinner",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-17,Pratham,Pratham,0.0
+Roomie,"Swarma Dinner",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",50.0,INR,2025-12-17,Pratham,Garv,0.0
+Roomie,Scrub,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",10.0,INR,2025-12-17,Pratham,Mohammed,10.0
+Roomie,Scrub,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",10.0,INR,2025-12-17,Pratham,Pratham,0.0
+Roomie,Scrub,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",10.0,INR,2025-12-17,Pratham,Garv,0.0
+Roomie,"Round Trip College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.7,INR,2025-12-17,Pratham,Garv,66.7
+Roomie,"Round Trip College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.7,INR,2025-12-17,Pratham,Pratham,0.0
+Roomie,"Round Trip College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.7,INR,2025-12-17,Pratham,Mohammed,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-17,Pratham,Mohammed,20.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-17,Pratham,Pratham,0.0
+Roomie,Breakfast,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",20.0,INR,2025-12-17,Pratham,Garv,0.0
+Roomie,Maid,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",183.3,INR,2025-12-17,Pratham,Mohammed,183.3
+Roomie,Maid,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",183.3,INR,2025-12-17,Pratham,Pratham,0.0
+Roomie,Maid,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",183.3,INR,2025-12-17,Pratham,Garv,0.0
+Roomie,"College Lunch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",90.0,INR,2025-12-17,Mohammed,Pratham,90.0
+Roomie,"College Lunch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",90.0,INR,2025-12-17,Mohammed,Mohammed,0.0
+Roomie,"College Lunch",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",90.0,INR,2025-12-17,Mohammed,Garv,0.0
+Roomie,"College Lunch",NORMAL,RESTAURANTS,270.0,INR,2025-12-17,Pratham,Garv,90.0
+Roomie,"College Lunch",NORMAL,RESTAURANTS,270.0,INR,2025-12-17,Pratham,Mohammed,90.0
+Roomie,"College Lunch",NORMAL,RESTAURANTS,270.0,INR,2025-12-17,Pratham,Pratham,90.0
+Roomie,"Room to College",NORMAL,TRANSPORT,100.0,INR,2025-12-17,Garv,Garv,33.3333333333333
+Roomie,"Room to College",NORMAL,TRANSPORT,100.0,INR,2025-12-17,Garv,Mohammed,33.3333333333333
+Roomie,"Room to College",NORMAL,TRANSPORT,100.0,INR,2025-12-17,Garv,Pratham,33.3333333333333
+Roomie,Breakfast,NORMAL,RESTAURANTS,60.0,INR,2025-12-17,Mohammed,Garv,20.0
+Roomie,Breakfast,NORMAL,RESTAURANTS,60.0,INR,2025-12-17,Mohammed,Mohammed,20.0
+Roomie,Breakfast,NORMAL,RESTAURANTS,60.0,INR,2025-12-17,Mohammed,Pratham,20.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",150.0,INR,2025-12-16,Pratham,Mohammed,150.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",150.0,INR,2025-12-16,Pratham,Pratham,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",150.0,INR,2025-12-16,Pratham,Garv,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",150.0,INR,2025-12-16,Garv,Mohammed,150.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",150.0,INR,2025-12-16,Garv,Garv,0.0
+Roomie,Lunch,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",150.0,INR,2025-12-16,Garv,Pratham,0.0
+Roomie,Lunch,NORMAL,RESTAURANTS,400.0,INR,2025-12-16,Mohammed,Mohammed,100.0
+Roomie,Lunch,NORMAL,RESTAURANTS,400.0,INR,2025-12-16,Mohammed,Garv,150.0
+Roomie,Lunch,NORMAL,RESTAURANTS,400.0,INR,2025-12-16,Mohammed,Pratham,150.0
+Roomie,"College to Room",NORMAL,TRANSPORT,90.0,INR,2025-12-16,Mohammed,Garv,30.0
+Roomie,"College to Room",NORMAL,TRANSPORT,90.0,INR,2025-12-16,Mohammed,Mohammed,30.0
+Roomie,"College to Room",NORMAL,TRANSPORT,90.0,INR,2025-12-16,Mohammed,Pratham,30.0
+Roomie,"Room to College",NORMAL,TRANSPORT,90.0,INR,2025-12-16,Mohammed,Garv,30.0
+Roomie,"Room to College",NORMAL,TRANSPORT,90.0,INR,2025-12-16,Mohammed,Mohammed,30.0
+Roomie,"Room to College",NORMAL,TRANSPORT,90.0,INR,2025-12-16,Mohammed,Pratham,30.0
+Roomie,"Bulbs and Stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",160.0,INR,2025-12-16,Mohammed,Garv,53.3333333333333
+Roomie,"Bulbs and Stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",160.0,INR,2025-12-16,Mohammed,Mohammed,53.3333333333333
+Roomie,"Bulbs and Stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",160.0,INR,2025-12-16,Mohammed,Pratham,53.3333333333333
+Roomie,"Bulbs And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",53.3,INR,2025-12-16,Pratham,Mohammed,53.3
+Roomie,"Bulbs And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",53.3,INR,2025-12-16,Pratham,Pratham,0.0
+Roomie,"Bulbs And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",53.3,INR,2025-12-16,Pratham,Garv,0.0
+Roomie,"Round Trip To College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",60.0,INR,2025-12-16,Pratham,Mohammed,60.0
+Roomie,"Round Trip To College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",60.0,INR,2025-12-16,Pratham,Pratham,0.0
+Roomie,"Round Trip To College",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",60.0,INR,2025-12-16,Pratham,Garv,0.0
+Roomie,"Bathroom Acid",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2025-12-16,Garv,Mohammed,6.67
+Roomie,"Bathroom Acid",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2025-12-16,Garv,Garv,0.0
+Roomie,"Bathroom Acid",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",6.67,INR,2025-12-16,Garv,Pratham,0.0
+Roomie,"Lunch Pritam's Share",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",48.0,INR,2025-12-16,Garv,Mohammed,48.0
+Roomie,"Lunch Pritam's Share",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",48.0,INR,2025-12-16,Garv,Garv,0.0
+Roomie,"Lunch Pritam's Share",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",48.0,INR,2025-12-16,Garv,Pratham,0.0
+Roomie,"Bulb and other stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",53.0,INR,2025-12-16,Garv,Mohammed,53.0
+Roomie,"Bulb and other stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",53.0,INR,2025-12-16,Garv,Garv,0.0
+Roomie,"Bulb and other stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",53.0,INR,2025-12-16,Garv,Pratham,0.0
+Roomie,"Travel College to Room",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-16,Garv,Mohammed,30.0
+Roomie,"Travel College to Room",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-16,Garv,Garv,0.0
+Roomie,"Travel College to Room",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-16,Garv,Pratham,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",190.0,INR,2025-12-15,Pratham,Mohammed,190.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",190.0,INR,2025-12-15,Pratham,Pratham,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",190.0,INR,2025-12-15,Pratham,Garv,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",190.0,INR,2025-12-15,Garv,Mohammed,190.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",190.0,INR,2025-12-15,Garv,Garv,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",190.0,INR,2025-12-15,Garv,Pratham,0.0
+Roomie,Dinner,NORMAL,RESTAURANTS,570.0,INR,2025-12-15,Mohammed,Garv,190.0
+Roomie,Dinner,NORMAL,RESTAURANTS,570.0,INR,2025-12-15,Mohammed,Mohammed,190.0
+Roomie,Dinner,NORMAL,RESTAURANTS,570.0,INR,2025-12-15,Mohammed,Pratham,190.0
+Roomie,Icecream,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",40.0,INR,2025-12-15,Garv,Mohammed,40.0
+Roomie,Icecream,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",40.0,INR,2025-12-15,Garv,Garv,0.0
+Roomie,Icecream,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",40.0,INR,2025-12-15,Garv,Pratham,0.0
+Roomie,"Icecream Payment",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-15,Pratham,Mohammed,30.0
+Roomie,"Icecream Payment",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-15,Pratham,Pratham,0.0
+Roomie,"Icecream Payment",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",30.0,INR,2025-12-15,Pratham,Garv,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2025-12-15,Pratham,Mohammed,140.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2025-12-15,Pratham,Pratham,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2025-12-15,Pratham,Garv,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2025-12-15,Garv,Mohammed,140.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2025-12-15,Garv,Garv,0.0
+Roomie,Dinner,BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",140.0,INR,2025-12-15,Garv,Pratham,0.0
+Roomie,"Movie + Lunch",BALANCE,,325.0,INR,2025-12-15,Pratham,Mohammed,325.0
+Roomie,"Movie + Lunch",BALANCE,,325.0,INR,2025-12-15,Pratham,Pratham,0.0
+Roomie,"Movie + Lunch",BALANCE,,325.0,INR,2025-12-15,Pratham,Garv,0.0
+Roomie,"Movie Transfer",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",180.0,INR,2025-12-15,Garv,Mohammed,180.0
+Roomie,"Movie Transfer",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",180.0,INR,2025-12-15,Garv,Garv,0.0
+Roomie,"Movie Transfer",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",180.0,INR,2025-12-15,Garv,Pratham,0.0
+Roomie,"Rent from 25th Nov to 25th Dec",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2025-12-15,Garv,Mohammed,2100.0
+Roomie,"Rent from 25th Nov to 25th Dec",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2025-12-15,Garv,Garv,0.0
+Roomie,"Rent from 25th Nov to 25th Dec",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2025-12-15,Garv,Pratham,0.0
+Roomie,Icecream,NORMAL,RESTAURANTS,95.0,INR,2025-12-15,Mohammed,Garv,40.0
+Roomie,Icecream,NORMAL,RESTAURANTS,95.0,INR,2025-12-15,Mohammed,Mohammed,25.0
+Roomie,Icecream,NORMAL,RESTAURANTS,95.0,INR,2025-12-15,Mohammed,Pratham,30.0
+Roomie,"Wiper and stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",120.0,INR,2025-12-15,Mohammed,Garv,40.0
+Roomie,"Wiper and stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",120.0,INR,2025-12-15,Mohammed,Mohammed,40.0
+Roomie,"Wiper and stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",120.0,INR,2025-12-15,Mohammed,Pratham,40.0
+Roomie,"Bathroom Acid",NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",20.0,INR,2025-12-15,Mohammed,Garv,6.66666666666667
+Roomie,"Bathroom Acid",NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",20.0,INR,2025-12-15,Mohammed,Mohammed,6.66666666666667
+Roomie,"Bathroom Acid",NORMAL,"CUSTOM({""t"":""Cleaning & Hygiene"", ""i"":""🧹""})",20.0,INR,2025-12-15,Mohammed,Pratham,6.66666666666667
+Roomie,"Dinner(Excluding Pritam's Amount)",NORMAL,RESTAURANTS,433.5,INR,2025-12-15,Mohammed,Garv,144.5
+Roomie,"Dinner(Excluding Pritam's Amount)",NORMAL,RESTAURANTS,433.5,INR,2025-12-15,Mohammed,Mohammed,144.5
+Roomie,"Dinner(Excluding Pritam's Amount)",NORMAL,RESTAURANTS,433.5,INR,2025-12-15,Mohammed,Pratham,144.5
+Roomie,Movies,NORMAL,ENTERTAINMENT,540.0,INR,2025-12-15,Mohammed,Garv,180.0
+Roomie,Movies,NORMAL,ENTERTAINMENT,540.0,INR,2025-12-15,Mohammed,Mohammed,180.0
+Roomie,Movies,NORMAL,ENTERTAINMENT,540.0,INR,2025-12-15,Mohammed,Pratham,180.0
+Roomie,"Lunch (Pritam not included)",NORMAL,RESTAURANTS,435.0,INR,2025-12-15,Mohammed,Garv,48.34
+Roomie,"Lunch (Pritam not included)",NORMAL,RESTAURANTS,435.0,INR,2025-12-15,Mohammed,Mohammed,193.33
+Roomie,"Lunch (Pritam not included)",NORMAL,RESTAURANTS,435.0,INR,2025-12-15,Mohammed,Pratham,193.33
+Roomie,"First Broom and stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",1050.0,INR,2025-12-15,Mohammed,Garv,350.0
+Roomie,"First Broom and stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",1050.0,INR,2025-12-15,Mohammed,Mohammed,350.0
+Roomie,"First Broom and stuff",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",1050.0,INR,2025-12-15,Mohammed,Pratham,350.0
+Roomie,"Bathroom Acid + Wiper And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",46.67,INR,2025-12-15,Pratham,Mohammed,46.67
+Roomie,"Bathroom Acid + Wiper And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",46.67,INR,2025-12-15,Pratham,Pratham,0.0
+Roomie,"Bathroom Acid + Wiper And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",46.67,INR,2025-12-15,Pratham,Garv,0.0
+Roomie,"First Broom And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",350.0,INR,2025-12-15,Pratham,Mohammed,350.0
+Roomie,"First Broom And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",350.0,INR,2025-12-15,Pratham,Pratham,0.0
+Roomie,"First Broom And Stuff",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",350.0,INR,2025-12-15,Pratham,Garv,0.0
+Roomie,"Lunch Pritam's Share",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",48.0,INR,2025-12-15,Pratham,Mohammed,48.0
+Roomie,"Lunch Pritam's Share",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",48.0,INR,2025-12-15,Pratham,Pratham,0.0
+Roomie,"Lunch Pritam's Share",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",48.0,INR,2025-12-15,Pratham,Garv,0.0
+Roomie,"Gas Pipe",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",200.0,INR,2025-12-13,Mohammed,Garv,66.6666666666667
+Roomie,"Gas Pipe",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",200.0,INR,2025-12-13,Mohammed,Mohammed,66.6666666666667
+Roomie,"Gas Pipe",NORMAL,"CUSTOM({""t"":""Furniture"", ""i"":""🛋️""})",200.0,INR,2025-12-13,Mohammed,Pratham,66.6666666666667
+Roomie,"Gas Pipe",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.67,INR,2025-12-13,Pratham,Mohammed,66.67
+Roomie,"Gas Pipe",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.67,INR,2025-12-13,Pratham,Pratham,0.0
+Roomie,"Gas Pipe",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.67,INR,2025-12-13,Pratham,Garv,0.0
+Roomie,"Gas pipe",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.0,INR,2025-12-13,Garv,Mohammed,66.0
+Roomie,"Gas pipe",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.0,INR,2025-12-13,Garv,Garv,0.0
+Roomie,"Gas pipe",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",66.0,INR,2025-12-13,Garv,Pratham,0.0
+Roomie,"Rent amount from 25th Nov to 25th Dec",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2025-12-10,Pratham,Mohammed,2100.0
+Roomie,"Rent amount from 25th Nov to 25th Dec",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2025-12-10,Pratham,Pratham,0.0
+Roomie,"Rent amount from 25th Nov to 25th Dec",BALANCE,"CUSTOM({""t"":""Transfered"", ""i"":""📲""})",2100.0,INR,2025-12-10,Pratham,Garv,0.0
