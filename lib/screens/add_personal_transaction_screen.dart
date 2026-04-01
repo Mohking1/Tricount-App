@@ -553,21 +553,23 @@ class _AddPersonalTransactionScreenState
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: _saveTransaction,
+                      onPressed: _isLoading ? null : _saveTransaction,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF0A84FF),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
-                        'Save Transaction',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      child: _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                              'Save Transaction',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
                   ),
                 ],

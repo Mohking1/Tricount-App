@@ -393,7 +393,7 @@ class _PersonalTrackerScreenState extends State<PersonalTrackerScreen> {
           ],
         ),
         trailing: Text(
-          '${isIncome ? '+' : '-'}₹${transaction['amount']}',
+          '${isIncome ? '+' : '-'}₹${(double.tryParse(transaction['amount']?.toString() ?? '0') ?? 0).toStringAsFixed(2)}',
           style: TextStyle(
             color: isIncome ? Colors.green : Colors.red,
             fontWeight: FontWeight.bold,
@@ -527,7 +527,9 @@ class _PersonalTrackerScreenState extends State<PersonalTrackerScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              _buildDetailRow('Amount', '₹${transaction['amount']}',
+              _buildDetailRow(
+                  'Amount',
+                  '₹${(double.tryParse(transaction['amount']?.toString() ?? '0') ?? 0).toStringAsFixed(2)}',
                   isIncome ? Colors.green : Colors.red),
               _buildDetailRow('Type', isIncome ? 'Income' : 'Expense', null),
               _buildDetailRow(

@@ -79,7 +79,7 @@ class PersonalInsightsView extends StatelessWidget {
             Colors.green,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
         Expanded(
           child: _buildSummaryCard(
             'Expense',
@@ -88,7 +88,7 @@ class PersonalInsightsView extends StatelessWidget {
             Colors.red,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
         Expanded(
           child: _buildSummaryCard(
             'Balance',
@@ -104,7 +104,7 @@ class PersonalInsightsView extends StatelessWidget {
   Widget _buildSummaryCard(
       String title, double amount, IconData icon, Color color) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
       decoration: BoxDecoration(
         color: const Color(0xFF1C1C1E),
         borderRadius: BorderRadius.circular(12),
@@ -112,24 +112,24 @@ class PersonalInsightsView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(height: 8),
+          Icon(icon, color: color, size: 18),
+          const SizedBox(height: 6),
           Text(
             title,
             style: const TextStyle(
               color: Colors.grey,
-              fontSize: 12,
+              fontSize: 11,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 3),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
             child: Text(
-              '₹${amount.toStringAsFixed(0)}',
+              '₹${amount.toStringAsFixed(2)}',
               style: TextStyle(
                 color: color,
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -157,17 +157,6 @@ class PersonalInsightsView extends StatelessWidget {
     final sortedCategories = categoryTotals.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
 
-    final colors = [
-      Colors.blue,
-      Colors.red,
-      Colors.green,
-      Colors.orange,
-      Colors.purple,
-      Colors.pink,
-      Colors.teal,
-      Colors.amber,
-    ];
-
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -185,61 +174,73 @@ class PersonalInsightsView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          SizedBox(
-            height: 200,
-            child: PieChart(
-              PieChartData(
-                sectionsSpace: 2,
-                centerSpaceRadius: 40,
-                sections: sortedCategories.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final categoryEntry = entry.value;
-                  final total = categoryTotals.values
-                      .reduce((sum, amount) => sum + amount);
-                  final percentage = (categoryEntry.value / total) * 100;
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final isCompact = constraints.maxWidth < 380;
+              final chartSize = isCompact ? 180.0 : 200.0;
 
-                  return PieChartSectionData(
-                    color: colors[index % colors.length],
-                    value: categoryEntry.value,
-                    title: '${percentage.toStringAsFixed(0)}%',
-                    radius: 60,
-                    titleStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: sortedCategories.asMap().entries.map((entry) {
-              final index = entry.key;
-              final categoryEntry = entry.value;
-              return Row(
-                mainAxisSize: MainAxisSize.min,
+              return Column(
                 children: [
-                  Container(
-                    width: 12,
-                    height: 12,
-                    decoration: BoxDecoration(
-                      color: colors[index % colors.length],
-                      shape: BoxShape.circle,
+                  SizedBox(
+                    height: chartSize,
+                    width: chartSize,
+                    child: PieChart(
+                      PieChartData(
+                        sectionsSpace: 2,
+                        centerSpaceRadius: isCompact ? 34 : 40,
+                        sections: sortedCategories.map((entry) {
+                          return PieChartSectionData(
+                            color: _getCategoryColor(entry.key),
+                            value: entry.value,
+                            title: '',
+                            radius: isCompact ? 54 : 60,
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 4),
-                  Text(
-                    '${categoryEntry.key}: ₹${categoryEntry.value.toStringAsFixed(0)}',
-                    style: const TextStyle(fontSize: 12),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  const SizedBox(height: 16),
+                  ...sortedCategories.map((entry) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 12,
+                            height: 12,
+                            decoration: BoxDecoration(
+                              color: _getCategoryColor(entry.key),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              entry.key,
+                              style: const TextStyle(fontSize: 12),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 120),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                '₹${entry.value.toStringAsFixed(2)}',
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ],
               );
-            }).toList(),
+            },
           ),
         ],
       ),
@@ -363,11 +364,13 @@ class PersonalInsightsView extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        '₹${entry.value.toStringAsFixed(0)} (${percentage.toStringAsFixed(0)}%)',
+                        '₹${entry.value.toStringAsFixed(2)} (${percentage.toStringAsFixed(2)}%)',
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.grey,
                         ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                     ],
                   ),
@@ -384,5 +387,48 @@ class PersonalInsightsView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color _getCategoryColor(String category) {
+    switch (category) {
+      case 'Food':
+      case 'Restaurants & Bars':
+        return const Color(0xFFFFCC00);
+      case 'Groceries':
+        return const Color(0xFF5AC8FA);
+      case 'Accommodation':
+      case 'Rent & Charges':
+        return const Color(0xFF007AFF);
+      case 'Transport':
+        return const Color(0xFF34C759);
+      case 'Furniture':
+        return const Color(0xFFAF52DE);
+      case 'Shopping':
+        return const Color(0xFFFF2D55);
+      case 'Entertainment':
+        return const Color(0xFF5856D6);
+      case 'Other':
+      default:
+        return _fallbackCategoryColor(category);
+    }
+  }
+
+  Color _fallbackCategoryColor(String category) {
+    const palette = [
+      Color(0xFF64B5F6),
+      Color(0xFF81C784),
+      Color(0xFFFFB74D),
+      Color(0xFFBA68C8),
+      Color(0xFF4DB6AC),
+      Color(0xFFA1887F),
+      Color(0xFFFF8A65),
+      Color(0xFF90A4AE),
+      Color(0xFFDCE775),
+      Color(0xFFF06292),
+    ];
+    final key = category.trim().toLowerCase();
+    final hash =
+        key.codeUnits.fold<int>(0, (acc, c) => (acc * 31 + c) & 0x7fffffff);
+    return palette[hash % palette.length];
   }
 }

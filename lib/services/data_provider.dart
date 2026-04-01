@@ -344,84 +344,10 @@ class DataProvider extends ChangeNotifier {
   /// Detect new group expenses involving the current user (created by others)
   /// and auto-create personal tracker entries for their share.
   Future<void> _autoRegisterPersonalExpenses(Set<dynamic> oldExpenseIds) async {
-    final uid = _currentUserId;
-    if (uid == null) return;
-
-    try {
-      // Find new expenses that weren't in the old set
-      final newExpenses =
-          _expenses.where((e) => !oldExpenseIds.contains(e['id'])).toList();
-
-      if (newExpenses.isEmpty) return;
-
-      final client = Supabase.instance.client;
-
-      for (final expense in newExpenses) {
-        // Skip expenses created by the current user (they already synced
-        // their own personal tracker when creating the expense)
-        if (expense['user_id'] == uid) continue;
-
-        // Only process group expenses (must have a tricount_id)
-        if (expense['tricount_id'] == null) continue;
-
-        // Find the current user's share
-        double myShare = 0;
-        final involved = expense['involved_participants'];
-        if (involved is List) {
-          for (var item in involved) {
-            if (item is Map) {
-              final itemUid = item['user_id'] ?? item['id'];
-              if (itemUid == uid) {
-                myShare =
-                    double.tryParse(item['amount']?.toString() ?? '0') ?? 0;
-                break;
-              }
-            }
-          }
-        }
-
-        // Skip if user has no share in this expense
-        if (myShare <= 0) continue;
-
-        // Check if we already logged this expense (by checking notes for expense name + tricount_id)
-        final alreadyExists = _personalTransactions.any((pt) =>
-            pt['notes'] != null &&
-            pt['notes'].toString().contains('Group expense') &&
-            pt['name'] == expense['name'] &&
-            pt['amount']?.toString() == myShare.toStringAsFixed(2));
-
-        if (alreadyExists) continue;
-
-        // Create personal tracker entry
-        try {
-          await client.from('personal_transactions').insert({
-            'user_id': uid,
-            'name': expense['name'],
-            'amount': myShare,
-            'type': 'expense',
-            'payment_mode':
-                (expense['payment_method'] as String?)?.toLowerCase() ??
-                    'online',
-            'category': expense['category'] ?? 'Other',
-            'date': expense['created_at'],
-            'notes':
-                'Group expense (your share, paid by ${expense['paid_by'] ?? 'someone'})',
-          });
-          debugPrint(
-              '[DataProvider] Auto-registered personal expense: ${expense['name']} = ₹$myShare');
-        } catch (e) {
-          debugPrint('[DataProvider] Auto personal expense insert error: $e');
-        }
-      }
-
-      // Refresh personal data to include newly inserted entries
-      if (newExpenses
-          .any((e) => e['user_id'] != uid && e['tricount_id'] != null)) {
-        await refreshPersonal();
-      }
-    } catch (e) {
-      debugPrint('[DataProvider] Auto register error: $e');
-    }
+    // Cash-flow mode: personal tracker is updated at action time from
+    // AddExpenseScreen (full payment and settlement transfers), not by
+    // auto-adding share liabilities in background refresh.
+    return;
   }
 
   // ── Clear on logout ──────────────────────────────────────────

@@ -306,6 +306,52 @@ class _TricountInvitesTab extends StatelessWidget {
     if (currentUser == null) return;
 
     try {
+      final rpcRes = await Supabase.instance.client.rpc(
+        'join_tricount_by_uuid',
+        params: {'p_tricount_id': tricountId},
+      );
+
+      final status = rpcRes is Map ? (rpcRes['status']?.toString() ?? '') : '';
+      final message =
+          rpcRes is Map ? (rpcRes['message']?.toString() ?? '') : '';
+
+      if (status == 'ghosts_available') {
+        final ghostsRaw = rpcRes is Map ? (rpcRes['ghosts'] as List?) : null;
+        final ghosts = List<Map<String, dynamic>>.from(
+          (ghostsRaw ?? const []).map((e) => Map<String, dynamic>.from(e)),
+        );
+
+        if (ghosts.isNotEmpty && context.mounted) {
+          await _showGhostClaimDialogRpcInvite(
+            context,
+            tricountId,
+            inviteId,
+            ghosts,
+          );
+          return;
+        }
+      }
+
+      if (status == 'joined' ||
+          status == 'claimed' ||
+          status == 'already_joined') {
+        await Supabase.instance.client
+            .from('tricount_invites')
+            .delete()
+            .eq('id', inviteId);
+        if (context.mounted) {
+          DataProvider().refreshAll();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                message.isNotEmpty ? message : 'Invitation accepted',
+              ),
+            ),
+          );
+        }
+        return;
+      }
+
       // Get current tricount data
       final tricountRes = await Supabase.instance.client
           .from('tricounts')
@@ -372,6 +418,127 @@ class _TricountInvitesTab extends StatelessWidget {
         );
       }
     }
+  }
+
+  Future<void> _showGhostClaimDialogRpcInvite(
+    BuildContext context,
+    String tricountId,
+    String inviteId,
+    List<Map<String, dynamic>> ghosts,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Claim an existing profile?'),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              ...ghosts.map((g) => ListTile(
+                    title: Text((g['name'] ?? 'Unknown').toString()),
+                    subtitle: const Text('Take over this existing participant'),
+                    leading: const Icon(Icons.person_outline),
+                    onTap: () async {
+                      Navigator.pop(dialogContext);
+                      final res = await Supabase.instance.client.rpc(
+                        'join_tricount_by_uuid',
+                        params: {
+                          'p_tricount_id': tricountId,
+                          'p_ghost_id': (g['id'] ?? '').toString(),
+                        },
+                      );
+
+                      final status =
+                          res is Map ? (res['status']?.toString() ?? '') : '';
+                      final message =
+                          res is Map ? (res['message']?.toString() ?? '') : '';
+
+                      if (status == 'claimed' || status == 'already_joined') {
+                        await Supabase.instance.client
+                            .from('tricount_invites')
+                            .delete()
+                            .eq('id', inviteId);
+                        if (context.mounted) {
+                          DataProvider().refreshAll();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                message.isNotEmpty
+                                    ? message
+                                    : 'Profile claimed successfully!',
+                              ),
+                            ),
+                          );
+                        }
+                      } else if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              message.isNotEmpty
+                                  ? message
+                                  : 'Could not claim profile',
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  )),
+              const Divider(),
+              ListTile(
+                title: const Text('None of these'),
+                subtitle: const Text('Join as a new participant'),
+                leading: const Icon(Icons.person_add),
+                onTap: () async {
+                  Navigator.pop(dialogContext);
+                  final res = await Supabase.instance.client.rpc(
+                    'join_tricount_by_uuid',
+                    params: {
+                      'p_tricount_id': tricountId,
+                      'p_join_as_new': true,
+                    },
+                  );
+
+                  final status =
+                      res is Map ? (res['status']?.toString() ?? '') : '';
+                  final message =
+                      res is Map ? (res['message']?.toString() ?? '') : '';
+
+                  if (status == 'joined' || status == 'already_joined') {
+                    await Supabase.instance.client
+                        .from('tricount_invites')
+                        .delete()
+                        .eq('id', inviteId);
+                    if (context.mounted) {
+                      DataProvider().refreshAll();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            message.isNotEmpty
+                                ? message
+                                : 'Joined successfully!',
+                          ),
+                        ),
+                      );
+                    }
+                  } else if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          message.isNotEmpty
+                              ? message
+                              : 'Could not join tricount',
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> _showGhostClaimDialog(
@@ -484,11 +651,15 @@ class _TricountInvitesTab extends StatelessWidget {
       return p;
     }).toList();
 
-    final updatedIds = [...allParticipantIds, realId];
+    final updatedIds = {
+      ...allParticipantIds.where((id) => id != ghostId),
+      realId,
+    }.toList();
 
     await Supabase.instance.client.from('tricounts').update({
       'participants': updatedParticipants,
       'participant_ids': updatedIds,
+      'created_by': realId,
     }).eq('id', tricountId);
 
     // 2. Update expenses — paid by ghost → paid by real user
@@ -538,11 +709,13 @@ class _TricountInvitesTab extends StatelessWidget {
         'id': currentUser.id,
         'name': currentUser.userMetadata?['name'] ?? 'Unknown',
         'photo_url': currentUser.userMetadata?['photo_url'],
+        'is_ghost': false,
       });
 
       await Supabase.instance.client.from('tricounts').update({
         'participant_ids': participantIds,
         'participants': participants,
+        'created_by': currentUser.id,
       }).eq('id', tricountId);
     }
   }

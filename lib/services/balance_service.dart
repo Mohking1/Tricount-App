@@ -40,8 +40,13 @@ class BalanceService {
           if (item is Map) {
             final userId = item['user_id'] ?? item['id'];
             final userAmount = double.tryParse(item['amount'].toString()) ?? 0;
-            final paidAmount =
+            var paidAmount =
                 double.tryParse(item['paid_amount']?.toString() ?? '0') ?? 0;
+
+            // Ignore self paid-back markers for payer line; they are not real repayments.
+            if (payerId != null && userId == payerId) {
+              paidAmount = 0;
+            }
 
             String debtorName = idToName[userId] ?? 'Unknown';
 

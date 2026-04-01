@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 import '../services/data_provider.dart';
 
 class InsightsView extends StatefulWidget {
@@ -19,24 +17,10 @@ class _InsightsViewState extends State<InsightsView> {
   String _timeFilter = 'All'; // 'Month', 'Year', 'All'
   String _scopeFilter = 'For the Group'; // 'For Me', 'For the Group'
   DateTime _selectedDate = DateTime.now();
-  int _touchedIndex = -1;
-  List<Map<String, dynamic>> _allCategories = [];
 
   @override
   void initState() {
     super.initState();
-    _loadCategories();
-  }
-
-  Future<void> _loadCategories() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? allCatsString = prefs.getString('all_categories');
-    if (allCatsString != null) {
-      setState(() {
-        _allCategories =
-            List<Map<String, dynamic>>.from(jsonDecode(allCatsString));
-      });
-    }
   }
 
   Map<String, dynamic> _processData(List<Map<String, dynamic>> allExpenses) {
@@ -125,8 +109,6 @@ class _InsightsViewState extends State<InsightsView> {
               ],
               const SizedBox(height: 16),
               _buildChartCard(categoryTotals, totalAmount),
-              const SizedBox(height: 16),
-              _buildCategoryList(categoryTotals),
             ],
           ),
         );
@@ -307,141 +289,159 @@ class _InsightsViewState extends State<InsightsView> {
       );
     }
 
-    // Top 3 for legend
-    final topCategories = sortedCategories.take(3).toList();
-
     return Card(
       color: const Color(0xFF1C1C1E),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Center(
-              child: Text(
-                'All',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isCompact = constraints.maxWidth < 380;
+            final chartSize = isCompact ? 170.0 : 150.0;
+
+            final chartWidget = SizedBox(
+              height: chartSize,
+              width: chartSize,
+              child: PieChart(
+                PieChartData(
+                  sectionsSpace: 0,
+                  centerSpaceRadius: 0,
+                  sections: _buildPieSections(sortedCategories),
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Row(
+            );
+
+            final summaryWidget = Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Pie Chart
-                SizedBox(
-                  height: 150,
-                  width: 150,
-                  child: PieChart(
-                    PieChartData(
-                      pieTouchData: PieTouchData(
-                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                          setState(() {
-                            if (!event.isInterestedForInteractions ||
-                                pieTouchResponse == null ||
-                                pieTouchResponse.touchedSection == null) {
-                              _touchedIndex = -1;
-                              return;
-                            }
-                            _touchedIndex = pieTouchResponse
-                                .touchedSection!.touchedSectionIndex;
-                          });
-                        },
-                      ),
-                      sectionsSpace: 0,
-                      centerSpaceRadius: 0,
-                      sections: _buildPieSections(sortedCategories),
+                const Text(
+                  'Total:',
+                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                ),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '₹ ${totalAmount.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
-                const SizedBox(width: 24),
-                // Legend & Total
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Total:',
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
-                      ),
-                      Text(
-                        '₹ ${totalAmount.toStringAsFixed(0)}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      ...topCategories.map((e) => Padding(
-                            padding: const EdgeInsets.only(bottom: 4),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 8,
-                                  height: 8,
-                                  decoration: BoxDecoration(
-                                    color: _getCategoryColor(e.key),
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    e.key,
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 12),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
+                const SizedBox(height: 12),
+                ...sortedCategories.map((e) => Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: _getCategoryColor(e.key),
+                              shape: BoxShape.circle,
                             ),
-                          )),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              e.key,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 12),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 120),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                '₹ ${e.value.toStringAsFixed(2)}',
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 12),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+              ],
+            );
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Center(
+                  child: Text(
+                    'All',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                if (isCompact)
+                  Column(
+                    children: [
+                      Center(child: chartWidget),
+                      const SizedBox(height: 16),
+                      summaryWidget,
                     ],
+                  )
+                else
+                  Row(
+                    children: [
+                      chartWidget,
+                      const SizedBox(width: 24),
+                      Expanded(child: summaryWidget),
+                    ],
+                  ),
+                const SizedBox(height: 16),
+                // Scope Dropdown
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: _scopeFilter,
+                      dropdownColor: Colors.grey[800],
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                      icon: const Icon(Icons.keyboard_arrow_down,
+                          color: Colors.black),
+                      items: ['For Me', 'For the Group'].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(
+                              color: value == _scopeFilter
+                                  ? Colors.black
+                                  : Colors.white,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        if (newValue != null) {
+                          setState(() {
+                            _scopeFilter = newValue;
+                          });
+                        }
+                      },
+                    ),
                   ),
                 ),
               ],
-            ),
-            const SizedBox(height: 16),
-            // Scope Dropdown
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: _scopeFilter,
-                  dropdownColor: Colors.grey[800],
-                  style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                  icon: const Icon(Icons.keyboard_arrow_down,
-                      color: Colors.black),
-                  items: ['For Me', 'For the Group'].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: TextStyle(
-                          color: value == _scopeFilter
-                              ? Colors.black
-                              : Colors.white,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) {
-                    if (newValue != null) {
-                      setState(() {
-                        _scopeFilter = newValue;
-                      });
-                    }
-                  },
-                ),
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
@@ -451,53 +451,14 @@ class _InsightsViewState extends State<InsightsView> {
       List<MapEntry<String, double>> sortedCategories) {
     if (sortedCategories.isEmpty) return [];
 
-    return sortedCategories.asMap().entries.map((entry) {
-      final index = entry.key;
-      final data = entry.value;
-      final isTouched = index == _touchedIndex;
-      final radius = isTouched ? 80.0 : 75.0;
-
+    return sortedCategories.map((data) {
       return PieChartSectionData(
         color: _getCategoryColor(data.key),
         value: data.value,
         title: '',
-        radius: radius,
+        radius: 75,
       );
     }).toList();
-  }
-
-  Widget _buildCategoryList(Map<String, double> categoryTotals) {
-    final sortedCategories = categoryTotals.entries.toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
-
-    return Column(
-      children: sortedCategories.map((entry) {
-        return Container(
-          margin: const EdgeInsets.only(bottom: 1),
-          color: const Color(0xFF1C1C1E),
-          child: ListTile(
-            leading: Text(
-              _getCategoryEmoji(entry.key),
-              style: const TextStyle(fontSize: 24),
-            ),
-            title: Text(
-              entry.key,
-              style: const TextStyle(color: Colors.grey),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-            trailing: Text(
-              '₹ ${entry.value.toStringAsFixed(2)}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        );
-      }).toList(),
-    );
   }
 
   Color _getCategoryColor(String category) {
@@ -520,44 +481,26 @@ class _InsightsViewState extends State<InsightsView> {
         return const Color(0xFF5856D6); // Indigo
       case 'Other':
       default:
-        return Colors.grey;
+        return _fallbackCategoryColor(category);
     }
   }
 
-  String _getCategoryEmoji(String category) {
-    // Check all categories (including edited defaults)
-    final cat = _allCategories.firstWhere(
-      (c) => c['name'] == category,
-      orElse: () => <String, dynamic>{},
-    );
-    if (cat.isNotEmpty) {
-      return cat['icon'];
-    }
-
-    // Fallback for legacy categories or if not found in list
-    switch (category) {
-      case 'Food':
-        return '🍔';
-      case 'Transport':
-        return '🚌';
-      case 'Accommodation':
-        return '🏠';
-      case 'Entertainment':
-        return '🎬';
-      case 'Shopping':
-        return '🛍️';
-      case 'Other':
-        return '📦';
-      case 'Rent & Charges':
-        return '🏠';
-      case 'Restaurants & Bars':
-        return '🍔';
-      case 'Groceries':
-        return '🛒';
-      case 'Furniture':
-        return '🪑';
-      default:
-        return '📦';
-    }
+  Color _fallbackCategoryColor(String category) {
+    const palette = [
+      Color(0xFF64B5F6),
+      Color(0xFF81C784),
+      Color(0xFFFFB74D),
+      Color(0xFFBA68C8),
+      Color(0xFF4DB6AC),
+      Color(0xFFA1887F),
+      Color(0xFFFF8A65),
+      Color(0xFF90A4AE),
+      Color(0xFFDCE775),
+      Color(0xFFF06292),
+    ];
+    final key = category.trim().toLowerCase();
+    final hash =
+        key.codeUnits.fold<int>(0, (acc, c) => (acc * 31 + c) & 0x7fffffff);
+    return palette[hash % palette.length];
   }
 }

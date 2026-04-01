@@ -18,6 +18,15 @@ class _ExpensesViewState extends State<ExpensesView> {
   String? _selectedPayer;
   String _paymentStatus = 'All'; // 'All', 'Unpaid', 'Partially Paid', 'Paid'
 
+  @override
+  void initState() {
+    super.initState();
+    // Ensure mobile builds don't keep stale cached totals after logic changes.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      DataProvider().refreshTricountExpenses(widget.tricountId);
+    });
+  }
+
   void _showFilterBottomSheet(List<String> categories, List<String> payers) {
     showModalBottomSheet(
       context: context,
@@ -189,6 +198,8 @@ class _ExpensesViewState extends State<ExpensesView> {
 
         // Filter expenses
         final expenses = allExpenses.where((expense) {
+          if (expense['type'] == 'transfer') return false;
+
           final name = (expense['name'] as String? ?? '').toLowerCase();
           final category = expense['category'] as String?;
           final paidBy = expense['paid_by'] as String?;
@@ -256,10 +267,28 @@ class _ExpensesViewState extends State<ExpensesView> {
         double totalExpenses = 0;
         double myExpenses = 0;
         for (var expense in allExpenses) {
+          if (expense['type'] == 'transfer') continue;
+
           final value = double.tryParse(expense['value'].toString()) ?? 0;
           totalExpenses += value;
-          if (expense['user_id'] == currentUserId) {
-            myExpenses += value;
+
+          // "My Expenses" reflects net share due after settlements.
+          if (currentUserId != null) {
+            final involved = expense['involved_participants'];
+            if (involved is List) {
+              for (var item in involved) {
+                if (item is Map) {
+                  final uid = item['user_id'] ?? item['id'];
+                  if (uid == currentUserId) {
+                    // Calculate total consumption for the user regardless of who paid
+                    final amount =
+                        double.tryParse(item['amount']?.toString() ?? '0') ?? 0;
+                    myExpenses += amount;
+                    break;
+                  }
+                }
+              }
+            }
           }
         }
 

@@ -7,6 +7,7 @@ import 'dart:convert';
 import '../services/photo_service.dart';
 import '../services/sync_service.dart';
 import '../services/data_provider.dart';
+import '../utils/category_icon_utils.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   final String tricountId;
@@ -44,11 +45,15 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
   // Categories - Expense
   final List<Map<String, String>> _defaultExpenseCategories = [
     {'name': 'Food', 'icon': '🍔'},
+    {'name': 'Groceries', 'icon': '🛒'},
     {'name': 'Transport', 'icon': '🚌'},
     {'name': 'Accommodation', 'icon': '🏠'},
     {'name': 'Entertainment', 'icon': '🎬'},
     {'name': 'Shopping', 'icon': '🛍️'},
-    {'name': 'Other', 'icon': '📦'},
+    {'name': 'Restaurants', 'icon': '🍝'},
+    {'name': 'Transfer', 'icon': '💸'},
+    {'name': 'Rent', 'icon': '🏡'},
+    {'name': 'Other', 'icon': '🧾'},
   ];
   // Categories - Income
   final List<Map<String, String>> _defaultIncomeCategories = [
@@ -57,7 +62,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
     {'name': 'Investment', 'icon': '📈'},
     {'name': 'Refund', 'icon': '🔄'},
     {'name': 'Gift', 'icon': '🎁'},
-    {'name': 'Other', 'icon': '📦'},
+    {'name': 'Other', 'icon': '🧾'},
   ];
   final List<String> _emojiPresets = const [
     '🍔',
@@ -65,7 +70,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
     '🏠',
     '🎬',
     '🛍️',
-    '📦',
+    '🧾',
     '🍺',
     '✈️',
     '💊',
@@ -105,6 +110,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
     });
     _amountController.addListener(_updateSplitAmounts);
     _fetchData();
+  }
+
+  String _participantId(Map<String, dynamic> participant) {
+    final raw = participant['id'] ?? participant['user_id'];
+    return raw?.toString() ?? '';
   }
 
   void _updateSplitAmounts() {
@@ -182,12 +192,14 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
 
           // Initialize split map
           for (var p in _participants) {
-            _splitInvolved[p['id']] = true;
+            final participantId = _participantId(p);
+            if (participantId.isEmpty) continue;
+            _splitInvolved[participantId] = true;
             // Initialize controllers
-            if (!_splitControllers.containsKey(p['id'])) {
+            if (!_splitControllers.containsKey(participantId)) {
               final controller = TextEditingController(text: '0.00');
               controller.addListener(_updateTotalFromSplits);
-              _splitControllers[p['id']] = controller;
+              _splitControllers[participantId] = controller;
             }
           }
 
@@ -195,11 +207,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
           if (currentUser != null) {
             // Check if current user is in participants
             final me = _participants.firstWhere(
-                (p) => p['id'] == currentUser.id,
+                (p) => _participantId(p) == currentUser.id,
                 orElse: () => _participants.isNotEmpty
                     ? _participants.first
                     : {'id': ''});
-            _paidByUserId = me['id'];
+            _paidByUserId = _participantId(me);
           }
 
           if (widget.expense != null) {
@@ -218,7 +230,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
   void _initializeFromExpense() {
     final expense = widget.expense!;
     _titleController.text = expense['name'] ?? '';
-    _amountController.text = expense['value'].toString();
+    _amountController.text =
+        (double.tryParse(expense['value'].toString()) ?? 0).toStringAsFixed(2);
     _selectedDate = DateTime.parse(expense['created_at']);
     _selectedCategory = expense['category'];
     _paidByUserId = expense['user_id'];
@@ -254,7 +267,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
           _splitInvolved[userId] = true;
           _splitAmounts[userId] = amount;
           if (_splitControllers.containsKey(userId)) {
-            _splitControllers[userId]!.text = amount.toString();
+            _splitControllers[userId]!.text = amount.toStringAsFixed(2);
           }
 
           // Check if it looks like unequal split
@@ -320,7 +333,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
                 content: Text(
-                    'Split amounts (₹$sum) do not match total (₹$amount)')),
+                    'Split amounts (₹${sum.toStringAsFixed(2)}) do not match total (₹${amount.toStringAsFixed(2)})')),
           );
           setState(() => _isLoading = false);
           return;
@@ -355,13 +368,62 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
         }
       }
 
-      // Get payer name for backward compatibility
-      final payer = _participants.firstWhere((p) => p['id'] == _paidByUserId,
-          orElse: () => {'name': 'Unknown'});
-
       String type = 'expense';
       if (_tabController.index == 1) type = 'income';
       if (_tabController.index == 2) type = 'transfer';
+
+      // Normalize participants and guard against malformed split payloads.
+      // This prevents full expense amount from being treated as a single user's share.
+      if (type != 'transfer') {
+        final normalized = <Map<String, dynamic>>[];
+        for (final item in involvedList) {
+          if (item is! Map) continue;
+          final uid = (item['user_id'] ?? item['id'])?.toString() ?? '';
+          if (uid.isEmpty) continue;
+          final amt = double.tryParse(item['amount']?.toString() ?? '0') ?? 0;
+          if (amt <= 0) continue;
+          normalized.add({'user_id': uid, 'amount': amt});
+        }
+
+        if (normalized.isEmpty) {
+          final selectedIds = _splitInvolved.entries
+              .where((e) => e.value)
+              .map((e) => e.key)
+              .where((id) => id.isNotEmpty)
+              .toList();
+          final fallbackIds = selectedIds.isNotEmpty
+              ? selectedIds
+              : (_participants
+                  .map(_participantId)
+                  .where((id) => id.isNotEmpty)
+                  .toList());
+          final count = fallbackIds.length;
+          final equalShare = count > 0 ? amount / count : amount;
+          involvedList = fallbackIds
+              .map((id) => {'user_id': id, 'amount': equalShare})
+              .toList();
+        } else {
+          final sum = normalized.fold<double>(
+              0, (prev, item) => prev + (item['amount'] as double));
+          if ((sum - amount).abs() > 0.01 && sum > 0) {
+            // Keep user's intended relative weights, but force total to match bill.
+            final scale = amount / sum;
+            involvedList = normalized
+                .map((item) => {
+                      'user_id': item['user_id'],
+                      'amount': (item['amount'] as double) * scale,
+                    })
+                .toList();
+          } else {
+            involvedList = normalized;
+          }
+        }
+      }
+
+      // Get payer name for backward compatibility
+      final payer = _participants.firstWhere(
+          (p) => _participantId(p) == _paidByUserId,
+          orElse: () => {'name': 'Unknown'});
 
       // For transfer, build involvedList from the recipient, not from split
       if (type == 'transfer') {
@@ -465,6 +527,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
       if (mounted) {
         // Refresh DataProvider so all screens see the new expense
         DataProvider().refreshTricountExpenses(widget.tricountId);
+        DataProvider().refreshPersonal();
         Navigator.pop(context, true);
       }
     } catch (e) {
@@ -483,44 +546,65 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
     try {
       final currentUser = Supabase.instance.client.auth.currentUser;
       if (currentUser == null) return;
-
-      // Find the current user's share from the involved_participants
-      double myShare = 0;
-      final involved = expenseData['involved_participants'];
-      if (involved is List) {
-        for (var item in involved) {
-          if (item is Map) {
-            final uid = item['user_id'] ?? item['id'];
-            if (uid == currentUser.id) {
-              myShare = double.tryParse(item['amount'].toString()) ?? 0;
-              break;
-            }
-          }
-        }
-      }
-
-      // If user has no share and is not the payer, skip
-      final isPayer = expenseData['user_id'] == currentUser.id ||
-          _paidByUserId == currentUser.id;
-      if (myShare <= 0 && !isPayer) return;
-
-      // Use the user's share if they have one, otherwise use the full amount
-      final amountToLog = myShare > 0 ? myShare : expenseData['value'];
+      final expenseType = (expenseData['type']?.toString() ?? 'expense');
+      final payerId = (expenseData['user_id'] ?? _paidByUserId)?.toString();
+      final totalAmount =
+          double.tryParse(expenseData['value']?.toString() ?? '0') ?? 0;
       final paymentMode =
           (expenseData['payment_method'] as String?)?.toLowerCase() ?? 'online';
-      final String noteText = isPayer && myShare > 0
-          ? 'Group expense (paid ₹${expenseData['value']}, your share)'
-          : isPayer
-              ? 'Group expense (paid full amount)'
-              : 'Group expense (your share)';
+
+      String txType;
+      String txName = (expenseData['name']?.toString() ?? 'Group transaction');
+      String noteText;
+      double amountToLog;
+
+      if (expenseType == 'expense') {
+        // Cash-tracking mode: only the actual payer logs the full outflow.
+        if (payerId != currentUser.id) return;
+        txType = 'expense';
+        amountToLog = totalAmount;
+        noteText = 'Group expense payment (full bill paid by you)';
+      } else if (expenseType == 'income') {
+        if (payerId != currentUser.id) return;
+        txType = 'income';
+        amountToLog = totalAmount;
+        noteText = 'Group income received';
+      } else if (expenseType == 'transfer') {
+        String? receiverId;
+        final involved = expenseData['involved_participants'];
+        if (involved is List && involved.isNotEmpty) {
+          final first = involved.first;
+          if (first is Map) {
+            receiverId = (first['user_id'] ?? first['id'])?.toString();
+          }
+        }
+
+        if (payerId == currentUser.id) {
+          txType = 'expense';
+          amountToLog = totalAmount;
+          noteText = 'Transfer sent for group settlement';
+        } else if (receiverId == currentUser.id) {
+          txType = 'income';
+          amountToLog = totalAmount;
+          noteText = 'Transfer received for group settlement';
+        } else {
+          return;
+        }
+      } else {
+        return;
+      }
+
+      if (amountToLog <= 0) return;
 
       await Supabase.instance.client.from('personal_transactions').insert({
         'user_id': currentUser.id,
-        'name': expenseData['name'],
+        'name': txName,
         'amount': amountToLog,
-        'type': 'expense',
+        'type': txType,
         'payment_mode': paymentMode,
-        'category': expenseData['category'],
+        'category': expenseType == 'transfer'
+            ? 'Transfer'
+            : (expenseData['category'] ?? 'Other'),
         'date': expenseData['created_at'],
         'notes': noteText,
       });
@@ -735,9 +819,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
                                 dropdownColor: const Color(0xFF1C1C1E),
                                 icon: const Icon(Icons.keyboard_arrow_down,
                                     color: Colors.grey),
-                                items: _participants.map((p) {
+                                items: _participants
+                                    .where((p) => _participantId(p).isNotEmpty)
+                                    .map((p) {
+                                  final participantId = _participantId(p);
                                   return DropdownMenuItem<String>(
-                                    value: p['id'],
+                                    value: participantId,
                                     child: Text(
                                       p['name'] ?? 'Unknown',
                                       style:
@@ -931,10 +1018,13 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
                           icon: const Icon(Icons.keyboard_arrow_down,
                               color: Colors.grey),
                           items: _participants
-                              .where((p) => p['id'] != _paidByUserId)
+                              .where((p) =>
+                                  _participantId(p).isNotEmpty &&
+                                  _participantId(p) != _paidByUserId)
                               .map((p) {
+                            final participantId = _participantId(p);
                             return DropdownMenuItem<String>(
-                              value: p['id'],
+                              value: participantId,
                               child: Text(
                                 p['name'] ?? 'Unknown',
                                 style: const TextStyle(color: Colors.white),
@@ -1040,8 +1130,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Column(
-                          children: _participants.map((p) {
-                            final isSelected = _splitInvolved[p['id']] ?? false;
+                          children: _participants
+                              .where((p) => _participantId(p).isNotEmpty)
+                              .map((p) {
+                            final participantId = _participantId(p);
+                            final isSelected =
+                                _splitInvolved[participantId] ?? false;
 
                             // Calculate display amount based on mode
                             String displayAmount = '₹0.00';
@@ -1062,7 +1156,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
                               value: isSelected,
                               onChanged: (val) {
                                 setState(() {
-                                  _splitInvolved[p['id']] = val ?? false;
+                                  _splitInvolved[participantId] = val ?? false;
                                 });
                               },
                               title: Text(p['name'] ?? 'Unknown',
@@ -1078,7 +1172,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
                                   : SizedBox(
                                       width: 80,
                                       child: TextField(
-                                        controller: _splitControllers[p['id']],
+                                        controller:
+                                            _splitControllers[participantId],
                                         keyboardType: const TextInputType
                                             .numberWithOptions(decimal: true),
                                         style: const TextStyle(
@@ -1101,7 +1196,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
                                         onChanged: (val) {
                                           final amount =
                                               double.tryParse(val) ?? 0;
-                                          _splitAmounts[p['id']] = amount;
+                                          _splitAmounts[participantId] = amount;
                                         },
                                       ),
                                     ),
@@ -1124,20 +1219,22 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: _saveExpense,
+                      onPressed: _isLoading ? null : _saveExpense,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF0A84FF),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
-                        'Add',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      child: _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                              'Add',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
                     ),
                   ),
                 ],
@@ -1162,6 +1259,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
     }
 
     final payerId = _paidByUserId!;
+    final currentUser = Supabase.instance.client.auth.currentUser;
+    final receiver = _participants.firstWhere(
+        (p) => _participantId(p) == receiverId,
+        orElse: () => {'name': 'Unknown'});
+    final payerName = payer['name']?.toString() ?? 'Someone';
+    final receiverName = receiver['name']?.toString() ?? 'Someone';
 
     // Find expenses where:
     // Paid By = Receiver (receiverId)
@@ -1183,6 +1286,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
       final involved =
           List<dynamic>.from(expense['involved_participants'] ?? []);
       bool updated = false;
+      final settlementEntries = <Map<String, dynamic>>[];
 
       final updatedInvolved = involved.map((item) {
         if (item is Map) {
@@ -1203,6 +1307,32 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
                 remainingTransfer = 0;
               }
 
+              if (currentUser != null && pay > 0) {
+                if (currentUser.id == receiverId) {
+                  settlementEntries.add({
+                    'user_id': currentUser.id,
+                    'name': expense['name'] ?? 'Settlement received',
+                    'amount': pay,
+                    'type': 'income',
+                    'payment_mode': _paymentMethod.toLowerCase(),
+                    'category': 'Transfer',
+                    'date': DateTime.now().toIso8601String(),
+                    'notes': 'Settlement received from $payerName',
+                  });
+                } else if (currentUser.id == payerId) {
+                  settlementEntries.add({
+                    'user_id': currentUser.id,
+                    'name': expense['name'] ?? 'Settlement paid',
+                    'amount': pay,
+                    'type': 'expense',
+                    'payment_mode': _paymentMethod.toLowerCase(),
+                    'category': 'Transfer',
+                    'date': DateTime.now().toIso8601String(),
+                    'notes': 'Settlement paid to $receiverName',
+                  });
+                }
+              }
+
               updated = true;
               return {...item, 'paid_amount': paid + pay};
             }
@@ -1214,6 +1344,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
       if (updated) {
         await SyncService().updateExpense(
             expense['id'], {'involved_participants': updatedInvolved});
+      }
+
+      if (settlementEntries.isNotEmpty) {
+        await Supabase.instance.client
+            .from('personal_transactions')
+            .insert(settlementEntries);
       }
     }
 
@@ -1233,6 +1369,32 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
         'payment_method': _paymentMethod,
       };
       await SyncService().insertExpense(expenseData);
+
+      if (currentUser != null) {
+        if (currentUser.id == receiverId) {
+          await Supabase.instance.client.from('personal_transactions').insert({
+            'user_id': currentUser.id,
+            'name': expenseData['name'],
+            'amount': remainingTransfer,
+            'type': 'income',
+            'payment_mode': _paymentMethod.toLowerCase(),
+            'category': 'Transfer',
+            'date': DateTime.now().toIso8601String(),
+            'notes': 'Transfer received from $payerName',
+          });
+        } else if (currentUser.id == payerId) {
+          await Supabase.instance.client.from('personal_transactions').insert({
+            'user_id': currentUser.id,
+            'name': expenseData['name'],
+            'amount': remainingTransfer,
+            'type': 'expense',
+            'payment_mode': _paymentMethod.toLowerCase(),
+            'category': 'Transfer',
+            'date': DateTime.now().toIso8601String(),
+            'notes': 'Transfer sent to $receiverName',
+          });
+        }
+      }
     }
   }
 
@@ -1255,24 +1417,73 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
   }
 
   String _getCategoryIcon(String categoryName) {
-    final cat = _allCategories.firstWhere(
-      (c) => c['name'] == categoryName,
-      orElse: () => {'icon': '📦'},
-    );
-    return cat['icon'] ?? '📦';
+    final key = categoryName.trim().toLowerCase();
+    for (final c in _allCategories) {
+      final name = (c['name']?.toString() ?? '').trim().toLowerCase();
+      if (name == key) {
+        final icon = (c['icon']?.toString() ?? '').trim();
+        if (icon.isNotEmpty) return icon;
+      }
+    }
+    return categoryIconForName(categoryName);
   }
 
   Future<void> _loadCategories() async {
     final prefs = await SharedPreferences.getInstance();
     final String? expCatsString = prefs.getString('group_expense_categories');
     final String? incCatsString = prefs.getString('group_income_categories');
+    final List<Map<String, dynamic>> importedCategories = [];
+
+    try {
+      final rows = await Supabase.instance.client
+          .from('categories')
+          .select('name,icon,color')
+          .eq('tricount_id', widget.tricountId);
+      importedCategories.addAll(List<Map<String, dynamic>>.from(rows));
+    } catch (_) {
+      // If table/query is unavailable, keep local categories only.
+    }
+
+    List<Map<String, dynamic>> mergeByName(
+        List<Map<String, dynamic>> base, List<Map<String, dynamic>> incoming) {
+      final result = List<Map<String, dynamic>>.from(base);
+      final indexByName = <String, int>{};
+      for (var i = 0; i < result.length; i++) {
+        final name = (result[i]['name']?.toString() ?? '').trim().toLowerCase();
+        if (name.isNotEmpty) indexByName[name] = i;
+      }
+
+      for (final c in incoming) {
+        final rawName = (c['name']?.toString() ?? '').trim();
+        if (rawName.isEmpty) continue;
+        final key = rawName.toLowerCase();
+        final icon = (c['icon']?.toString() ?? '').trim();
+        final payload = {
+          'name': rawName,
+          'icon': icon.isNotEmpty ? icon : categoryIconForName(rawName),
+        };
+
+        if (indexByName.containsKey(key)) {
+          result[indexByName[key]!] = payload;
+        } else {
+          result.add(payload);
+          indexByName[key] = result.length - 1;
+        }
+      }
+
+      return result;
+    }
+
     setState(() {
-      _allExpenseCategories = expCatsString != null
+      final localExpense = expCatsString != null
           ? List<Map<String, dynamic>>.from(jsonDecode(expCatsString))
           : List<Map<String, dynamic>>.from(_defaultExpenseCategories);
-      _allIncomeCategories = incCatsString != null
+      final localIncome = incCatsString != null
           ? List<Map<String, dynamic>>.from(jsonDecode(incCatsString))
           : List<Map<String, dynamic>>.from(_defaultIncomeCategories);
+
+      _allExpenseCategories = mergeByName(localExpense, importedCategories);
+      _allIncomeCategories = localIncome;
     });
     _saveCategories();
   }
@@ -1283,6 +1494,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
         'group_expense_categories', jsonEncode(_allExpenseCategories));
     await prefs.setString(
         'group_income_categories', jsonEncode(_allIncomeCategories));
+    final merged = <Map<String, dynamic>>[
+      ..._allExpenseCategories,
+      ..._allIncomeCategories,
+    ];
+    await prefs.setString('all_categories', jsonEncode(merged));
   }
 
   Future<void> _showCategoryDialog() async {
@@ -1305,8 +1521,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               children: [
-                ..._allCategories.map(
-                    (c) => _buildCategoryItem(c['name'], c['icon'] ?? '📦')),
+                ..._allCategories.map((c) => _buildCategoryItem(
+                    c['name'], _getCategoryIcon(c['name']?.toString() ?? ''))),
                 const Divider(color: Colors.grey),
                 ListTile(
                   leading: const Icon(Icons.edit, color: Colors.white),
@@ -1352,7 +1568,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
                         shrinkWrap: true,
                         children: [
                           ..._allCategories.map((c) => ListTile(
-                                leading: Text(c['icon'],
+                                leading: Text(
+                                    _getCategoryIcon(
+                                        c['name']?.toString() ?? ''),
                                     style: const TextStyle(fontSize: 24)),
                                 title: Text(c['name'],
                                     style:
@@ -1413,7 +1631,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen>
 
   Future<void> _showEditCategoryDialog(Map<String, dynamic> category) async {
     final nameController = TextEditingController(text: category['name']);
-    String selectedEmoji = (category['icon'] ?? '📦').toString();
+    String selectedEmoji = _getCategoryIcon(category['name']);
     final emojiController = TextEditingController(text: selectedEmoji);
 
     await showDialog(

@@ -15,6 +15,19 @@ class _AuthScreenState extends State<AuthScreen> {
   final _nameController = TextEditingController();
   bool _isLogin = true;
   bool _isLoading = false;
+  bool _obscurePassword = true;
+  String? _infoMessage;
+
+  void _showMessage(String text, {bool isError = false}) {
+    if (!mounted) return;
+    setState(() => _infoMessage = text);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text),
+        backgroundColor: isError ? Colors.red : Colors.green,
+      ),
+    );
+  }
 
   Future<void> _submitForm() async {
     if (!_formKey.currentState!.validate()) return;
@@ -28,26 +41,36 @@ class _AuthScreenState extends State<AuthScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text,
         );
+        _showMessage('Signed in successfully.');
       } else {
-        await supabase.auth.signUp(
+        final response = await supabase.auth.signUp(
           email: _emailController.text.trim(),
           password: _passwordController.text,
           data: {'name': _nameController.text.trim()},
         );
-        // User creation is handled by Supabase trigger
+
+        if (response.session == null) {
+          _showMessage(
+              'Account created. Please check your email and confirm your account before signing in.');
+          setState(() => _isLogin = true);
+        } else {
+          _showMessage('Account created and signed in.');
+        }
       }
     } on AuthException catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message)),
+      final raw = e.message.toLowerCase();
+      if (raw.contains('email not confirmed')) {
+        _showMessage(
+          'Your email is not confirmed yet. Please check your inbox.',
+          isError: true,
         );
+      } else if (raw.contains('invalid login credentials')) {
+        _showMessage('Invalid email or password.', isError: true);
+      } else {
+        _showMessage(e.message, isError: true);
       }
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('An error occurred: $e')),
-        );
-      }
+      _showMessage('An error occurred: $e', isError: true);
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -65,6 +88,37 @@ class _AuthScreenState extends State<AuthScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  _isLogin ? 'Welcome Back' : 'Create Account',
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  _isLogin
+                      ? 'Sign in to continue'
+                      : 'Sign up with your email and password',
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                if (_infoMessage != null) ...[
+                  const SizedBox(height: 12),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1C1C1E),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey.shade700),
+                    ),
+                    child: Text(
+                      _infoMessage!,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 20),
                 if (!_isLogin)
                   TextFormField(
                     controller: _nameController,
@@ -103,11 +157,19 @@ class _AuthScreenState extends State<AuthScreen> {
                 TextFormField(
                   controller: _passwordController,
                   style: const TextStyle(fontFamily: 'Roboto'),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Password',
                     border: OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: Icon(_obscurePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() => _obscurePassword = !_obscurePassword);
+                      },
+                    ),
                   ),
-                  obscureText: true,
+                  obscureText: _obscurePassword,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a password';
@@ -131,7 +193,12 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 const SizedBox(height: 16),
                 TextButton(
-                  onPressed: () => setState(() => _isLogin = !_isLogin),
+                  onPressed: () {
+                    setState(() {
+                      _isLogin = !_isLogin;
+                      _infoMessage = null;
+                    });
+                  },
                   child: Text(
                     _isLogin
                         ? 'Create a new account'

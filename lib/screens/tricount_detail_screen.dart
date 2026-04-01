@@ -367,15 +367,24 @@ class _TricountDetailScreenState extends State<TricountDetailScreen> {
       final currentUser = Supabase.instance.client.auth.currentUser;
       if (currentUser == null) return;
 
-      await Supabase.instance.client.rpc('leave_tricount', params: {
+      final result =
+          await Supabase.instance.client.rpc('leave_tricount', params: {
         'p_tricount_id': widget.tricountId,
       });
+
+      final deleted = result is Map && result['deleted'] == true;
 
       if (context.mounted) {
         DataProvider().refreshAll();
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('You left the tricount')),
+          SnackBar(
+            content: Text(
+              deleted
+                  ? 'You left and the tricount was deleted (no members left)'
+                  : 'You left the tricount',
+            ),
+          ),
         );
       }
     } catch (e) {

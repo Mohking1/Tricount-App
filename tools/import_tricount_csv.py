@@ -14,8 +14,6 @@ from typing import Any
 from urllib import error, request
 
 
-TRANSFER_WORDS = {"transfer", "transfered", "transferred"}
-
 
 @dataclass
 class Event:
@@ -34,6 +32,31 @@ class Event:
     paid_by: str
     rows: list[dict[str, Any]]
     involved: list[dict[str, Any]]
+
+
+HARDCODED_CATEGORY_ICONS: dict[str, str] = {
+    "food": "🍔",
+    "groceries": "🛒",
+    "transport": "🚌",
+    "accommodation": "🏠",
+    "accomodation": "🏠",
+    "entertainment": "🎬",
+    "shopping": "🛍️",
+    "restaurants": "🍝",
+    "restaurant": "🍝",
+    "rent": "🏡",
+    "transfer": "💸",
+    "transfered": "💸",
+    "furniture": "🛋️",
+    "cleaning & hygiene": "🧹",
+    "water": "💧",
+    "other": "🧾",
+}
+
+
+def hardcoded_category_icon(name: str | None) -> str:
+    key = (name or "").strip().lower()
+    return HARDCODED_CATEGORY_ICONS.get(key, "🧾")
 
 
 def parse_args() -> argparse.Namespace:
@@ -60,12 +83,6 @@ def parse_args() -> argparse.Namespace:
         "--access-token",
         default=None,
         help="Supabase user access token (or set SUPABASE_ACCESS_TOKEN env var)",
-    )
-    parser.add_argument(
-        "--similarity-threshold",
-        type=float,
-        default=0.45,
-        help="Levenshtein similarity threshold for BALANCE title match",
     )
     parser.add_argument(
         "--dry-run",
@@ -112,6 +129,15 @@ def parse_custom_category(category_raw: str) -> tuple[str, str | None, bool]:
     if not raw:
         return "Other", None, False
 
+    # Normalize common categories
+    normalized = raw.capitalize()
+    if normalized == "Accomodation" or normalized == "Accommodation":
+        normalized = "Accommodation"
+    elif normalized == "Groceries" or normalized == "Food" or normalized == "Restaurants" or normalized == "Rent" or normalized == "Transport":
+        pass
+    else:
+        pass # allow normal formatting
+
     payload = None
     is_custom = False
 
@@ -139,7 +165,7 @@ def parse_custom_category(category_raw: str) -> tuple[str, str | None, bool]:
         except json.JSONDecodeError:
             pass
 
-    return raw, None, is_custom
+    return normalized, None, is_custom
 
 
 def extract_embedded_icon(name: str) -> tuple[str, str | None]:
@@ -165,39 +191,6 @@ def event_key(row: dict[str, str]) -> tuple[str, ...]:
         (row.get("date") or "").strip(),
         (row.get("paid_by") or "").strip(),
     )
-
-
-def levenshtein(a: str, b: str) -> int:
-    if a == b:
-        return 0
-    if not a:
-        return len(b)
-    if not b:
-        return len(a)
-
-    prev = list(range(len(b) + 1))
-    for i, ca in enumerate(a, start=1):
-        curr = [i]
-        for j, cb in enumerate(b, start=1):
-            cost = 0 if ca == cb else 1
-            curr.append(
-                min(
-                    prev[j] + 1,
-                    curr[j - 1] + 1,
-                    prev[j - 1] + cost,
-                )
-            )
-        prev = curr
-    return prev[-1]
-
-
-def similarity(a: str, b: str) -> float:
-    x = (a or "").strip().lower()
-    y = (b or "").strip().lower()
-    if not x and not y:
-        return 1.0
-    denom = max(len(x), len(y), 1)
-    return 1.0 - (levenshtein(x, y) / denom)
 
 
 def extract_anon_key() -> str:
@@ -300,17 +293,8 @@ def _make_event(index: int, key: tuple[str, ...], rows: list[dict[str, str]]) ->
     )
 
 
-def normalize_transfer_word(s: str) -> str:
-    return re.sub(r"[^a-z]", "", (s or "").lower())
 
-
-def is_transfer_category(name: str) -> bool:
-    normalized = normalize_transfer_word(name)
-    return normalized in {normalize_transfer_word(x) for x in TRANSFER_WORDS}
-
-
-def apply_balance_settlements(events: list[Event], threshold: float) -> dict[str, int]:
-    # Build initial involved shares on NORMAL events.
+def init_normal_involved(events: list[Event]) -> None:
     for event in events:
         if event.event_type != "NORMAL":
             continue
@@ -329,101 +313,6 @@ def apply_balance_settlements(events: list[Event], threshold: float) -> dict[str
             )
         event.involved = involved
 
-    stat_title_matched = 0
-    stat_fallback_matched = 0
-    stat_unallocated = 0
-
-    for idx, event in enumerate(events):
-        if event.event_type != "BALANCE":
-            continue
-
-        creditor = event.paid_by
-        for row in event.rows:
-            debtor = (row.get("owes_who") or "").strip()
-            amount = to_decimal(row.get("owes_amount") or "0")
-            if amount <= 0 or not debtor:
-                continue
-
-            remaining = amount
-
-            # Pass 1: title-similar candidates below current row, same creditor.
-            candidates_1 = []
-            for j in range(idx + 1, len(events)):
-                e = events[j]
-                if e.event_type != "NORMAL":
-                    continue
-                if e.paid_by != creditor:
-                    continue
-                debt_line = _find_debt_line(e, debtor)
-                if debt_line is None:
-                    continue
-                left = debt_line["amount"] - debt_line["paid_amount"]
-                if left <= 0:
-                    continue
-                sim = similarity(event.title, e.title)
-                if sim >= threshold:
-                    days = abs((event.date_dt - e.date_dt).days)
-                    candidates_1.append((sim, -days, j, e, debt_line))
-
-            candidates_1.sort(key=lambda x: (x[0], x[1], -x[2]), reverse=True)
-
-            for _, _, _, e, debt_line in candidates_1:
-                if remaining <= 0:
-                    break
-                left = debt_line["amount"] - debt_line["paid_amount"]
-                if left <= 0:
-                    continue
-                used = min(remaining, left)
-                debt_line["paid_amount"] += used
-                remaining -= used
-                stat_title_matched += 1
-
-            # Pass 2: fallback distribution to any below-date NORMAL debts for same debtor.
-            if remaining > 0:
-                candidates_2 = []
-                for j in range(idx + 1, len(events)):
-                    e = events[j]
-                    if e.event_type != "NORMAL":
-                        continue
-                    debt_line = _find_debt_line(e, debtor)
-                    if debt_line is None:
-                        continue
-                    left = debt_line["amount"] - debt_line["paid_amount"]
-                    if left <= 0:
-                        continue
-                    days = abs((event.date_dt - e.date_dt).days)
-                    same_creditor = 1 if e.paid_by == creditor else 0
-                    candidates_2.append((same_creditor, -days, -j, e, debt_line))
-
-                candidates_2.sort(reverse=True)
-
-                for _, _, _, e, debt_line in candidates_2:
-                    if remaining <= 0:
-                        break
-                    left = debt_line["amount"] - debt_line["paid_amount"]
-                    if left <= 0:
-                        continue
-                    used = min(remaining, left)
-                    debt_line["paid_amount"] += used
-                    remaining -= used
-                    stat_fallback_matched += 1
-
-            if remaining > 0:
-                stat_unallocated += 1
-
-    return {
-        "title_matches": stat_title_matched,
-        "fallback_matches": stat_fallback_matched,
-        "unallocated_balance_rows": stat_unallocated,
-    }
-
-
-def _find_debt_line(event: Event, debtor_name: str) -> dict[str, Any] | None:
-    for line in event.involved:
-        if line["name"] == debtor_name:
-            return line
-    return None
-
 
 def build_participants(events: list[Event]) -> tuple[dict[str, str], list[dict[str, Any]]]:
     names = set()
@@ -435,15 +324,18 @@ def build_participants(events: list[Event]) -> tuple[dict[str, str], list[dict[s
             if n:
                 names.add(n)
 
-    name_to_id = {name: str(uuid.uuid5(uuid.NAMESPACE_DNS, f"ghost:{name}")) for name in sorted(names)}
-    participants = [
-        {
+    name_to_id = {
+        name: str(uuid.uuid5(uuid.NAMESPACE_DNS, f"ghost:{name}"))
+        for name in sorted(names)
+    }
+
+    participants = []
+    for name, pid in name_to_id.items():
+        participants.append({
             "id": pid,
             "name": name,
             "is_ghost": True,
-        }
-        for name, pid in name_to_id.items()
-    ]
+        })
     return name_to_id, participants
 
 
@@ -463,7 +355,8 @@ def build_expense_rows(events: list[Event], name_to_id: dict[str, str]) -> list[
                 "amount": float(line["amount"]),
             }
             paid = line["paid_amount"]
-            if paid > 0:
+            # Never set paid_amount for payer's own share; it causes UI and balance glitches.
+            if paid > 0 and line["name"] != e.paid_by:
                 entry["paid_amount"] = float(paid)
             involved.append(entry)
 
@@ -471,7 +364,7 @@ def build_expense_rows(events: list[Event], name_to_id: dict[str, str]) -> list[
             {
                 "name": e.title,
                 "paid_by": e.paid_by,
-                "user_id": None,
+                "user_id": name_to_id.get(e.paid_by),
                 "value": float(e.total),
                 "category": e.category_name,
                 "created_at": e.date_iso,
@@ -486,13 +379,11 @@ def build_expense_rows(events: list[Event], name_to_id: dict[str, str]) -> list[
 def build_custom_categories(events: list[Event]) -> list[dict[str, str | None]]:
     categories: dict[str, dict[str, str | None]] = {}
     for e in events:
-        parsed_name, parsed_icon, _ = parse_custom_category(e.category_raw)
+        parsed_name, _, _ = parse_custom_category(e.category_raw)
         if e.event_type == "BALANCE":
             continue
         name, embedded_icon = extract_embedded_icon(parsed_name)
-        icon = parsed_icon or embedded_icon
-        if is_transfer_category(name):
-            continue
+        icon = e.category_icon or embedded_icon or hardcoded_category_icon(name)
         if name not in categories:
             categories[name] = {
                 "name": name,
@@ -562,7 +453,7 @@ def main() -> int:
         return 1
 
     events = build_events(rows)
-    settle_stats = apply_balance_settlements(events, args.similarity_threshold)
+    init_normal_involved(events)
     name_to_id, participants = build_participants(events)
     expense_rows = build_expense_rows(events, name_to_id)
     custom_categories = build_custom_categories(events)
@@ -573,10 +464,10 @@ def main() -> int:
 
     tricount_payload = {
         "name": tricount_name,
-        "description": "Imported from CSV with BALANCE settlements applied.",
+        "description": "Imported from CSV (expenses only; transfers handled manually).",
         "created_at": datetime.now(timezone.utc).isoformat(),
         "participants": participants,
-        "participant_ids": [],
+        "participant_ids": [p["id"] for p in participants],
         "emoji": "📥",
     }
     if user_id:
@@ -588,10 +479,9 @@ def main() -> int:
     print(f"  normal_events_imported: {len(expense_rows)}")
     print(f"  balance_events_processed: {sum(1 for e in events if e.event_type == 'BALANCE')}")
     print(f"  custom_categories: {len(custom_categories)}")
-    print(f"  participants(ghost): {len(participants)}")
-    print(f"  settlement_title_matches: {settle_stats['title_matches']}")
-    print(f"  settlement_fallback_matches: {settle_stats['fallback_matches']}")
-    print(f"  settlement_unallocated_rows: {settle_stats['unallocated_balance_rows']}")
+    ghost_count = sum(1 for p in participants if p.get("is_ghost"))
+    print(f"  participants(total): {len(participants)}")
+    print(f"  participants(ghost): {ghost_count}")
 
     if args.dry_run:
         print("DRY_RUN=1 No data written.")

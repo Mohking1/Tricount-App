@@ -47,7 +47,8 @@ class ExpenseDetailSheet extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          _buildInfoRow('Amount', '${expense['value']} ₹'),
+          _buildInfoRow('Amount',
+              '${(double.tryParse(expense['value']?.toString() ?? '0') ?? 0).toStringAsFixed(2)} ₹'),
           _buildInfoRow('Paid by', expense['paid_by'] ?? 'Unspecified'),
           _buildInfoRow('Category', expense['category'] ?? 'Other'),
           if (expense['payment_method'] != null)

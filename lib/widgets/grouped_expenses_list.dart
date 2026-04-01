@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../screens/expense_detail_screen.dart';
+import '../utils/category_icon_utils.dart';
 
 class GroupedExpensesList extends StatelessWidget {
   final List<Map<String, dynamic>> expenses;
@@ -12,17 +13,8 @@ class GroupedExpensesList extends StatelessWidget {
     required this.tricountId,
   });
 
-  static const Map<String, String> _categoryEmojis = {
-    'Food': '🍔',
-    'Transport': '🚌',
-    'Accommodation': '🏠',
-    'Entertainment': '🎬',
-    'Shopping': '🛍️',
-    'Other': '📦',
-  };
-
   String _getCategoryEmoji(String? category) {
-    return _categoryEmojis[category] ?? '📦';
+    return categoryIconForName(category);
   }
 
   String _formatDate(DateTime date) {
@@ -90,8 +82,11 @@ class GroupedExpensesList extends StatelessWidget {
               bool isPartiallyPaid = false;
 
               if (currentUserId != null) {
+                if (expense['user_id'] == currentUserId) {
+                  isPaid = true;
+                }
                 final involved = expense['involved_participants'];
-                if (involved is List) {
+                if (!isPaid && involved is List) {
                   for (var item in involved) {
                     if (item is Map) {
                       final uid = item['user_id'] ?? item['id'];
@@ -171,7 +166,7 @@ class GroupedExpensesList extends StatelessWidget {
                   ],
                 ),
                 trailing: Text(
-                  '${expense['value']?.toString() ?? '0'} ₹',
+                  '${(double.tryParse(expense['value']?.toString() ?? '0') ?? 0).toStringAsFixed(2)} ₹',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

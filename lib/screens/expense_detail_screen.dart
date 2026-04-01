@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'dart:convert';
 import 'add_expense_screen.dart';
 import '../services/sync_service.dart';
+import '../utils/category_icon_utils.dart';
 
 class ExpenseDetailScreen extends StatefulWidget {
   final Map<String, dynamic> expense;
@@ -24,49 +23,11 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
   List<Map<String, dynamic>> _participants = [];
   bool _isLoading = true;
   bool _hasChanges = false;
-  final Map<String, String> _savedCategoryIcons = {};
 
   @override
   void initState() {
     super.initState();
-    _loadCategoryIcons();
     _fetchParticipants();
-  }
-
-  Future<void> _loadCategoryIcons() async {
-    final prefs = await SharedPreferences.getInstance();
-    final expCats = prefs.getString('group_expense_categories');
-    final incCats = prefs.getString('group_income_categories');
-
-    final Map<String, String> iconMap = {};
-    void mergeCategories(String? jsonString) {
-      if (jsonString == null || jsonString.isEmpty) return;
-      try {
-        final list = List<Map<String, dynamic>>.from(jsonDecode(jsonString));
-        for (final item in list) {
-          final name = item['name']?.toString();
-          final icon = item['icon']?.toString();
-          if (name != null &&
-              name.isNotEmpty &&
-              icon != null &&
-              icon.isNotEmpty) {
-            iconMap[name] = icon;
-          }
-        }
-      } catch (_) {
-        // Ignore malformed cached category payloads.
-      }
-    }
-
-    mergeCategories(expCats);
-    mergeCategories(incCats);
-
-    if (!mounted) return;
-    setState(() {
-      _savedCategoryIcons
-        ..clear()
-        ..addAll(iconMap);
-    });
   }
 
   Future<void> _fetchParticipants() async {
@@ -145,9 +106,9 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
     }
   }
 
-  Future<void> _markAsPaid(double amountToPay) async {
-    final currentUserId = Supabase.instance.client.auth.currentUser?.id;
-    if (currentUserId == null) return;
+  Future<void> _markAsPaidForParticipant(
+      String participantId, double amountToPay) async {
+    if (participantId.isEmpty) return;
 
     // Show payment method and date dialog
     String paymentMethod = 'Online';
@@ -289,7 +250,7 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
       final updatedInvolved = involvedData.map((item) {
         if (item is Map) {
           final userId = item['user_id'] ?? item['id'];
-          if (userId == currentUserId) {
+          if (userId == participantId) {
             final currentPaid =
                 double.tryParse(item['paid_amount']?.toString() ?? '0') ?? 0;
             final newPaid = currentPaid + amountToPay;
@@ -366,12 +327,16 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
     }
   }
 
-  Future<void> _showPaymentDialog(double maxAmount) async {
+  Future<void> _showPaymentDialogForParticipant(
+      String participantId, double maxAmount,
+      {String? participantName}) async {
     final controller = TextEditingController();
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Enter Amount'),
+        title: Text(participantName != null && participantName.isNotEmpty
+            ? 'Mark $participantName as Paid'
+            : 'Enter Amount'),
         content: TextField(
           controller: controller,
           keyboardType: TextInputType.number,
@@ -385,9 +350,9 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
           TextButton(
             onPressed: () {
               final val = double.tryParse(controller.text);
-              if (val != null && val > 0) {
+              if (val != null && val > 0 && val <= maxAmount + 0.01) {
                 Navigator.pop(context);
-                _markAsPaid(val);
+                _markAsPaidForParticipant(participantId, val);
               }
             },
             child: const Text('Pay'),
@@ -477,7 +442,11 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () => _showPaymentDialog(remaining),
+                          onPressed: () => _showPaymentDialogForParticipant(
+                            currentUserId,
+                            remaining,
+                            participantName: myEntry['name']?.toString(),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
                             foregroundColor: Colors.white,
@@ -488,7 +457,8 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () => _markAsPaid(remaining),
+                          onPressed: () => _markAsPaidForParticipant(
+                              currentUserId, remaining),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.green,
                             side: const BorderSide(color: Colors.green),
@@ -725,6 +695,14 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
                             fontSize: 18,
                           ),
                         ),
+                        const SizedBox(height: 6),
+                        Text(
+                          'Long press a participant to mark their share as paid',
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                            fontSize: 12,
+                          ),
+                        ),
                         const SizedBox(height: 12),
                         Container(
                           decoration: BoxDecoration(
@@ -737,61 +715,87 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
                               final index = entry.key;
                               final p = entry.value;
                               final isLast = index == _participants.length - 1;
+                              final participantId =
+                                  (p['id'] ?? p['user_id'])?.toString() ?? '';
+                              final participantAmount =
+                                  double.tryParse(p['amount'].toString()) ?? 0;
+                              final participantPaid = double.tryParse(
+                                      p['paid_amount']?.toString() ?? '0') ??
+                                  0;
+                              final participantRemaining =
+                                  participantAmount - participantPaid;
+                              final payerId =
+                                  widget.expense['user_id']?.toString() ?? '';
+                              final canMarkForRow = participantId.isNotEmpty &&
+                                  participantRemaining > 0.01 &&
+                                  participantId != payerId;
 
                               return Column(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Row(
-                                      children: [
-                                        CircleAvatar(
-                                          backgroundColor: Colors.grey[800],
-                                          backgroundImage:
-                                              p['photo_url'] != null
-                                                  ? NetworkImage(p['photo_url'])
-                                                  : null,
-                                          child: p['photo_url'] == null
-                                              ? const Icon(Icons.person,
-                                                  color: Colors.white)
-                                              : null,
-                                        ),
-                                        const SizedBox(width: 12),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                p['name'] ?? 'Unknown',
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              ),
-                                              if (p['id'] == currentUserId)
+                                  GestureDetector(
+                                    onLongPress: canMarkForRow
+                                        ? () =>
+                                            _showPaymentDialogForParticipant(
+                                              participantId,
+                                              participantRemaining,
+                                              participantName:
+                                                  p['name']?.toString(),
+                                            )
+                                        : null,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundColor: Colors.grey[800],
+                                            backgroundImage: p['photo_url'] !=
+                                                    null
+                                                ? NetworkImage(p['photo_url'])
+                                                : null,
+                                            child: p['photo_url'] == null
+                                                ? const Icon(Icons.person,
+                                                    color: Colors.white)
+                                                : null,
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
                                                 Text(
-                                                  'Me',
-                                                  style: TextStyle(
-                                                    color: Colors.grey[400],
-                                                    fontSize: 14,
+                                                  p['name'] ?? 'Unknown',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
                                                   ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
                                                 ),
-                                              _buildPaymentStatus(p),
-                                            ],
+                                                if (p['id'] == currentUserId)
+                                                  Text(
+                                                    'Me',
+                                                    style: TextStyle(
+                                                      color: Colors.grey[400],
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                _buildPaymentStatus(p),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          '₹${(p['amount'] as double).toStringAsFixed(2)}',
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+                                          Text(
+                                            '₹${participantAmount.toStringAsFixed(2)}',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   if (!isLast)
@@ -870,19 +874,6 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
   }
 
   String _getCategoryIcon(String? categoryName) {
-    if (categoryName == null) return '📦';
-    if (_savedCategoryIcons.containsKey(categoryName)) {
-      return _savedCategoryIcons[categoryName]!;
-    }
-
-    const defaultIcons = {
-      'Food': '🍔',
-      'Transport': '🚌',
-      'Accommodation': '🏠',
-      'Entertainment': '🎬',
-      'Shopping': '🛍️',
-      'Other': '📦',
-    };
-    return defaultIcons[categoryName] ?? '📦';
+    return categoryIconForName(categoryName);
   }
 }
