@@ -327,41 +327,6 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
     }
   }
 
-  Future<void> _showPaymentDialogForParticipant(
-      String participantId, double maxAmount,
-      {String? participantName}) async {
-    final controller = TextEditingController();
-    await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(participantName != null && participantName.isNotEmpty
-            ? 'Mark $participantName as Paid'
-            : 'Enter Amount'),
-        content: TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(prefixText: '₹'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              final val = double.tryParse(controller.text);
-              if (val != null && val > 0 && val <= maxAmount + 0.01) {
-                Navigator.pop(context);
-                _markAsPaidForParticipant(participantId, val);
-              }
-            },
-            child: const Text('Pay'),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildMyStatus(String currentUserId) {
     final myEntry = _participants.firstWhere(
       (p) => p['id'] == currentUserId,
@@ -442,11 +407,8 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () => _showPaymentDialogForParticipant(
-                            currentUserId,
-                            remaining,
-                            participantName: myEntry['name']?.toString(),
-                          ),
+                          onPressed: () => _markAsPaidForParticipant(
+                              currentUserId, remaining),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
                             foregroundColor: Colors.white,
@@ -734,12 +696,9 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> {
                                 children: [
                                   GestureDetector(
                                     onLongPress: canMarkForRow
-                                        ? () =>
-                                            _showPaymentDialogForParticipant(
+                                        ? () => _markAsPaidForParticipant(
                                               participantId,
                                               participantRemaining,
-                                              participantName:
-                                                  p['name']?.toString(),
                                             )
                                         : null,
                                     child: Padding(
