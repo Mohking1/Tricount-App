@@ -170,6 +170,7 @@ class BalanceService {
                 'to_id': payerId,
                 'amount': remaining,
                 'expense_name': expense['name'],
+                'expense_id': expense['id'],
                 'date': expense['created_at'],
               });
             }

@@ -80,6 +80,10 @@ class GroupedExpensesList extends StatelessWidget {
             ...dayExpenses.map((expense) {
               bool isPaid = false;
               bool isPartiallyPaid = false;
+              final createdAt = expense['created_at'] as String?;
+              final expenseDate = createdAt != null
+                  ? _formatDate(DateTime.parse(createdAt))
+                  : null;
 
               if (currentUserId != null) {
                 if (expense['user_id'] == currentUserId) {
@@ -153,6 +157,14 @@ class GroupedExpensesList extends StatelessWidget {
                         ],
                       ),
                     ),
+                    if (expenseDate != null)
+                      Text(
+                        expenseDate,
+                        style: TextStyle(
+                          color: Colors.grey[500],
+                          fontSize: 12,
+                        ),
+                      ),
                     if (isPaid)
                       const Text(
                         'You paid your share',

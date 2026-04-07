@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/balance_service.dart';
 import '../services/data_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../screens/expense_detail_screen.dart';
 
 class BalanceView extends StatefulWidget {
   final String tricountId;
@@ -14,6 +15,8 @@ class BalanceView extends StatefulWidget {
 
 class _BalanceViewState extends State<BalanceView> {
   bool _showSpecific = false;
+  String? _specificFromId;
+  String? _specificToId;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,21 @@ class _BalanceViewState extends State<BalanceView> {
     User? currentUser,
     List<Map<String, dynamic>> participants,
   ) {
+    final filteredSpecificDebts = specificDebts.where((debt) {
+      final matchesFrom =
+          _specificFromId == null || debt['from_id'] == _specificFromId;
+      final matchesTo = _specificToId == null || debt['to_id'] == _specificToId;
+      return matchesFrom && matchesTo;
+    }).toList();
+
+    final specificDebtors = participants
+        .where((p) => (p['id']?.toString().isNotEmpty ?? false))
+        .toList();
+
+    final specificCreditors = participants
+        .where((p) => (p['id']?.toString().isNotEmpty ?? false))
+        .toList();
+
     return Column(
       children: [
         Padding(
@@ -60,21 +78,131 @@ class _BalanceViewState extends State<BalanceView> {
               const Text('Simplified', style: TextStyle(color: Colors.white)),
               Switch(
                 value: _showSpecific,
-                onChanged: (val) => setState(() => _showSpecific = val),
+                onChanged: (val) => setState(() {
+                  _showSpecific = val;
+                  if (!val) {
+                    _specificFromId = null;
+                    _specificToId = null;
+                  }
+                }),
                 activeTrackColor: const Color(0xFF0A84FF),
               ),
               const Text('Specific', style: TextStyle(color: Colors.white)),
             ],
           ),
         ),
+        if (_showSpecific)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: InputDecorator(
+                        decoration: const InputDecoration(
+                          labelText: 'Debtor',
+                          labelStyle: TextStyle(color: Colors.grey),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String?>(
+                            value: _specificFromId,
+                            isDense: true,
+                            dropdownColor: const Color(0xFF2C2C2E),
+                            style: const TextStyle(color: Colors.white),
+                            items: [
+                              const DropdownMenuItem<String?>(
+                                value: null,
+                                child: Text('Anyone owes',
+                                    style: TextStyle(color: Colors.white)),
+                              ),
+                              ...specificDebtors
+                                  .map((p) => DropdownMenuItem<String?>(
+                                        value: p['id']?.toString(),
+                                        child: Text(
+                                          p['name']?.toString() ?? 'Unknown',
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      )),
+                            ],
+                            onChanged: (val) {
+                              setState(() => _specificFromId = val);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: InputDecorator(
+                        decoration: const InputDecoration(
+                          labelText: 'Creditor',
+                          labelStyle: TextStyle(color: Colors.grey),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String?>(
+                            value: _specificToId,
+                            isDense: true,
+                            dropdownColor: const Color(0xFF2C2C2E),
+                            style: const TextStyle(color: Colors.white),
+                            items: [
+                              const DropdownMenuItem<String?>(
+                                value: null,
+                                child: Text('Anyone is owed',
+                                    style: TextStyle(color: Colors.white)),
+                              ),
+                              ...specificCreditors
+                                  .map((p) => DropdownMenuItem<String?>(
+                                        value: p['id']?.toString(),
+                                        child: Text(
+                                          p['name']?.toString() ?? 'Unknown',
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      )),
+                            ],
+                            onChanged: (val) {
+                              setState(() => _specificToId = val);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _specificFromId = null;
+                        _specificToId = null;
+                      });
+                    },
+                    child: const Text('Clear filters'),
+                  ),
+                ),
+              ],
+            ),
+          ),
         Expanded(
           child: _showSpecific
-              ? (specificDebts.isEmpty
+              ? (filteredSpecificDebts.isEmpty
                   ? const Center(child: Text('No debts found'))
                   : ListView.builder(
-                      itemCount: specificDebts.length,
+                      itemCount: filteredSpecificDebts.length,
                       itemBuilder: (context, index) {
-                        final debt = specificDebts[index];
+                        final debt = filteredSpecificDebts[index];
                         final amount =
                             double.tryParse(debt['amount'].toString()) ?? 0;
                         final currentUserName =
@@ -87,7 +215,8 @@ class _BalanceViewState extends State<BalanceView> {
                           margin: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 8),
                           child: InkWell(
-                            onTap: isCurrentUserDebtor
+                            onTap: () => _openExpenseFromDebt(context, debt),
+                            onLongPress: isCurrentUserDebtor
                                 ? () {
                                     if (debt['to_id'] != null &&
                                         currentUser != null) {
@@ -109,9 +238,7 @@ class _BalanceViewState extends State<BalanceView> {
                                   maxLines: 2),
                               subtitle: Text('For: ${debt['expense_name']}',
                                   overflow: TextOverflow.ellipsis, maxLines: 1),
-                              trailing: isCurrentUserDebtor
-                                  ? const Icon(Icons.chevron_right)
-                                  : null,
+                              trailing: const Icon(Icons.open_in_new),
                             ),
                           ),
                         );
@@ -185,6 +312,39 @@ class _BalanceViewState extends State<BalanceView> {
                     )),
         ),
       ],
+    );
+  }
+
+  void _openExpenseFromDebt(BuildContext context, Map<String, dynamic> debt) {
+    final expenseId = debt['expense_id']?.toString();
+    if (expenseId == null || expenseId.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Expense link is unavailable')),
+      );
+      return;
+    }
+
+    final expense = DataProvider()
+        .expensesForTricount(widget.tricountId)
+        .where((e) => e['id']?.toString() == expenseId)
+        .cast<Map<String, dynamic>>()
+        .toList();
+
+    if (expense.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Expense not found')),
+      );
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ExpenseDetailScreen(
+          expense: expense.first,
+          tricountId: widget.tricountId,
+        ),
+      ),
     );
   }
 

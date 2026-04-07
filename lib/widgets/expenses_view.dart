@@ -15,7 +15,8 @@ class ExpensesView extends StatefulWidget {
 class _ExpensesViewState extends State<ExpensesView> {
   String _searchQuery = '';
   String? _selectedCategory;
-  String? _selectedPayer;
+  String? _selectedDebtorId;
+  String? _selectedCreditorId;
   String _paymentStatus = 'All'; // 'All', 'Unpaid', 'Partially Paid', 'Paid'
 
   @override
@@ -27,7 +28,8 @@ class _ExpensesViewState extends State<ExpensesView> {
     });
   }
 
-  void _showFilterBottomSheet(List<String> categories, List<String> payers) {
+  void _showFilterBottomSheet(
+      List<String> categories, List<Map<String, String>> participants) {
     showModalBottomSheet(
       context: context,
       backgroundColor: const Color(0xFF1C1C1E),
@@ -80,33 +82,63 @@ class _ExpensesViewState extends State<ExpensesView> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  // Paid By
+                  // Debtor
                   InputDecorator(
                     decoration: const InputDecoration(
-                      labelText: 'Paid By',
+                      labelText: 'Debtor',
                       labelStyle: TextStyle(color: Colors.grey),
                       enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey)),
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String?>(
-                        value: _selectedPayer,
+                        value: _selectedDebtorId,
                         dropdownColor: const Color(0xFF2C2C2E),
                         style: const TextStyle(color: Colors.white),
                         isDense: true,
                         items: [
                           const DropdownMenuItem(
                               value: null,
-                              child: Text('Anyone',
+                              child: Text('Anyone owes',
                                   style: TextStyle(color: Colors.white))),
-                          ...payers.map((p) => DropdownMenuItem(
-                              value: p,
-                              child: Text(p,
+                          ...participants.map((p) => DropdownMenuItem(
+                              value: p['id'],
+                              child: Text(p['name'] ?? 'Unknown',
                                   style:
                                       const TextStyle(color: Colors.white)))),
                         ],
                         onChanged: (val) =>
-                            setModalState(() => _selectedPayer = val),
+                            setModalState(() => _selectedDebtorId = val),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  InputDecorator(
+                    decoration: const InputDecoration(
+                      labelText: 'Creditor',
+                      labelStyle: TextStyle(color: Colors.grey),
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String?>(
+                        value: _selectedCreditorId,
+                        dropdownColor: const Color(0xFF2C2C2E),
+                        style: const TextStyle(color: Colors.white),
+                        isDense: true,
+                        items: [
+                          const DropdownMenuItem(
+                              value: null,
+                              child: Text('Anyone is owed',
+                                  style: TextStyle(color: Colors.white))),
+                          ...participants.map((p) => DropdownMenuItem(
+                              value: p['id'],
+                              child: Text(p['name'] ?? 'Unknown',
+                                  style:
+                                      const TextStyle(color: Colors.white)))),
+                        ],
+                        onChanged: (val) =>
+                            setModalState(() => _selectedCreditorId = val),
                       ),
                     ),
                   ),
@@ -152,6 +184,22 @@ class _ExpensesViewState extends State<ExpensesView> {
                       child: const Text('Apply Filters'),
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () {
+                        setModalState(() {
+                          _selectedCategory = null;
+                          _selectedDebtorId = null;
+                          _selectedCreditorId = null;
+                          _paymentStatus = 'All';
+                        });
+                        setState(() {});
+                      },
+                      child: const Text('Clear filters'),
+                    ),
+                  ),
                   const SizedBox(height: 16),
                 ],
               ),
@@ -167,10 +215,11 @@ class _ExpensesViewState extends State<ExpensesView> {
     return ListenableBuilder(
       listenable: DataProvider(),
       builder: (context, _) {
-        final allExpenses =
-            DataProvider().expensesForTricount(widget.tricountId);
+        final dp = DataProvider();
+        final allExpenses = dp.expensesForTricount(widget.tricountId);
+        final tricount = dp.tricountById(widget.tricountId);
 
-        if (DataProvider().isLoading && allExpenses.isEmpty) {
+        if (dp.isLoading && allExpenses.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
 
@@ -186,13 +235,17 @@ class _ExpensesViewState extends State<ExpensesView> {
             .toList();
         categories.sort();
 
-        // Extract unique payers
-        final payers = allExpenses
-            .map((e) => e['paid_by'] as String?)
-            .where((p) => p != null)
-            .toSet()
-            .toList();
-        payers.sort();
+        final participantOptions = tricount != null
+            ? List<Map<String, dynamic>>.from(tricount['participants'] ?? [])
+                .where((p) => (p['id']?.toString().isNotEmpty ?? false))
+                .map((p) => {
+                      'id': p['id']?.toString() ?? '',
+                      'name': p['name']?.toString() ?? 'Unknown',
+                    })
+                .toList()
+            : <Map<String, String>>[];
+        participantOptions
+            .sort((a, b) => (a['name'] ?? '').compareTo(b['name'] ?? ''));
 
         final currentUserId = Supabase.instance.client.auth.currentUser?.id;
 
@@ -202,19 +255,69 @@ class _ExpensesViewState extends State<ExpensesView> {
 
           final name = (expense['name'] as String? ?? '').toLowerCase();
           final category = expense['category'] as String?;
-          final paidBy = expense['paid_by'] as String?;
+          final payerId = expense['user_id']?.toString();
+          final involved = expense['involved_participants'];
 
           final matchesSearch = name.contains(_searchQuery.toLowerCase());
           final matchesCategory =
               _selectedCategory == null || category == _selectedCategory;
-          final matchesPayer =
-              _selectedPayer == null || paidBy == _selectedPayer;
+
+          bool debtorHasOutstanding(String debtorId) {
+            if (involved is! List) return false;
+            for (var item in involved) {
+              if (item is Map) {
+                final uid = (item['user_id'] ?? item['id'])?.toString();
+                if (uid != debtorId) continue;
+                if (payerId != null && uid == payerId) continue;
+
+                final amount =
+                    double.tryParse(item['amount']?.toString() ?? '0') ?? 0;
+                final paid =
+                    double.tryParse(item['paid_amount']?.toString() ?? '0') ??
+                        0;
+                if (amount - paid > 0.01) {
+                  return true;
+                }
+              }
+            }
+            return false;
+          }
+
+          bool hasAnyOutstandingToPayer() {
+            if (involved is! List) return false;
+            for (var item in involved) {
+              if (item is Map) {
+                final uid = (item['user_id'] ?? item['id'])?.toString();
+                if (payerId != null && uid == payerId) continue;
+
+                final amount =
+                    double.tryParse(item['amount']?.toString() ?? '0') ?? 0;
+                final paid =
+                    double.tryParse(item['paid_amount']?.toString() ?? '0') ??
+                        0;
+                if (amount - paid > 0.01) {
+                  return true;
+                }
+              }
+            }
+            return false;
+          }
+
+          bool matchesSpecificPair = true;
+          if (_selectedDebtorId != null) {
+            matchesSpecificPair = debtorHasOutstanding(_selectedDebtorId!);
+            if (matchesSpecificPair && _selectedCreditorId != null) {
+              matchesSpecificPair = payerId == _selectedCreditorId;
+            }
+          } else if (_selectedCreditorId != null) {
+            matchesSpecificPair =
+                payerId == _selectedCreditorId && hasAnyOutstandingToPayer();
+          }
 
           bool matchesStatus = true;
           if (_paymentStatus != 'All') {
             if (currentUserId != null) {
               // Check my status in this expense
-              final involved = expense['involved_participants'];
               double myAmount = 0;
               double myPaid = 0;
 
@@ -251,7 +354,7 @@ class _ExpensesViewState extends State<ExpensesView> {
 
           return matchesSearch &&
               matchesCategory &&
-              matchesPayer &&
+              matchesSpecificPair &&
               matchesStatus;
         }).toList();
 
@@ -323,13 +426,14 @@ class _ExpensesViewState extends State<ExpensesView> {
                   IconButton(
                     icon: Icon(Icons.filter_list,
                         color: (_selectedCategory != null ||
-                                _selectedPayer != null ||
+                                _selectedDebtorId != null ||
+                                _selectedCreditorId != null ||
                                 _paymentStatus != 'All')
                             ? const Color(0xFF0A84FF)
                             : Colors.white),
                     onPressed: () => _showFilterBottomSheet(
                         categories.whereType<String>().toList(),
-                        payers.whereType<String>().toList()),
+                        participantOptions),
                   ),
                 ],
               ),
